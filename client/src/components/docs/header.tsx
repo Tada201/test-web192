@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Search } from "@/components/ui/search";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/hooks/use-theme";
 
 interface HeaderProps {
   onMobileMenuToggle: () => void;
 }
 
 export function Header({ onMobileMenuToggle }: HeaderProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="sticky top-0 z-50 bg-doc-bg/95 backdrop-blur-sm border-b border-doc-border">
       <div className="flex items-center justify-between px-4 h-16 max-w-none">
@@ -76,8 +79,10 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
             variant="ghost"
             size="sm"
             className="p-2 hover:bg-doc-hover"
+            onClick={toggleTheme}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
-            <i className="fas fa-sun text-doc-text"></i>
+            <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} text-doc-text`}></i>
           </Button>
         </div>
       </div>

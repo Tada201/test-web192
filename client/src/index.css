@@ -24,15 +24,15 @@
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
   
-  /* Documentation theme colors */
-  --doc-bg: hsl(214, 13%, 5%);
-  --doc-surface: hsl(214, 13%, 9%);
-  --doc-border: hsl(214, 13%, 18%);
-  --doc-text: hsl(210, 40%, 98%);
-  --doc-text-muted: hsl(215, 14%, 58%);
+  /* Light mode documentation theme colors */
+  --doc-bg: hsl(0, 0%, 100%);
+  --doc-surface: hsl(0, 0%, 98%);
+  --doc-border: hsl(214, 13%, 88%);
+  --doc-text: hsl(20, 14.3%, 4.1%);
+  --doc-text-muted: hsl(25, 5.3%, 44.7%);
   --doc-primary: hsl(207, 90%, 54%);
-  --doc-accent: hsl(211, 100%, 74%);
-  --doc-hover: hsl(214, 13%, 13%);
+  --doc-accent: hsl(207, 90%, 54%);
+  --doc-hover: hsl(60, 4.8%, 95.9%);
 }
 
 .dark {
@@ -56,6 +56,16 @@
   --destructive-foreground: hsl(210, 40%, 98%);
   --ring: hsl(214, 13%, 83%);
   --radius: 0.5rem;
+  
+  /* Dark mode documentation theme colors */
+  --doc-bg: hsl(214, 13%, 5%);
+  --doc-surface: hsl(214, 13%, 9%);
+  --doc-border: hsl(214, 13%, 18%);
+  --doc-text: hsl(210, 40%, 98%);
+  --doc-text-muted: hsl(215, 14%, 58%);
+  --doc-primary: hsl(207, 90%, 54%);
+  --doc-accent: hsl(211, 100%, 74%);
+  --doc-hover: hsl(214, 13%, 13%);
 }
 
 @layer base {
