@@ -34,9 +34,10 @@ This is a full-stack TypeScript application built with a modern React frontend a
 ## Key Components
 
 ### Frontend Components
-- **Documentation System**: Complete docs interface with sidebar navigation, search, and table of contents
+- **Documentation System**: Complete docs interface with sidebar navigation, advanced search, and table of contents
+- **Search Engine**: FlexSearch-powered search with Unicode support, keyboard navigation, and result highlighting
 - **UI Library**: 30+ reusable components including forms, navigation, data display, and feedback components
-- **Theming**: Dark mode documentation theme with CSS custom properties
+- **Theming**: Light/dark mode toggle with localStorage persistence and CSS custom properties
 - **Responsive Design**: Mobile-first approach with collapsible sidebar
 
 ### Backend Components
