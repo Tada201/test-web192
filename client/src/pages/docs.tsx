@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useTheme } from "@/hooks/use-theme";
 import { Header } from "@/components/docs/header";
 import { Sidebar } from "@/components/docs/sidebar";
 import { MainContent } from "@/components/docs/main-content";
@@ -9,6 +10,7 @@ export default function DocsPage() {
   const [location] = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("introduction");
+  const { theme } = useTheme();
 
   useEffect(() => {
     // Extract section from URL hash or path
@@ -32,7 +34,7 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="bg-doc-bg text-doc-text antialiased min-h-screen">
+    <div className={`${theme} bg-doc-bg text-doc-text antialiased min-h-screen transition-colors duration-200`}>
       <Header onMobileMenuToggle={toggleSidebar} />
       
       <div className="flex min-h-screen">

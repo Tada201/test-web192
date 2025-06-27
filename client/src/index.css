@@ -75,9 +75,14 @@
 
   body {
     @apply font-inter antialiased;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  html.light body,
+  html.dark body {
     background-color: hsl(var(--doc-bg));
     color: hsl(var(--doc-text));
-    font-family: 'Inter', sans-serif;
   }
   
   .font-inter {
@@ -161,12 +166,36 @@
   }
 }
 
-/* Custom utilities */
-.bg-doc-bg { background-color: hsl(var(--doc-bg)); }
-.bg-doc-surface { background-color: hsl(var(--doc-surface)); }
-.bg-doc-hover { background-color: hsl(var(--doc-hover)); }
-.text-doc-text { color: hsl(var(--doc-text)); }
-.text-doc-text-muted { color: hsl(var(--doc-text-muted)); }
-.text-doc-accent { color: hsl(var(--doc-accent)); }
-.border-doc-border { border-color: hsl(var(--doc-border)); }
-.border-doc-accent { border-color: hsl(var(--doc-accent)); }
+/* Custom utilities with theme support */
+.bg-doc-bg { 
+  background-color: hsl(var(--doc-bg)); 
+  transition: background-color 0.2s ease;
+}
+.bg-doc-surface { 
+  background-color: hsl(var(--doc-surface)); 
+  transition: background-color 0.2s ease;
+}
+.bg-doc-hover { 
+  background-color: hsl(var(--doc-hover)); 
+  transition: background-color 0.2s ease;
+}
+.text-doc-text { 
+  color: hsl(var(--doc-text)); 
+  transition: color 0.2s ease;
+}
+.text-doc-text-muted { 
+  color: hsl(var(--doc-text-muted)); 
+  transition: color 0.2s ease;
+}
+.text-doc-accent { 
+  color: hsl(var(--doc-accent)); 
+  transition: color 0.2s ease;
+}
+.border-doc-border { 
+  border-color: hsl(var(--doc-border)); 
+  transition: border-color 0.2s ease;
+}
+.border-doc-accent { 
+  border-color: hsl(var(--doc-accent)); 
+  transition: border-color 0.2s ease;
+}
