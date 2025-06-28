@@ -387,21 +387,25 @@ export function EnhancedSearchModal({
                 </div>
               )}
 
-              {/* Popular Searches */}
-              <div>
-                <h3 className="text-sm font-medium text-doc-text mb-4">
+              {/* Enhanced Popular Searches */}
+              <div className="mt-8">
+                <h3 className="text-sm font-medium text-doc-text mb-6 flex items-center">
+                  <Zap size={16} className="mr-2 text-doc-accent" />
                   Popular Searches
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {popularSearches.map((term) => (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {popularSearches.map(term => (
                     <button
                       key={term}
                       onClick={() => setSearchQuery(term)}
-                      className="px-4 py-2 text-sm bg-doc-surface text-doc-text-muted rounded-lg hover:bg-doc-hover hover:text-doc-text transition-all duration-200 border border-doc-border hover:border-doc-accent/30"
+                      className="group px-4 py-3 text-sm bg-doc-surface text-doc-text-muted rounded-xl hover:bg-doc-accent/10 hover:text-doc-accent transition-all duration-200 border border-doc-border hover:border-doc-accent/40 hover:scale-105 hover:shadow-lg text-center font-medium"
                     >
-                      {term}
+                      <span className="capitalize">{term}</span>
+                      <ArrowRight size={14} className="ml-2 inline opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                     </button>
                   ))}
+                </div>
+              </div>
                 </div>
               </div>
             </div>
