@@ -1,4 +1,55 @@
-import matter from 'gray-matter';
+// Browser-safe frontmatter parser to avoid Buffer dependency issues
+function parseFrontmatter(content: string): { data: Record<string, any>; content: string } {
+  const lines = content.split('\n');
+  
+  if (lines[0] !== '---') {
+    return { data: {}, content };
+  }
+
+  let endIndex = -1;
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i] === '---') {
+      endIndex = i;
+      break;
+    }
+  }
+
+  if (endIndex === -1) {
+    return { data: {}, content };
+  }
+
+  const frontmatterLines = lines.slice(1, endIndex);
+  const contentLines = lines.slice(endIndex + 1);
+  
+  const data: Record<string, any> = {};
+  
+  frontmatterLines.forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const key = line.substring(0, colonIndex).trim();
+      const value = line.substring(colonIndex + 1).trim();
+      
+      // Remove quotes if present
+      const cleanValue = value.replace(/^["']|["']$/g, '');
+      
+      // Try to parse as number
+      if (/^\d+$/.test(cleanValue)) {
+        data[key] = parseInt(cleanValue, 10);
+      } else if (cleanValue === 'true') {
+        data[key] = true;
+      } else if (cleanValue === 'false') {
+        data[key] = false;
+      } else {
+        data[key] = cleanValue;
+      }
+    }
+  });
+
+  return {
+    data,
+    content: contentLines.join('\n')
+  };
+}
 
 export interface MDXDocument {
   slug: string;
@@ -29,7 +80,7 @@ export function loadMDXDocuments(): MDXDocument[] {
     try {
       // Ensure content is a string
       const contentString = typeof content === 'string' ? content : String(content);
-      const { data: frontmatter, content: markdownContent } = matter(contentString);
+      const { data: frontmatter, content: markdownContent } = parseFrontmatter(contentString);
       
       // Extract slug from file path
       const slug = path

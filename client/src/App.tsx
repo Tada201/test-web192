@@ -8,7 +8,9 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import { LoadingAnimation } from "./components/LoadingAnimation";
 import { BackgroundAnimation } from "./components/BackgroundAnimation";
+import { Header } from "./components/Header";
 import NotFound from "@/pages/not-found";
+import HomePage from "@/pages/home";
 import DocsPage from "@/pages/docs";
 import ComponentsDemo from "@/pages/components-demo";
 import JavaOOPExample from "@/pages/java-oop-example";
@@ -16,11 +18,11 @@ import JavaOOPExample from "@/pages/java-oop-example";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DocsPage} />
+      <Route path="/" component={HomePage} />
       <Route path="/docs" component={DocsPage} />
       <Route path="/docs/:section" component={DocsPage} />
-      <Route path="/components-demo" component={ComponentsDemo} />
-      <Route path="/java-oop-example" component={JavaOOPExample} />
+      <Route path="/components" component={ComponentsDemo} />
+      <Route path="/java-oop" component={JavaOOPExample} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -40,6 +42,7 @@ function App() {
             {!isLoading && (
               <>
                 <BackgroundAnimation />
+                <Header />
                 <Toaster />
                 <Router />
               </>
