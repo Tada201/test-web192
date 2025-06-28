@@ -77,14 +77,11 @@ html.dark {
   body {
     @apply font-inter antialiased;
     font-family: "Inter", sans-serif;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease;
-  }
-
-  body {
     background-color: hsl(var(--doc-bg));
     color: hsl(var(--doc-text));
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   .font-inter {
