@@ -253,66 +253,89 @@ export function EnhancedSearchModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 px-4 sm:px-6">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-12 px-4 sm:px-6">
       <div
-        className="fixed inset-0 backdrop-blur-sm transition-opacity"
-        style={{ backgroundColor: "rgba(14, 14, 14, 0.85)" }}
+        className="fixed inset-0 backdrop-blur-md transition-all duration-300"
+        style={{ backgroundColor: "rgba(14, 14, 14, 0.90)" }}
         onClick={onClose}
       />
 
       <div
-        className="relative w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden transition-colors duration-300"
-        style={{ backgroundColor: "rgb(18, 18, 18)" }}
+        className="relative w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 animate-in slide-in-from-top-4"
+        style={{
+          backgroundColor: "rgb(18, 18, 18)",
+          border: "1px solid rgb(40, 40, 40)",
+          boxShadow:
+            "0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+        }}
       >
-        {/* Search Header */}
+        {/* Enhanced Search Header */}
         <div
-          className="flex items-center px-6 py-4"
+          className="flex items-center px-8 py-6 relative group"
           style={{ borderBottom: "1px solid rgb(30, 30, 30)" }}
         >
-          <Search
-            size={20}
-            className="mr-3 text-gray-400 dark:text-doc-text-muted"
-          />
+          {/* Animated search icon with hover effect */}
+          <div className="relative mr-4">
+            <Search
+              size={24}
+              className="text-doc-accent transition-all duration-200 group-hover:scale-110 group-hover:text-doc-accent/80"
+            />
+            <div className="absolute inset-0 bg-doc-accent/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 opacity-0 group-hover:opacity-100 blur-md"></div>
+          </div>
+
+          {/* Enhanced input with larger hit area */}
           <input
             ref={inputRef}
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyNavigation}
-            placeholder="Search tutorials, examples, references..."
-            className="flex-1 bg-transparent border-none focus:ring-0 text-gray-900 dark:text-doc-text placeholder-gray-400 dark:placeholder-doc-text-muted text-lg outline-none"
+            placeholder="Search OOP topics, examples, or Java concepts..."
+            className="flex-1 bg-transparent border-none focus:ring-0 text-doc-text placeholder-doc-text-muted/70 text-xl font-medium outline-none py-2 px-2 rounded-lg hover:bg-doc-hover/30 focus:bg-doc-hover/50 transition-all duration-200"
+            style={{ minHeight: "48px" }}
           />
-          <div className="flex items-center space-x-2">
+
+          {/* Enhanced action buttons */}
+          <div className="flex items-center space-x-3">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-lg transition-all duration-200 ${
+              className={`relative p-3 rounded-xl transition-all duration-200 group/filter ${
                 showFilters || Object.keys(filters).length > 0
-                  ? "bg-doc-accent/20 text-doc-accent border border-doc-accent/30"
-                  : "text-gray-400 dark:text-doc-text-muted hover:text-gray-600 dark:hover:text-doc-text hover:bg-doc-hover"
+                  ? "bg-doc-accent/20 text-doc-accent border border-doc-accent/40 shadow-lg scale-105"
+                  : "text-doc-text-muted hover:text-doc-accent hover:bg-doc-accent/10 hover:scale-105 border border-transparent hover:border-doc-accent/20"
               }`}
-              title="Filters"
+              title="Advanced Filters"
             >
-              <Filter size={18} />
+              <Filter
+                size={20}
+                className="transition-transform duration-200 group-hover/filter:rotate-12"
+              />
+              {Object.keys(filters).length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-doc-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {Object.keys(filters).length}
+                </span>
+              )}
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-gray-400 dark:text-doc-text-muted hover:text-gray-600 dark:hover:text-doc-text hover:bg-doc-hover transition-all duration-200"
+              className="p-3 rounded-xl text-doc-text-muted hover:text-red-400 hover:bg-red-500/10 hover:scale-105 transition-all duration-200 border border-transparent hover:border-red-500/20"
+              title="Close Search"
             >
-              <X size={18} />
+              <X size={20} />
             </button>
           </div>
         </div>
 
-        {/* Filters */}
+        {/* Enhanced Filters */}
         {showFilters && (
           <div
-            className="px-6 py-4 border-b"
+            className="px-8 py-6 border-b"
             style={{
               backgroundColor: "rgb(22, 22, 22)",
               borderBottomColor: "rgb(30, 30, 30)",
             }}
           >
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center space-x-3">
                 <label className="text-sm font-medium text-doc-text-muted">
                   Category:
@@ -359,10 +382,10 @@ export function EnhancedSearchModal({
           </div>
         )}
 
-        {/* Content */}
+        {/* Enhanced Content */}
         <div className="max-h-96 overflow-y-auto custom-scrollbar">
           {!searchQuery.trim() && (
-            <div className="p-6">
+            <div className="p-8">
               {/* Recent Searches */}
               {recentSearches.length > 0 && (
                 <div className="mb-8">
@@ -394,25 +417,26 @@ export function EnhancedSearchModal({
                   Popular Searches
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {popularSearches.map(term => (
+                  {popularSearches.map((term) => (
                     <button
                       key={term}
                       onClick={() => setSearchQuery(term)}
                       className="group px-4 py-3 text-sm bg-doc-surface text-doc-text-muted rounded-xl hover:bg-doc-accent/10 hover:text-doc-accent transition-all duration-200 border border-doc-border hover:border-doc-accent/40 hover:scale-105 hover:shadow-lg text-center font-medium"
                     >
                       <span className="capitalize">{term}</span>
-                      <ArrowRight size={14} className="ml-2 inline opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                      <ArrowRight
+                        size={14}
+                        className="ml-2 inline opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      />
                     </button>
                   ))}
-                </div>
-              </div>
                 </div>
               </div>
             </div>
           )}
 
           {searchQuery.trim() && (
-            <div className="p-4">
+            <div className="p-8">
               {/* Loading indicator */}
               {isSearching && (
                 <div className="text-center py-8">
@@ -423,7 +447,7 @@ export function EnhancedSearchModal({
                 </div>
               )}
 
-              {/* Search Results */}
+              {/* Enhanced Search Results */}
               {results.length > 0 && !isSearching && (
                 <div>
                   <h4 className="text-sm font-medium text-doc-text mb-4">
@@ -495,28 +519,40 @@ export function EnhancedSearchModal({
           )}
         </div>
 
-        {/* Footer */}
+        {/* Enhanced Footer with better keyboard hints */}
         <div
-          className="px-6 py-4 border-t"
+          className="px-8 py-5 border-t"
           style={{
             borderTopColor: "rgb(30, 30, 30)",
             backgroundColor: "rgb(22, 22, 22)",
           }}
         >
-          <div className="flex items-center justify-between text-xs text-doc-text-muted">
-            <div className="flex items-center space-x-4">
-              <span>
-                <kbd className="kbd">↑↓</kbd> to navigate
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <span className="text-sm text-doc-text-muted font-medium">
+                <kbd className="enhanced-kbd bg-doc-surface border border-doc-border text-doc-text px-2 py-1 rounded-md font-mono text-xs mr-2">
+                  ↑↓
+                </kbd>
+                Navigate
               </span>
-              <span>
-                <kbd className="kbd">↵</kbd> to select
+              <span className="text-sm text-doc-text-muted font-medium">
+                <kbd className="enhanced-kbd bg-doc-surface border border-doc-border text-doc-text px-2 py-1 rounded-md font-mono text-xs mr-2">
+                  ↵
+                </kbd>
+                Select
               </span>
-              <span>
-                <kbd className="kbd">esc</kbd> to close
+              <span className="text-sm text-doc-text-muted font-medium">
+                <kbd className="enhanced-kbd bg-doc-surface border border-doc-border text-doc-text px-2 py-1 rounded-md font-mono text-xs mr-2">
+                  esc
+                </kbd>
+                Close
               </span>
             </div>
-            <div>
-              <kbd className="kbd">⌘K</kbd> to search
+            <div className="text-sm text-doc-text-muted font-medium">
+              <kbd className="enhanced-kbd bg-doc-accent/10 border border-doc-accent/30 text-doc-accent px-2 py-1 rounded-md font-mono text-xs mr-2">
+                ⌘K
+              </kbd>
+              Search anywhere
             </div>
           </div>
         </div>
