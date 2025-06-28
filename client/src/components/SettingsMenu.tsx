@@ -112,41 +112,17 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
                 <div>
                   <h3 className="text-lg font-medium text-doc-text mb-4">
-                    {settings.theme === "dark" ? "Dark" : "Light"} Theme
-                    Variants
+                    Theme Preview
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {(settings.theme === "dark" ? darkThemes : lightThemes).map(
-                      (theme) => (
-                        <button
-                          key={theme}
-                          onClick={() => setColorScheme(theme)}
-                          className={`p-3 rounded-md border text-left transition-colors ${
-                            (settings.theme === "dark"
-                              ? settings.darkTheme
-                              : settings.lightTheme) === theme
-                              ? "border-doc-primary bg-doc-primary/10"
-                              : "border-doc-border hover:border-doc-primary/50"
-                          }`}
-                        >
-                          <div className="font-medium text-doc-text capitalize">
-                            {theme.replace("-", " ")}
-                          </div>
-                          <div className="text-sm text-doc-text-muted mt-1">
-                            {theme === "modern-dark" &&
-                              "Clean and modern dark theme"}
-                            {theme === "blue-professional" &&
-                              "Professional blue accent"}
-                            {theme === "deep-purple" && "Rich purple tones"}
-                            {theme === "light-minimal" &&
-                              "Clean minimal light theme"}
-                            {theme === "light-warm" && "Warm light colors"}
-                            {theme === "light-cool" && "Cool light tones"}
-                            {theme === "pastel" && "Soft pastel colors"}
-                          </div>
-                        </button>
-                      ),
-                    )}
+                  <div className="p-4 rounded-lg border border-doc-border bg-doc-hover">
+                    <div className="text-doc-text font-medium mb-2">
+                      Current Theme: {theme === "dark" ? "Dark" : "Light"}
+                    </div>
+                    <div className="text-doc-text-muted text-sm">
+                      {theme === "dark"
+                        ? "Modern dark theme with high contrast and reduced eye strain"
+                        : "Clean light theme with excellent readability and accessibility"}
+                    </div>
                   </div>
                 </div>
               </div>
