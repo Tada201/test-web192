@@ -309,7 +309,7 @@ export default function JavaOOPExample() {
     (completedAssignments.size / assignments.length) * 100;
 
   return (
-    <div className="min-h-screen bg-doc-bg pt-16">
+    <div className="min-h-screen bg-doc-bg text-doc-text pt-16">
       <div className="flex h-[calc(100vh-4rem)]">
         {/* Sidebar */}
         <div
