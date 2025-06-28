@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Settings, X, Palette, Type, Eye, Globe, Volume2 } from "lucide-react";
 import {
-  useSettings,
-  darkThemes,
-  lightThemes,
-} from "../contexts/SettingsContext";
+  Settings,
+  X,
+  Palette,
+  Type,
+  Eye,
+  Globe,
+  Sun,
+  Moon,
+} from "lucide-react";
+import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
 
 interface SettingsMenuProps {
@@ -13,7 +18,7 @@ interface SettingsMenuProps {
 }
 
 export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
-  const { settings, updateSettings, setTheme, setColorScheme } = useSettings();
+  const { theme, toggleTheme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("appearance");
 
   if (!isOpen) return null;
@@ -32,16 +37,16 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
         onClick={onClose}
       />
 
-      <div className="relative bg-white dark:bg-gray-800 w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative bg-doc-surface w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden border border-doc-border">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b dark:border-gray-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-doc-border bg-doc-hover">
           <div className="flex items-center space-x-3">
-            <Settings size={24} className="text-doc-primary" />
+            <Settings size={24} className="text-doc-accent" />
             <h2 className="text-xl font-semibold text-doc-text">Settings</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-md text-doc-text-muted hover:text-doc-text transition-colors"
+            className="p-2 rounded-md text-doc-text-muted hover:text-doc-text hover:bg-doc-surface transition-colors"
           >
             <X size={20} />
           </button>
@@ -49,7 +54,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
         <div className="flex h-96">
           {/* Sidebar */}
-          <div className="w-64 bg-doc-hover border-r dark:border-gray-700 p-4">
+          <div className="w-64 bg-doc-surface border-r border-doc-border p-4">
             <nav className="space-y-1">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -59,8 +64,8 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors ${
                       activeTab === tab.id
-                        ? "bg-doc-primary text-white"
-                        : "text-doc-text-muted hover:text-doc-text hover:bg-doc-bg"
+                        ? "bg-doc-accent text-white"
+                        : "text-doc-text-muted hover:text-doc-text hover:bg-doc-hover"
                     }`}
                   >
                     <Icon size={18} />
@@ -82,25 +87,25 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                   <div className="flex space-x-4">
                     <button
                       onClick={() => setTheme("light")}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-md border transition-colors ${
-                        settings.theme === "light"
-                          ? "border-doc-primary bg-doc-primary/10 text-doc-primary"
-                          : "border-doc-border text-doc-text-muted hover:border-doc-primary/50"
+                      className={`flex items-center space-x-3 px-6 py-3 rounded-lg border transition-all duration-200 ${
+                        theme === "light"
+                          ? "border-doc-accent bg-doc-accent/10 text-doc-accent shadow-lg"
+                          : "border-doc-border text-doc-text-muted hover:border-doc-accent/50 hover:bg-doc-hover"
                       }`}
                     >
-                      <div className="w-4 h-4 bg-white border rounded"></div>
-                      <span>Light</span>
+                      <Sun size={18} />
+                      <span className="font-medium">Light Mode</span>
                     </button>
                     <button
                       onClick={() => setTheme("dark")}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-md border transition-colors ${
-                        settings.theme === "dark"
-                          ? "border-doc-primary bg-doc-primary/10 text-doc-primary"
-                          : "border-doc-border text-doc-text-muted hover:border-doc-primary/50"
+                      className={`flex items-center space-x-3 px-6 py-3 rounded-lg border transition-all duration-200 ${
+                        theme === "dark"
+                          ? "border-doc-accent bg-doc-accent/10 text-doc-accent shadow-lg"
+                          : "border-doc-border text-doc-text-muted hover:border-doc-accent/50 hover:bg-doc-hover"
                       }`}
                     >
-                      <div className="w-4 h-4 bg-gray-800 border rounded"></div>
-                      <span>Dark</span>
+                      <Moon size={18} />
+                      <span className="font-medium">Dark Mode</span>
                     </button>
                   </div>
                 </div>
