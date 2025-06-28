@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import { LoadingAnimation } from "./components/LoadingAnimation";
+import { BackgroundAnimation } from "./components/BackgroundAnimation";
 import NotFound from "@/pages/not-found";
 import DocsPage from "@/pages/docs";
 import ComponentsDemo from "@/pages/components-demo";
@@ -38,6 +39,7 @@ function App() {
             )}
             {!isLoading && (
               <>
+                <BackgroundAnimation />
                 <Toaster />
                 <Router />
               </>

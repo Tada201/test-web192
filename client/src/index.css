@@ -319,3 +319,67 @@ html.dark {
 .font-opendyslexic-bold {
   font-family: 'OpenDyslexic-Bold', serif !important;
 }
+
+/* Background Animation Styles */
+body {
+  background-color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background-color: hsl(var(--doc-bg));
+}
+
+/* Ensure content stays above background animation */
+#root {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+/* Background animation canvas positioning */
+canvas[style*="z-index: -1"] {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+  z-index: -1 !important;
+}
+
+/* Subtle animation for particle connections */
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.1; }
+}
+
+/* Ensure white background consistency across all pages */
+.min-h-screen {
+  background-color: white;
+}
+
+.dark .min-h-screen {
+  background-color: hsl(var(--doc-bg));
+}
+
+/* Background animation particles - subtle movement */
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-5px) translateX(-5px); }
+  75% { transform: translateY(-15px) translateX(10px); }
+}
+
+/* Smooth transitions for background animation toggle */
+canvas {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Maintain content readability over background */
+.prose-docs, .docs-content, .main-content {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
