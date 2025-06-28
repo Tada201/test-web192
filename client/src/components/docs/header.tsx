@@ -79,7 +79,10 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
             variant="ghost"
             size="sm"
             className="p-2 hover:bg-doc-hover"
-            onClick={toggleTheme}
+            onClick={() => {
+              console.log('Button clicked! Current theme:', theme);
+              toggleTheme();
+            }}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} text-doc-text`}></i>

@@ -25,6 +25,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    console.log('Applying theme:', theme);
+    
     // Apply theme to document element
     const root = document.documentElement;
     const body = document.body;
@@ -37,12 +39,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.classList.add(theme);
     body.classList.add(theme);
     
+    console.log('Applied classes to root:', root.className);
+    console.log('Applied classes to body:', body.className);
+    
     // Save to localStorage
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === "light" ? "dark" : "light");
+    console.log('Theme toggle clicked, current theme:', theme);
+    const newTheme = theme === "light" ? "dark" : "light";
+    console.log('Switching to theme:', newTheme);
+    setTheme(newTheme);
   };
 
   return (
