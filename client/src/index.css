@@ -24,7 +24,7 @@ html.light {
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
-  
+
   /* Light mode documentation theme colors */
   --doc-bg: hsl(0, 0%, 100%);
   --doc-surface: hsl(0, 0%, 98%);
@@ -37,36 +37,36 @@ html.light {
 }
 
 html.dark {
-  --background: hsl(214, 13%, 5%);
+  --background: rgb(14, 14, 14);
   --foreground: hsl(210, 40%, 98%);
-  --muted: hsl(214, 13%, 15%);
-  --muted-foreground: hsl(215, 14%, 58%);
-  --popover: hsl(214, 13%, 5%);
+  --muted: rgb(20, 20, 20);
+  --muted-foreground: hsl(215, 14%, 65%);
+  --popover: rgb(14, 14, 14);
   --popover-foreground: hsl(210, 40%, 98%);
-  --card: hsl(214, 13%, 5%);
+  --card: rgb(18, 18, 18);
   --card-foreground: hsl(210, 40%, 98%);
-  --border: hsl(214, 13%, 15%);
-  --input: hsl(214, 13%, 15%);
+  --border: rgb(30, 30, 30);
+  --input: rgb(20, 20, 20);
   --primary: hsl(207, 90%, 54%);
   --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(214, 13%, 15%);
+  --secondary: rgb(20, 20, 20);
   --secondary-foreground: hsl(210, 40%, 98%);
-  --accent: hsl(214, 13%, 15%);
+  --accent: rgb(22, 22, 22);
   --accent-foreground: hsl(210, 40%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(210, 40%, 98%);
-  --ring: hsl(214, 13%, 83%);
+  --ring: rgb(50, 50, 50);
   --radius: 0.5rem;
-  
-  /* Dark mode documentation theme colors */
-  --doc-bg: hsl(214, 13%, 5%);
-  --doc-surface: hsl(214, 13%, 9%);
-  --doc-border: hsl(214, 13%, 18%);
+
+  /* Modern dark mode documentation theme colors */
+  --doc-bg: rgb(14, 14, 14);
+  --doc-surface: rgb(18, 18, 18);
+  --doc-border: rgb(30, 30, 30);
   --doc-text: hsl(210, 40%, 98%);
-  --doc-text-muted: hsl(215, 14%, 58%);
+  --doc-text-muted: hsl(215, 14%, 65%);
   --doc-primary: hsl(207, 90%, 54%);
   --doc-accent: hsl(211, 100%, 74%);
-  --doc-hover: hsl(214, 13%, 13%);
+  --doc-hover: rgb(22, 22, 22);
 }
 
 @layer base {
@@ -76,21 +76,23 @@ html.dark {
 
   body {
     @apply font-inter antialiased;
-    font-family: 'Inter', sans-serif;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    font-family: "Inter", sans-serif;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
-  
+
   body {
     background-color: hsl(var(--doc-bg));
     color: hsl(var(--doc-text));
   }
-  
+
   .font-inter {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
-  
+
   .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 }
 
@@ -98,26 +100,34 @@ html.dark {
   .sidebar-scroll::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .sidebar-scroll::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   .sidebar-scroll::-webkit-scrollbar-thumb {
     background: hsl(var(--doc-border));
     border-radius: 3px;
   }
-  
+
   .sidebar-scroll::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--doc-hover));
   }
 
   .code-block {
-    background: linear-gradient(135deg, hsl(214, 13%, 11%) 0%, hsl(214, 13%, 9%) 100%);
+    background: linear-gradient(
+      135deg,
+      hsl(214, 13%, 11%) 0%,
+      hsl(214, 13%, 9%) 100%
+    );
   }
 
   .nav-item.active {
-    background: linear-gradient(90deg, hsla(211, 100%, 74%, 0.1) 0%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      hsla(211, 100%, 74%, 0.1) 0%,
+      transparent 100%
+    );
     border-left: 2px solid hsl(var(--doc-accent));
   }
 
@@ -126,34 +136,43 @@ html.dark {
   }
 
   @keyframes searchGlow {
-    0% { box-shadow: 0 0 0 0 hsla(211, 100%, 74%, 0.4); }
-    100% { box-shadow: 0 0 0 4px hsla(211, 100%, 74%, 0); }
+    0% {
+      box-shadow: 0 0 0 0 hsla(211, 100%, 74%, 0.4);
+    }
+    100% {
+      box-shadow: 0 0 0 4px hsla(211, 100%, 74%, 0);
+    }
   }
-  
+
   .prose-docs {
     @apply text-[hsl(var(--doc-text))];
   }
-  
-  .prose-docs h1, .prose-docs h2, .prose-docs h3, .prose-docs h4, .prose-docs h5, .prose-docs h6 {
+
+  .prose-docs h1,
+  .prose-docs h2,
+  .prose-docs h3,
+  .prose-docs h4,
+  .prose-docs h5,
+  .prose-docs h6 {
     @apply text-[hsl(var(--doc-text))];
   }
-  
+
   .prose-docs p {
     @apply text-[hsl(var(--doc-text-muted))];
   }
-  
+
   .prose-docs strong {
     @apply text-[hsl(var(--doc-text))];
   }
-  
+
   .prose-docs a {
     @apply text-[hsl(var(--doc-accent))] hover:underline;
   }
-  
+
   .prose-docs code {
     @apply bg-[hsl(var(--doc-surface))] px-1 py-0.5 rounded text-sm;
   }
-  
+
   .prose-docs pre {
     @apply bg-[hsl(var(--doc-surface))] border border-[hsl(var(--doc-border))];
   }
@@ -167,36 +186,36 @@ html.dark {
 }
 
 /* Custom utilities with theme support */
-.bg-doc-bg { 
-  background-color: hsl(var(--doc-bg)) !important; 
+.bg-doc-bg {
+  background-color: hsl(var(--doc-bg)) !important;
   transition: background-color 0.2s ease;
 }
-.bg-doc-surface { 
-  background-color: hsl(var(--doc-surface)) !important; 
+.bg-doc-surface {
+  background-color: hsl(var(--doc-surface)) !important;
   transition: background-color 0.2s ease;
 }
-.bg-doc-hover { 
-  background-color: hsl(var(--doc-hover)) !important; 
+.bg-doc-hover {
+  background-color: hsl(var(--doc-hover)) !important;
   transition: background-color 0.2s ease;
 }
-.text-doc-text { 
-  color: hsl(var(--doc-text)) !important; 
+.text-doc-text {
+  color: hsl(var(--doc-text)) !important;
   transition: color 0.2s ease;
 }
-.text-doc-text-muted { 
-  color: hsl(var(--doc-text-muted)) !important; 
+.text-doc-text-muted {
+  color: hsl(var(--doc-text-muted)) !important;
   transition: color 0.2s ease;
 }
-.text-doc-accent { 
-  color: hsl(var(--doc-accent)) !important; 
+.text-doc-accent {
+  color: hsl(var(--doc-accent)) !important;
   transition: color 0.2s ease;
 }
-.border-doc-border { 
-  border-color: hsl(var(--doc-border)) !important; 
+.border-doc-border {
+  border-color: hsl(var(--doc-border)) !important;
   transition: border-color 0.2s ease;
 }
-.border-doc-accent { 
-  border-color: hsl(var(--doc-accent)) !important; 
+.border-doc-accent {
+  border-color: hsl(var(--doc-accent)) !important;
   transition: border-color 0.2s ease;
 }
 
@@ -305,19 +324,19 @@ html.dark {
 
 /* Font families */
 .font-open-sans {
-  font-family: 'Open Sans', Arial, sans-serif !important;
+  font-family: "Open Sans", Arial, sans-serif !important;
 }
 
 .font-pt-serif {
-  font-family: 'PT Serif', Georgia, serif !important;
+  font-family: "PT Serif", Georgia, serif !important;
 }
 
 .font-opendyslexic-regular {
-  font-family: 'OpenDyslexic-Regular', serif !important;
+  font-family: "OpenDyslexic-Regular", serif !important;
 }
 
 .font-opendyslexic-bold {
-  font-family: 'OpenDyslexic-Bold', serif !important;
+  font-family: "OpenDyslexic-Bold", serif !important;
 }
 
 /* Background Animation Styles */
@@ -351,8 +370,13 @@ canvas[style*="z-index: -1"] {
 
 /* Subtle animation for particle connections */
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 0.1; }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
 }
 
 /* Ensure white background consistency across all pages */
@@ -366,10 +390,19 @@ canvas[style*="z-index: -1"] {
 
 /* Background animation particles - subtle movement */
 @keyframes floatParticle {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-10px) translateX(5px); }
-  50% { transform: translateY(-5px) translateX(-5px); }
-  75% { transform: translateY(-15px) translateX(10px); }
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(10px);
+  }
 }
 
 /* Smooth transitions for background animation toggle */
@@ -378,7 +411,9 @@ canvas {
 }
 
 /* Maintain content readability over background */
-.prose-docs, .docs-content, .main-content {
+.prose-docs,
+.docs-content,
+.main-content {
   position: relative;
   z-index: 2;
   background: transparent;
@@ -445,18 +480,18 @@ canvas {
     backdrop-filter: blur(20px);
     border-right: 1px solid rgba(229, 231, 235, 0.8);
   }
-  
+
   .dark aside.sidebar-mobile {
     background: rgba(17, 24, 39, 0.98) !important;
     border-right: 1px solid rgba(55, 65, 81, 0.8);
   }
-  
+
   .nav-item {
     background: rgba(255, 255, 255, 0.95) !important;
     margin-bottom: 2px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
-  
+
   .dark .nav-item {
     background: rgba(31, 41, 55, 0.95) !important;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
