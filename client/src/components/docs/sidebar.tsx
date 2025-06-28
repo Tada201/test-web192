@@ -33,13 +33,13 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
       )}
       
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-80 bg-doc-bg border-r border-doc-border transform transition-transform duration-300 ease-in-out pt-16 lg:pt-0 ${
+      <aside className={`sidebar-mobile fixed lg:static inset-y-0 left-0 z-40 w-80 bg-white dark:bg-doc-bg border-r border-doc-border transform transition-transform duration-300 ease-in-out pt-16 lg:pt-0 shadow-lg lg:shadow-none ${
         isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b border-doc-border">
+          <div className="p-4 border-b border-doc-border bg-gray-50 dark:bg-doc-surface">
             <Select defaultValue="v3.0.0">
-              <SelectTrigger className="w-full bg-doc-surface border border-doc-border text-doc-text">
+              <SelectTrigger className="w-full bg-white dark:bg-doc-surface border border-doc-border text-gray-900 dark:text-doc-text">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -53,13 +53,13 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
           <nav className="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1">
             {docSections.map((section) => (
               <div key={section.id} className="mb-6">
-                <div className="flex items-center justify-between py-2 text-sm font-medium text-doc-text-muted uppercase tracking-wider">
+                <div className="sidebar-section-header flex items-center justify-between py-2 px-3 text-sm font-medium bg-gray-100 dark:bg-doc-surface rounded-md text-gray-700 dark:text-doc-text-muted uppercase tracking-wider">
                   <span>{section.title}</span>
                   {section.collapsible && (
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-doc-text-muted hover:text-doc-text p-1"
+                      className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text p-1"
                       onClick={() => toggleSection(section.id)}
                     >
                       <i className={`fas fa-chevron-${collapsedSections.has(section.id) ? 'right' : 'down'} text-xs`}></i>
@@ -68,18 +68,18 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
                 </div>
                 
                 {(!section.collapsible || !collapsedSections.has(section.id)) && (
-                  <ul className="space-y-1 ml-2">
+                  <ul className="space-y-1 mt-2">
                     {section.items.map((item) => (
                       <li key={item.id}>
                         <a
                           href={item.href}
-                          className={`nav-item flex items-center px-3 py-2 text-sm rounded-md hover:bg-doc-hover transition-colors ${
-                            activeSection === item.id ? 'active' : ''
+                          className={`nav-item flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-800 dark:text-doc-text hover:bg-gray-100 dark:hover:bg-doc-hover ${
+                            activeSection === item.id ? 'active bg-blue-50 dark:bg-doc-hover text-blue-700 dark:text-doc-accent' : ''
                           }`}
                           onClick={onClose}
                         >
-                          <i className={`${item.icon} text-xs mr-3 ${activeSection === item.id ? 'text-doc-accent' : ''}`}></i>
-                          {item.title}
+                          <i className={`${item.icon} text-xs mr-3 text-gray-600 dark:text-doc-text-muted ${activeSection === item.id ? 'text-blue-600 dark:text-doc-accent' : ''}`}></i>
+                          <span className="font-medium">{item.title}</span>
                         </a>
                       </li>
                     ))}

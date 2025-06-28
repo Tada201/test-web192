@@ -106,6 +106,12 @@ This is a full-stack TypeScript application built with a modern React frontend a
 
 ```
 Changelog:
+- June 28, 2025. Completed background animation implementation and sidebar visibility enhancements
+  - Implemented BackgroundAnimation component with particle system and mouse interaction
+  - Added background animation toggle setting that integrates with SettingsContext
+  - Enhanced sidebar text visibility with improved contrast and background colors for mobile devices
+  - Added CSS styling for better text readability over background animation
+  - Ensured content stays readable with proper z-index layering and background consistency
 - June 28, 2025. Integrated advanced features from example project
   - Added enhanced settings system with theme colors, font families, text sizes, and accessibility options
   - Implemented advanced search modal with filters, keyboard navigation, and recent searches

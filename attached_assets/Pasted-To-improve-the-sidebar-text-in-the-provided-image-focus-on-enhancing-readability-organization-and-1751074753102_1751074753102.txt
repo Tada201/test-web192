@@ -1,0 +1,74 @@
+To improve the sidebar text in the provided image, focus on enhancing readability, organization, and user experience while maintaining the current UI/UX design (white background, black text, minimalistic style). Here are some suggestions:
+
+### Improvements for Sidebar Text
+
+1. **Improve Readability with Consistent Formatting**
+   - **Action**: Use consistent capitalization (e.g., title case or sentence case) for uniformity. Current text mixes cases (e.g., "Dynamic Memory" vs. "Exception Handling").
+   - **Suggestion**: Apply title case for all items (e.g., "Dynamic Memory" → "Dynamic Memory", "Exception Handling" → "Exception Handling").
+   - **Benefit**: Enhances professionalism and visual consistency.
+
+2. **Add Hierarchy and Spacing**
+   - **Action**: Increase vertical spacing between sections (e.g., between "Exception Handling" and "File I/O", or "SYLLABUS & MATERIALS" and its items) to separate topics clearly.
+   - **Suggestion**: Add a small margin (e.g., `margin-top: 8px;`) or a horizontal line between major sections.
+   - **Benefit**: Improves scannability and reduces visual clutter.
+
+3. **Enhance Section Headers**
+   - **Action**: Make "SYLLABUS & MATERIALS" stand out as a collapsible section header.
+   - **Suggestion**: Bold the header (e.g., **SYLLABUS & MATERIALS**) or use a slightly larger font size.
+   - **Benefit**: Clearly indicates it’s a collapsible category, improving navigation.
+
+4. **Shorten and Clarify Labels**
+   - **Action**: Simplify long or vague labels like "Object-Oriented Programming using Java (PRO192)" to a shorter form if the context is clear from the title.
+   - **Suggestion**: Use "OOP with Java (PRO192)" or just "PRO192" if the version dropdown provides context.
+   - **Benefit**: Reduces text length, making the sidebar less crowded.
+
+5. **Add Icons or Indicators**
+   - **Action**: Use subtle icons next to items (e.g., a PDF icon for sheets, a warning triangle for "Exception Handling") to visually distinguish content types.
+   - **Suggestion**: Keep icons minimal (e.g., a small PDF symbol next to "Sheet 001").
+   - **Benefit**: Improves quick recognition, especially for mobile users.
+
+6. **Ensure Mobile-Friendly Text**
+   - **Action**: Ensure text wraps or truncates gracefully on smaller screens.
+   - **Suggestion**: Add `text-overflow: ellipsis;` and `white-space: nowrap;` to long items if truncation is needed, with a tooltip for full text.
+   - **Benefit**: Maintains usability across devices.
+
+7. **Highlight Active or Selected Items**
+   - **Action**: Add a visual cue (e.g., bold text or a background color) for the currently selected item (e.g., "Sheet 001" if active).
+   - **Suggestion**: Use `font-weight: bold;` or `background-color: #f0f0f0;` for the active item.
+   - **Benefit**: Helps users track their location in the sidebar.
+
+### Sample Updated Sidebar Text
+- **PRO192 - Object-Oriented Programming** (v3.0.0 dropdown)
+  - Dynamic Memory
+  - Exception Handling
+  - File I/O
+  - **SYLLABUS & MATERIALS**
+    - 📄 Sheet 001
+    - 📄 Sheet 002
+    - 📄 Sheet 003
+    - 📄 Sheet 004
+    - 📄 Sheet 005
+    - 📄 Tab Strip
+
+### Implementation Notes
+- **CSS**: Use the main project’s styling framework (e.g., Tailwind CSS) to apply these changes. Example:
+  ```css
+  .sidebar-item { margin-top: 8px; }
+  .sidebar-header { font-weight: bold; font-size: 1.1em; }
+  .active-item { font-weight: bold; background-color: #f0f0f0; }
+  ```
+- **HTML**: Adjust the structure to include classes for styling:
+  ```html
+  <div class="sidebar">
+    <h3 class="sidebar-header">SYLLABUS & MATERIALS</h3>
+    <div class="sidebar-item active-item">📄 Sheet 001</div>
+    <div class="sidebar-item">📄 Sheet 002</div>
+    <!-- Add more items -->
+  </div>
+  ```
+- **Precautions**: 
+  - Test the updated sidebar on mobile and desktop to ensure text remains legible and clickable.
+  - Verify the collapsible functionality (e.g., "SYLLABUS & MATERIALS") works after styling changes.
+  - Avoid overcomplicating with too many icons or colors, sticking to the minimalistic design.
+
+These changes will make the sidebar more user-friendly and visually appealing while aligning with the current UI/UX. Let me know if you'd like a code sample or further adjustments!
