@@ -73,16 +73,7 @@ export function Header() {
                 <span className="ml-2 hidden sm:inline">Search</span>
               </Button>
 
-              {/* Social Icons */}
-              <a href="https://github.com/myproject/myproject" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-100 dark:hover:bg-doc-hover rounded">
-                <Github className="w-5 h-5 text-gray-600 dark:text-doc-text" />
-              </a>
-              <a href="https://discord.gg/myproject" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-100 dark:hover:bg-doc-hover rounded">
-                <DiscordIcon className="w-5 h-5 text-gray-600 dark:text-doc-text" />
-              </a>
-              <a href="https://twitter.com/myproject" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-100 dark:hover:bg-doc-hover rounded">
-                <Twitter className="w-5 h-5 text-gray-600 dark:text-doc-text" />
-              </a>
+              
 
               {/* Theme Toggle */}
               <Button
