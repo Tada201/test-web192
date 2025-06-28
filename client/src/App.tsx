@@ -8,7 +8,6 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import { LoadingAnimation } from "./components/LoadingAnimation";
 import { BackgroundAnimation } from "./components/BackgroundAnimation";
-import { Header } from "./components/Header";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 import DocsPage from "@/pages/docs";
@@ -42,7 +41,6 @@ function App() {
             {!isLoading && (
               <>
                 <BackgroundAnimation />
-                <Header />
                 <Toaster />
                 <Router />
               </>
