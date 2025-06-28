@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
+import { useTheme } from "@/hooks/use-theme";
 import { Sidebar } from "@/components/docs/sidebar";
 import { MainContent } from "@/components/docs/main-content";
 import { TableOfContents } from "@/components/docs/table-of-contents";
-import { useTheme } from "@/hooks/use-theme";
-import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
 
 export default function DocsPage() {
   const [location] = useLocation();
@@ -13,7 +13,7 @@ export default function DocsPage() {
 
   useEffect(() => {
     // Extract section from URL hash or path
-    const hash = window.location.hash.replace('#', '');
+    const hash = window.location.hash.replace("#", "");
     if (hash) {
       setActiveSection(hash);
     }
@@ -33,13 +33,14 @@ export default function DocsPage() {
   };
 
   return (
-    <div className={`${theme} bg-doc-bg text-doc-text antialiased min-h-screen transition-colors duration-200`}>
+    <div className="bg-doc-bg text-doc-text antialiased min-h-screen transition-colors duration-200 pt-16">
       <div className="flex min-h-screen">
-        <Sidebar 
-          isOpen={isSidebarOpen} 
+        <Sidebar
+          isOpen={isSidebarOpen}
           onClose={closeSidebar}
           activeSection={activeSection}
         />
+
         <div className="flex-1 lg:ml-0">
           <div className="flex">
             <MainContent activeSection={activeSection} />
