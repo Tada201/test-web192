@@ -75,7 +75,7 @@ function highlightText(text: string, query: string): JSX.Element {
         regex.test(part) ? (
           <mark
             key={index}
-            className="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded"
+            className="bg-doc-accent/20 text-doc-accent px-1 py-0.5 rounded font-medium"
           >
             {part}
           </mark>
