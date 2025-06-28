@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Menu, X, Search, Settings, Home, BookOpen, Code } from "lucide-react";
@@ -12,8 +12,16 @@ export function Header() {
 
   const navigation = [
     { name: "Home", href: "/", icon: <Home className="w-4 h-4" /> },
-    { name: "Documentation", href: "/docs", icon: <BookOpen className="w-4 h-4" /> },
-    { name: "Components", href: "/components", icon: <Code className="w-4 h-4" /> },
+    {
+      name: "Documentation",
+      href: "/docs",
+      icon: <BookOpen className="w-4 h-4" />,
+    },
+    {
+      name: "Components",
+      href: "/components",
+      icon: <Code className="w-4 h-4" />,
+    },
     { name: "Java OOP", href: "/java-oop", icon: <Code className="w-4 h-4" /> },
   ];
 
@@ -62,7 +70,7 @@ export function Header() {
                 <Search className="w-4 h-4" />
                 <span className="ml-2 hidden sm:inline">Search</span>
               </Button>
-              
+
               <Button
                 variant="ghost"
                 size="sm"
@@ -79,7 +87,11 @@ export function Header() {
                 className="md:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                {isMenuOpen ? (
+                  <X className="w-4 h-4" />
+                ) : (
+                  <Menu className="w-4 h-4" />
+                )}
               </Button>
             </div>
           </div>

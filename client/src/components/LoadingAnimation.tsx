@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface LoadingAnimationProps {
   onComplete?: () => void;
@@ -29,9 +29,9 @@ export function LoadingAnimation({ onComplete }: LoadingAnimationProps) {
   if (!isVisible) return null;
 
   return (
-    <div 
+    <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-gray-900 transition-opacity duration-500 ${
-        fadeOut ? 'opacity-0' : 'opacity-100'
+        fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
       <div className="text-center">
@@ -40,8 +40,12 @@ export function LoadingAnimation({ onComplete }: LoadingAnimationProps) {
           <div className="w-16 h-16 mx-auto mb-4 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
             <i className="fas fa-graduation-cap text-white text-2xl"></i>
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">PRO192 Documentation</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Object-Oriented Programming</p>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+            PRO192 Documentation
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            Object-Oriented Programming
+          </p>
         </div>
 
         {/* Loading Spinner */}
@@ -57,9 +61,18 @@ export function LoadingAnimation({ onComplete }: LoadingAnimationProps) {
 
         {/* Progress Dots */}
         <div className="flex items-center justify-center space-x-2 mt-6">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+          <div
+            className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+            style={{ animationDelay: "0ms" }}
+          ></div>
+          <div
+            className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+            style={{ animationDelay: "150ms" }}
+          ></div>
+          <div
+            className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+            style={{ animationDelay: "300ms" }}
+          ></div>
         </div>
       </div>
     </div>
