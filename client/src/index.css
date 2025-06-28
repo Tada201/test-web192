@@ -80,8 +80,7 @@ html.dark {
     transition: background-color 0.2s ease, color 0.2s ease;
   }
   
-  html.light body,
-  html.dark body {
+  body {
     background-color: hsl(var(--doc-bg));
     color: hsl(var(--doc-text));
   }
@@ -169,34 +168,34 @@ html.dark {
 
 /* Custom utilities with theme support */
 .bg-doc-bg { 
-  background-color: hsl(var(--doc-bg)); 
+  background-color: hsl(var(--doc-bg)) !important; 
   transition: background-color 0.2s ease;
 }
 .bg-doc-surface { 
-  background-color: hsl(var(--doc-surface)); 
+  background-color: hsl(var(--doc-surface)) !important; 
   transition: background-color 0.2s ease;
 }
 .bg-doc-hover { 
-  background-color: hsl(var(--doc-hover)); 
+  background-color: hsl(var(--doc-hover)) !important; 
   transition: background-color 0.2s ease;
 }
 .text-doc-text { 
-  color: hsl(var(--doc-text)); 
+  color: hsl(var(--doc-text)) !important; 
   transition: color 0.2s ease;
 }
 .text-doc-text-muted { 
-  color: hsl(var(--doc-text-muted)); 
+  color: hsl(var(--doc-text-muted)) !important; 
   transition: color 0.2s ease;
 }
 .text-doc-accent { 
-  color: hsl(var(--doc-accent)); 
+  color: hsl(var(--doc-accent)) !important; 
   transition: color 0.2s ease;
 }
 .border-doc-border { 
-  border-color: hsl(var(--doc-border)); 
+  border-color: hsl(var(--doc-border)) !important; 
   transition: border-color 0.2s ease;
 }
 .border-doc-accent { 
-  border-color: hsl(var(--doc-accent)); 
+  border-color: hsl(var(--doc-accent)) !important; 
   transition: border-color 0.2s ease;
 }

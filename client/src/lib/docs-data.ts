@@ -28,121 +28,147 @@ export interface TOCItem {
   level: number;
 }
 
+import { organizeMDXDocuments, type MDXDocument } from './mdx-loader';
+
+// Get MDX documentation sections
+const mdxSections = organizeMDXDocuments();
+
+// Convert MDX documents to DocItem format
+function mdxToDocItems(mdxDocs: MDXDocument[]): DocItem[] {
+  return mdxDocs.map(doc => ({
+    id: doc.slug,
+    title: doc.sidebar_label || doc.title,
+    icon: "fas fa-file-alt",
+    href: `#${doc.slug}`
+  }));
+}
+
 export const docSections: DocSection[] = [
   {
-    id: "getting-started",
-    title: "Getting Started",
-    icon: "fas fa-play",
+    id: "course-overview",
+    title: "Course Overview",
+    icon: "fas fa-graduation-cap",
     items: [
-      { id: "introduction", title: "Introduction", icon: "fas fa-play", href: "#introduction" },
-      { id: "installation", title: "Installation", icon: "fas fa-download", href: "#installation" },
-      { id: "quick-start", title: "Quick Start", icon: "fas fa-rocket", href: "#quick-start" }
+      { id: "mdx_docs-WelcomeSection", title: "Welcome", icon: "fas fa-home", href: "#mdx_docs-WelcomeSection" },
+      { id: "mdx_docs-IntroductionSection", title: "Introduction", icon: "fas fa-play", href: "#mdx_docs-IntroductionSection" },
+      { id: "mdx_docs-FoundationsCourseSection", title: "Foundations", icon: "fas fa-foundation", href: "#mdx_docs-FoundationsCourseSection" }
     ]
   },
   {
-    id: "features",
-    title: "Features",
-    icon: "fas fa-star",
+    id: "core-concepts",
+    title: "Core Concepts",
+    icon: "fas fa-cube",
     collapsible: true,
     items: [
-      { id: "core-features", title: "Core Features", icon: "fas fa-star", href: "#core-features" },
-      { id: "advanced-features", title: "Advanced Features", icon: "fas fa-cogs", href: "#advanced-features" },
-      { id: "integrations", title: "Integrations", icon: "fas fa-puzzle-piece", href: "#integrations" }
+      { id: "mdx_docs-EncapsulationSection", title: "Encapsulation", icon: "fas fa-shield-alt", href: "#mdx_docs-EncapsulationSection" },
+      { id: "mdx_docs-InheritanceSection", title: "Inheritance", icon: "fas fa-sitemap", href: "#mdx_docs-InheritanceSection" },
+      { id: "mdx_docs-PolymorphismSection", title: "Polymorphism", icon: "fas fa-shapes", href: "#mdx_docs-PolymorphismSection" }
     ]
   },
   {
-    id: "api-reference",
-    title: "API Reference",
-    icon: "fas fa-code",
+    id: "advanced-topics",
+    title: "Advanced Topics",
+    icon: "fas fa-cogs",
     collapsible: true,
     items: [
-      { id: "authentication", title: "Authentication", icon: "fas fa-key", href: "#authentication" },
-      { id: "endpoints", title: "Endpoints", icon: "fas fa-link", href: "#endpoints" },
-      { id: "sdks", title: "SDKs", icon: "fas fa-code", href: "#sdks" }
+      { id: "mdx_docs-CollectionsSection", title: "Collections", icon: "fas fa-list", href: "#mdx_docs-CollectionsSection" },
+      { id: "mdx_docs-ArrayOfObjectsSection", title: "Array of Objects", icon: "fas fa-th", href: "#mdx_docs-ArrayOfObjectsSection" },
+      { id: "mdx_docs-DynamicMemorySection", title: "Dynamic Memory", icon: "fas fa-memory", href: "#mdx_docs-DynamicMemorySection" },
+      { id: "mdx_docs-ExceptionSection", title: "Exception Handling", icon: "fas fa-exclamation-triangle", href: "#mdx_docs-ExceptionSection" },
+      { id: "mdx_docs-FileIOSection", title: "File I/O", icon: "fas fa-file", href: "#mdx_docs-FileIOSection" }
     ]
   },
   {
-    id: "deployment",
-    title: "Deployment",
-    icon: "fas fa-cloud",
+    id: "syllabus",
+    title: "Syllabus & Materials",
+    icon: "fas fa-book",
+    collapsible: true,
     items: [
-      { id: "docker", title: "Docker", icon: "fab fa-docker", href: "#docker" },
-      { id: "kubernetes", title: "Kubernetes", icon: "fas fa-dharmachakra", href: "#kubernetes" },
-      { id: "cloud-platforms", title: "Cloud Platforms", icon: "fas fa-cloud", href: "#cloud-platforms" }
-    ]
-  },
-  {
-    id: "community",
-    title: "Community",
-    icon: "fas fa-users",
-    items: [
-      { id: "contributing", title: "Contributing", icon: "fas fa-hands-helping", href: "#contributing" },
-      { id: "changelog", title: "Changelog", icon: "fas fa-history", href: "#changelog" },
-      { id: "support", title: "Support", icon: "fas fa-life-ring", href: "#support" }
+      { id: "Syllabus_mat-sheet001", title: "Sheet 001", icon: "fas fa-file-pdf", href: "#Syllabus_mat-sheet001" },
+      { id: "Syllabus_mat-sheet002", title: "Sheet 002", icon: "fas fa-file-pdf", href: "#Syllabus_mat-sheet002" },
+      { id: "Syllabus_mat-sheet003", title: "Sheet 003", icon: "fas fa-file-pdf", href: "#Syllabus_mat-sheet003" },
+      { id: "Syllabus_mat-sheet004", title: "Sheet 004", icon: "fas fa-file-pdf", href: "#Syllabus_mat-sheet004" },
+      { id: "Syllabus_mat-sheet005", title: "Sheet 005", icon: "fas fa-file-pdf", href: "#Syllabus_mat-sheet005" },
+      { id: "Syllabus_mat-tabstrip", title: "Tab Strip", icon: "fas fa-file-pdf", href: "#Syllabus_mat-tabstrip" }
     ]
   }
 ];
 
-export const docContent: Record<string, DocContent> = {
-  introduction: {
-    id: "introduction",
-    title: "Docs of MyProject",
-    description: "MyProject is a full-featured open source solution for modern web applications with minimal configuration. You have full control of your data, with no concerns about security. The platform is open source and there's a choice between the fully featured Professional Server available to purchase on our website and the basic free and OSS Server based on our Community Edition.",
-    lastModified: "2024-12-28",
-    tableOfContents: [
-      { id: "features", title: "Features", level: 2 },
-      { id: "installation", title: "Quick Installation", level: 2 },
-      { id: "github-repositories", title: "GitHub Repositories", level: 2 }
-    ],
-    content: `
-# Features
+import { getMDXDocument, processMarkdownContent } from './mdx-loader';
 
-MyProject offers a comprehensive set of features designed for modern web applications:
+// Function to generate table of contents from content
+function generateTOC(content: string): TOCItem[] {
+  const headings = content.match(/^#{1,3}\s+(.+)$/gm) || [];
+  return headings.map((heading, index) => {
+    const level = (heading.match(/#/g) || []).length;
+    const title = heading.replace(/^#+\s+/, '');
+    const id = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    return { id, title, level };
+  });
+}
 
-- **Multi-platform Support**: Works on Windows, macOS, Linux, iOS, Android, Web.
-- **Advanced Codecs**: Supports VP8 / VP9 / AV1 software codecs, and H264 / H265 hardware codecs.
-- **Self-hosted Solution**: Own your data, easily set up self-hosting solution on your infrastructure.
-- **Secure P2P**: P2P connection with end-to-end encryption based on NaCl.
-- **No Admin Required**: No administrative privileges or installation needed for Windows, elevate privilege locally or from remote on demand.
-- **Simple Design**: We like to keep things simple and will strive to make simpler where possible.
+// Function to create DocContent from MDX document
+function createDocContentFromMDX(slug: string): DocContent | null {
+  const mdxDoc = getMDXDocument(slug);
+  if (!mdxDoc) return null;
 
-# Quick Installation
+  return {
+    id: slug,
+    title: mdxDoc.title,
+    description: mdxDoc.description,
+    content: mdxDoc.content,
+    lastModified: new Date().toISOString().split('T')[0],
+    tableOfContents: generateTOC(mdxDoc.content)
+  };
+}
 
-Get started with MyProject in just a few commands:
+// Create dynamic docContent that loads from MDX files
+export const docContent: Record<string, DocContent> = new Proxy({}, {
+  get(target, prop: string) {
+    if (typeof prop !== 'string') return undefined;
+    
+    // Try to load from MDX first
+    const mdxContent = createDocContentFromMDX(prop);
+    if (mdxContent) return mdxContent;
+    
+    // Fallback content for introduction
+    if (prop === 'introduction' || prop === 'mdx_docs-WelcomeSection') {
+      return {
+        id: prop,
+        title: "Object-Oriented Programming using Java (PRO192)",
+        description: "Welcome to Object-Oriented Programming using Java course. This comprehensive course introduces students to object-oriented programming concepts, Java language fundamentals, and practical programming skills.",
+        lastModified: "2024-12-28",
+        tableOfContents: [
+          { id: "course-overview", title: "Course Overview", level: 2 },
+          { id: "learning-outcomes", title: "Learning Outcomes", level: 2 },
+          { id: "getting-started", title: "Getting Started", level: 2 }
+        ],
+        content: `
+# Course Overview
 
-\`\`\`bash
-# Install via npm
-npm install -g myproject-cli
+This course introduces students to object-oriented programming using the Java programming language. Students will learn fundamental concepts of object-oriented design and implementation.
 
-# Or using Docker
-docker pull myproject/myproject:latest
+## Learning Outcomes
 
-# Quick start
-myproject init my-app
-cd my-app
-myproject dev
-\`\`\`
+- Understand object-oriented programming concepts
+- Master Java language syntax and semantics  
+- Implement encapsulation, inheritance, and polymorphism
+- Work with collections and data structures
+- Handle exceptions and file I/O operations
+- Build complete Java applications
 
-> **Tip**: For production deployments, we recommend using our Docker images or official installers available on the releases page.
+# Getting Started
 
-# GitHub Repositories
+Begin your journey with object-oriented programming by exploring the course materials in the sidebar. Each section builds upon previous concepts to provide a comprehensive understanding of Java programming.
 
-Explore our open source repositories:
-
-## myproject/core
-Core library and main application code. Contains the primary business logic and API implementations.
-- ⭐ 15.2k stars
-- 🍴 2.1k forks
-- Language: Rust
-
-## myproject/docs
-Documentation website source code built with Docusaurus. Contributions to improve docs are welcome.
-- ⭐ 245 stars
-- 🍴 89 forks
-- Language: JavaScript
+Navigate through the course content using the sidebar menu. Start with the Course Overview and Introduction sections to understand the fundamentals.
 `
+      };
+    }
+    
+    return undefined;
   }
-};
+});
 
 export const breadcrumbs = [
   { title: "Docs", href: "#home" },

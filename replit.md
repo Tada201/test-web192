@@ -100,6 +100,12 @@ This is a full-stack TypeScript application built with a modern React frontend a
 
 ```
 Changelog:
+- June 28, 2025. Integrated Object-Oriented Programming Java (PRO192) course documentation
+  - Added MDX file loader for dynamic content loading
+  - Integrated FlexSearch for advanced search functionality
+  - Implemented light/dark theme toggle with localStorage persistence
+  - Updated navigation structure for Java course materials
+  - Created comprehensive documentation sections for OOP concepts
 - June 27, 2025. Initial setup
 ```
 

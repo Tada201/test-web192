@@ -27,7 +27,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
             <div className="w-8 h-8 bg-doc-primary rounded-lg flex items-center justify-center">
               <i className="fas fa-book text-white text-sm"></i>
             </div>
-            <span className="font-semibold text-lg text-doc-text">Documentation for MyProject</span>
+            <span className="font-semibold text-lg text-doc-text">PRO192 - Object-Oriented Programming</span>
           </div>
         </div>
 
@@ -79,10 +79,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
             variant="ghost"
             size="sm"
             className="p-2 hover:bg-doc-hover"
-            onClick={() => {
-              console.log('Button clicked! Current theme:', theme);
-              toggleTheme();
-            }}
+            onClick={toggleTheme}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} text-doc-text`}></i>
