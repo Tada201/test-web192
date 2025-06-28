@@ -51,7 +51,7 @@ const progressSteps = [
 
 export default function ComponentsDemo() {
   return (
-    <div className="min-h-screen bg-doc-bg pt-16">
+    <div className="min-h-[1494px] bg-doc-bg pt-16">
       <div className="max-w-4xl mx-auto p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-doc-text mb-4">
