@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Menu, X, Search, Settings, Home, BookOpen, Code } from "lucide-react";
+import {
+  Menu,
+  X,
+  Search,
+  Settings,
+  Home,
+  BookOpen,
+  Code,
+  Sun,
+  Moon,
+} from "lucide-react";
 import { EnhancedSearchModal } from "./EnhancedSearchModal";
 import { SettingsMenu } from "./SettingsMenu";
+import { useTheme } from "@/hooks/use-theme";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const navigation = [
     { name: "Home", href: "/", icon: <Home className="w-4 h-4" /> },
@@ -69,6 +81,20 @@ export function Header() {
               >
                 <Search className="w-4 h-4" />
                 <span className="ml-2 hidden sm:inline">Search</span>
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
               </Button>
 
               <Button
