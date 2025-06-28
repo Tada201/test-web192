@@ -33,9 +33,7 @@ export default function DocsPage() {
   };
 
   return (
-    <div
-      className={`${theme} bg-doc-bg text-doc-text antialiased min-h-screen transition-colors duration-200 pt-16`}
-    >
+    <div className="bg-doc-bg text-doc-text antialiased min-h-screen transition-colors duration-200 pt-16">
       <div className="flex min-h-screen">
         <Sidebar
           isOpen={isSidebarOpen}
