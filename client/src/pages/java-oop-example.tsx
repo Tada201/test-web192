@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { CodeBlock } from "@/components/content/CodeBlock";
 import { InfoBox } from "@/components/content/InfoBox";
 import { ConceptCard } from "@/components/content/ConceptCard";
@@ -34,7 +34,7 @@ const codeExamples = {
     private int studentId;
     private double gpa;
     private String major;
-    
+
     // Constructor
     public Student(String name, int studentId, String major) {
         this.name = name;
@@ -42,24 +42,24 @@ const codeExamples = {
         this.major = major;
         this.gpa = 0.0; // Default GPA
     }
-    
+
     // Getter methods
     public String getName() {
         return name;
     }
-    
+
     public int getStudentId() {
         return studentId;
     }
-    
+
     public double getGpa() {
         return gpa;
     }
-    
+
     public String getMajor() {
         return major;
     }
-    
+
     // Setter methods with validation
     public void setGpa(double gpa) {
         if (gpa >= 0.0 && gpa <= 4.0) {
@@ -68,11 +68,11 @@ const codeExamples = {
             System.out.println("Invalid GPA. Must be between 0.0 and 4.0");
         }
     }
-    
+
     public void setMajor(String major) {
         this.major = major;
     }
-    
+
     // Method to display student information
     public void displayInfo() {
         System.out.println("Student Information:");
@@ -81,7 +81,7 @@ const codeExamples = {
         System.out.println("Major: " + major);
         System.out.println("GPA: " + String.format("%.2f", gpa));
     }
-    
+
     // Method to check academic standing
     public String getAcademicStanding() {
         if (gpa >= 3.5) return "Dean's List";
@@ -89,21 +89,21 @@ const codeExamples = {
         else if (gpa >= 2.0) return "Satisfactory";
         else return "Academic Probation";
     }
-    
+
     public static void main(String[] args) {
         // Create student objects
         Student alice = new Student("Alice Johnson", 12345, "Computer Science");
         Student bob = new Student("Bob Smith", 12346, "Mathematics");
-        
+
         // Set GPAs
         alice.setGpa(3.8);
         bob.setGpa(2.9);
-        
+
         // Display information
         alice.displayInfo();
         System.out.println("Academic Standing: " + alice.getAcademicStanding());
         System.out.println();
-        
+
         bob.displayInfo();
         System.out.println("Academic Standing: " + bob.getAcademicStanding());
     }
@@ -118,7 +118,7 @@ const codeExamples = {
     public static void main(String[] args) {
         int a = 15;
         int b = 7;
-        
+
         System.out.println("Basic Calculator Operations:");
         System.out.println("a = " + a + ", b = " + b);
         System.out.println("Addition: " + (a + b));
@@ -132,13 +132,13 @@ const codeExamples = {
     private String accountNumber;
     private double balance;
     private String ownerName;
-    
+
     public BankAccount(String accountNumber, String ownerName, double initialBalance) {
         this.accountNumber = accountNumber;
         this.ownerName = ownerName;
         this.balance = initialBalance >= 0 ? initialBalance : 0;
     }
-    
+
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -148,7 +148,7 @@ const codeExamples = {
             System.out.println("Invalid deposit amount");
         }
     }
-    
+
     public void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
@@ -158,14 +158,14 @@ const codeExamples = {
             System.out.println("Invalid withdrawal amount or insufficient funds");
         }
     }
-    
+
     public double getBalance() {
         return balance;
     }
-    
+
     public static void main(String[] args) {
         BankAccount account = new BankAccount("ACC001", "John Doe", 1000.0);
-        
+
         System.out.println("Initial Balance: $" + account.getBalance());
         account.deposit(250.0);
         account.withdraw(100.0);
