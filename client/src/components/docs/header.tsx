@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Search } from "@/components/ui/search";
+import { Search, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
+import { EnhancedSearchModal } from "../EnhancedSearchModal";
+import { SettingsMenu } from "../SettingsMenu";
 
 interface HeaderProps {
   onMobileMenuToggle: () => void;
@@ -9,8 +11,19 @@ interface HeaderProps {
 
 export function Header({ onMobileMenuToggle }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
+    <>
+      <EnhancedSearchModal 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+      />
+      <SettingsMenu 
+        isOpen={isSettingsOpen} 
+        onClose={() => setIsSettingsOpen(false)} 
+      />
     <header className="sticky top-0 z-50 bg-doc-bg/95 backdrop-blur-sm border-b border-doc-border">
       <div className="flex items-center justify-between px-4 h-16 max-w-none">
         {/* Logo and Title */}
@@ -31,17 +44,27 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           </div>
         </div>
 
-        {/* Search Bar */}
+        {/* Enhanced Search Bar */}
         <div className="hidden md:flex flex-1 max-w-lg mx-8">
-          <Search className="w-full" />
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-doc-text-muted hover:text-doc-text bg-doc-hover hover:bg-doc-border rounded-md border border-doc-border transition-colors"
+          >
+            <Search size={16} />
+            <span>Search docs...</span>
+            <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+              <span className="text-xs">⌘</span>K
+            </kbd>
+          </button>
         </div>
 
-        {/* Social Links and Theme Toggle */}
+        {/* Actions */}
         <div className="flex items-center space-x-2">
           <Button
             variant="ghost"
             size="sm"
             className="md:hidden p-2 hover:bg-doc-hover"
+            onClick={() => setIsSearchOpen(true)}
           >
             <i className="fas fa-search text-doc-text"></i>
           </Button>
@@ -84,8 +107,19 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           >
             <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} text-doc-text`}></i>
           </Button>
+          {/* Settings Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-2 hover:bg-doc-hover"
+            onClick={() => setIsSettingsOpen(true)}
+            title="Settings"
+          >
+            <Settings size={20} className="text-doc-text" />
+          </Button>
         </div>
       </div>
     </header>
+    </>
   );
 }

@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
+import { SettingsProvider } from "./contexts/SettingsContext";
+import { LoadingAnimation } from "./components/LoadingAnimation";
 import NotFound from "@/pages/not-found";
 import DocsPage from "@/pages/docs";
 import ComponentsDemo from "@/pages/components-demo";
@@ -23,14 +26,25 @@ function Router() {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <SettingsProvider>
+        <ThemeProvider>
+          <TooltipProvider>
+            {isLoading && (
+              <LoadingAnimation onComplete={() => setIsLoading(false)} />
+            )}
+            {!isLoading && (
+              <>
+                <Toaster />
+                <Router />
+              </>
+            )}
+          </TooltipProvider>
+        </ThemeProvider>
+      </SettingsProvider>
     </QueryClientProvider>
   );
 }

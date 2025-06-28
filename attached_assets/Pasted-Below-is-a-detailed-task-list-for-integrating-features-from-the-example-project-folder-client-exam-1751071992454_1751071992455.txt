@@ -1,0 +1,214 @@
+Below is a detailed task list for integrating features from the example project folder (`client/example`) into the main project, based on your requirements. Each task includes instructions, guidelines on what to avoid, best practices, and precautions to ensure the code functions correctly. This assumes the example project contains a full implementation of the features you’ve requested, and the goal is to adapt them into the current app while retaining its UI/UX.
+
+---
+
+### Task List for Integrating Features from Example Project
+
+#### **Task 1: Integrate Settings and Functionalities**
+- **Instructions**: 
+  - Locate the settings implementation in `client/example` (e.g., `settings.tsx` or similar).
+  - Identify key functionalities (e.g., user preferences, app configurations) and integrate them into the main project.
+  - Adapt the code to fit the main project’s architecture, such as its component hierarchy or state management.
+- **Guidelines**:
+  - Avoid copying unrelated code (e.g., styling or layout-specific logic).
+  - Use modular imports to only bring in necessary functionality.
+- **Best Practices**: 
+  - Leverage the main project’s existing state management (e.g., Redux, Context API) if applicable.
+  - Keep the code reusable and well-documented.
+- **Precautions**: 
+  - Test settings functionality post-integration (e.g., save/load operations).
+  - Check for conflicts with existing features or dependencies.
+
+#### **Task 2: Retain MDX Documentation and Discard TSX Documentation**
+- **Instructions**: 
+  - Find MDX documentation files in `client/example` (e.g., `docs/*.mdx`).
+  - Integrate these into the main project’s documentation section.
+  - Identify and exclude any TSX documentation files (e.g., `docs/*.tsx`).
+- **Guidelines**: 
+  - Avoid altering the MDX content unless necessary for compatibility.
+  - Do not include TSX files or convert them to MDX.
+- **Best Practices**: 
+  - Use the main project’s MDX rendering library (e.g., `@mdx-js/react`) for consistency.
+- **Precautions**: 
+  - Verify MDX files render correctly in the main project.
+  - Ensure no TSX documentation is accidentally included.
+
+#### **Task 3: Implement Theme Color and Translation Settings**
+- **Instructions**: 
+  - Study the theme color implementation in `client/example` (e.g., CSS variables, theme provider).
+  - Integrate theme color functionality into the main project.
+  - Review translation settings (e.g., i18n setup) and adapt them to the main project.
+- **Guidelines**: 
+  - Avoid copying example-specific styles; use the main project’s styling framework.
+  - Ensure translations align with the current language structure.
+- **Best Practices**: 
+  - Use CSS variables or a theme provider for theme colors.
+  - Adopt a library like `react-i18next` if the example uses a similar approach.
+- **Precautions**: 
+  - Test theme switching across components.
+  - Confirm translations display correctly for all supported languages.
+
+#### **Task 4: Implement Search Bar Render**
+- **Instructions**: 
+  - Locate the search bar implementation in `client/example` (e.g., `SearchBar.tsx`).
+  - Integrate it into the main project’s navigation bar or appropriate location.
+  - Ensure it renders and functions (e.g., filters content) as expected.
+- **Guidelines**: 
+  - Avoid copying the example’s layout or styling; adapt to the current UI/UX.
+- **Best Practices**: 
+  - Use a functional component with hooks for state management.
+  - Ensure search logic is efficient and reusable.
+- **Precautions**: 
+  - Test search functionality with sample data.
+  - Verify responsiveness on different screen sizes.
+
+#### **Task 5: Maintain Current UI/UX**
+- **Instructions**: 
+  - Ensure all integrated features (settings, search bar, etc.) match the main project’s clean, minimalistic design (white background, black text, simple layout).
+  - Use the current site’s CSS classes and design patterns.
+- **Guidelines**: 
+  - Avoid importing styles or layouts from `client/example`.
+- **Best Practices**: 
+  - Use Tailwind CSS or the main project’s styling framework for consistency.
+- **Precautions**: 
+  - Visually inspect each integrated feature for UI consistency.
+  - Avoid introducing complex or flashy elements.
+
+#### **Task 6: Ensure Sidebar Functionality**
+- **Instructions**: 
+  - Confirm the sidebar (with its toggle icon) in the main project works as intended.
+  - Integrate any sidebar-related functionality from `client/example` if needed (e.g., navigation logic).
+- **Guidelines**: 
+  - Avoid altering the sidebar’s current design unless functionality requires it.
+- **Best Practices**: 
+  - Use a collapsible sidebar component with event handlers for toggling.
+- **Precautions**: 
+  - Test sidebar toggle and navigation on all screen sizes.
+  - Ensure no layout overlaps occur.
+
+#### **Task 7: Implement Background**
+- **Instructions**: 
+  - Check the background implementation in `client/example` (e.g., CSS or component-based).
+  - Ensure it works in the main project, adapting it to the current white background design.
+- **Guidelines**: 
+  - Avoid using example-specific background styles (e.g., gradients, images).
+- **Best Practices**: 
+  - Use simple CSS (e.g., `background-color: white`) for consistency.
+- **Precautions**: 
+  - Verify the background does not obscure content.
+  - Test across pages for uniformity.
+
+#### **Task 8: Add Loading Animation**
+- **Instructions**: 
+  - Implement a loading animation from `client/example` or create one that fades out after 3 seconds.
+  - Ensure it transitions smoothly to the main content.
+- **Guidelines**: 
+  - Avoid complex animations; keep it minimalistic.
+- **Best Practices**: 
+  - Use CSS keyframes or a library like `framer-motion` for smooth transitions.
+- **Precautions**: 
+  - Test the 3-second timing with a timer.
+  - Confirm content loads fully after the fade-out.
+
+#### **Task 9: Format MDX Files (Sheets 001 to 005)**
+- **Instructions**: 
+  - Locate MDX files for sheets 001 to 005 in `client/example` (e.g., `sheets/sheet001.mdx`).
+  - Format them to display like Excel sheets (e.g., table or grid layout).
+- **Guidelines**: 
+  - Avoid altering the content; focus on presentation.
+- **Best Practices**: 
+  - Use HTML `<table>` or CSS Grid within MDX for an Excel-like structure.
+- **Precautions**: 
+  - Test each sheet’s rendering for accuracy.
+  - Check for overflow on smaller screens.
+
+#### **Task 10: Implement Copy Code Block Functionality**
+- **Instructions**: 
+  - Integrate the copy code block feature from `client/example` (e.g., a button with `navigator.clipboard`).
+  - Ensure it works with code blocks in the main project.
+- **Guidelines**: 
+  - Avoid overcomplicating the UI; use a simple icon or button.
+- **Best Practices**: 
+  - Use `navigator.clipboard.writeText()` for modern compatibility.
+- **Precautions**: 
+  - Test copying with various code snippets.
+  - Ensure cross-browser support (e.g., Chrome, Firefox).
+
+#### **Task 11: Ensure Resizability**
+- **Instructions**: 
+  - Make the webpage fully resizable on mobile and desktop.
+  - Adapt integrated features to be responsive.
+- **Guidelines**: 
+  - Avoid fixed widths/heights from the example project.
+- **Best Practices**: 
+  - Use media queries, flexbox, and CSS Grid for responsive design.
+- **Precautions**: 
+  - Test on multiple devices (e.g., phone, tablet, desktop).
+  - Check for layout breaks or unresponsive elements.
+
+---
+
+### General Guidelines
+- **What to Avoid**: 
+  - Do not copy the layout or style from `client/example`; stick to the current UI/UX.
+  - Ignore anything related to designer mode in the example project.
+- **Best Methods**: 
+  - Use modular, reusable code to simplify maintenance.
+  - Leverage existing libraries or frameworks in the main project for consistency.
+- **Precautions**: 
+  - Test each task after integration to ensure functionality.
+  - Check for performance issues (e.g., slow loading due to animations).
+  - Validate compatibility with existing code.
+
+---
+
+Below is a sample implementation of the loading animation (Task 8) as an example artifact, assuming a web-based project with HTML/CSS/JavaScript:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Animation</title>
+  <style>
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeOut 3s forwards;
+    }
+    .loader::after {
+      content: "Loading...";
+      font-size: 24px;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+    .content { display: none; }
+    .loaded .content { display: block; }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <div class="content">
+    <h1>Welcome to the Main Page</h1>
+    <p>Content loaded successfully!</p>
+  </div>
+  <script>
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 3000);
+  </script>
+</body>
+</html>
+```
+
+This task list and sample artifact provide a clear roadmap for integrating the features while adhering to your requirements. Test each step thoroughly to ensure a seamless implementation!

@@ -199,3 +199,123 @@ html.dark {
   border-color: hsl(var(--doc-accent)) !important; 
   transition: border-color 0.2s ease;
 }
+
+/* Enhanced Theme Color Schemes */
+
+/* Dark Themes */
+.scheme-modern-dark {
+  --doc-bg: hsl(222, 84%, 4.9%);
+  --doc-surface: hsl(217, 32%, 7%);
+  --doc-hover: hsl(217, 32%, 10%);
+  --doc-border: hsl(217, 32%, 17%);
+  --doc-text: hsl(210, 40%, 98%);
+  --doc-text-muted: hsl(215, 20%, 65%);
+  --doc-primary: hsl(217, 91%, 60%);
+}
+
+.scheme-blue-professional {
+  --doc-bg: hsl(220, 30%, 8%);
+  --doc-surface: hsl(220, 25%, 11%);
+  --doc-hover: hsl(220, 25%, 15%);
+  --doc-border: hsl(220, 25%, 20%);
+  --doc-text: hsl(210, 40%, 95%);
+  --doc-text-muted: hsl(215, 20%, 70%);
+  --doc-primary: hsl(210, 100%, 56%);
+}
+
+.scheme-deep-purple {
+  --doc-bg: hsl(260, 50%, 8%);
+  --doc-surface: hsl(260, 45%, 11%);
+  --doc-hover: hsl(260, 45%, 15%);
+  --doc-border: hsl(260, 45%, 20%);
+  --doc-text: hsl(260, 20%, 95%);
+  --doc-text-muted: hsl(260, 15%, 70%);
+  --doc-primary: hsl(260, 85%, 65%);
+}
+
+/* Light Themes */
+.scheme-light-minimal {
+  --doc-bg: hsl(0, 0%, 100%);
+  --doc-surface: hsl(0, 0%, 98%);
+  --doc-hover: hsl(0, 0%, 95%);
+  --doc-border: hsl(0, 0%, 89%);
+  --doc-text: hsl(222, 84%, 4.9%);
+  --doc-text-muted: hsl(215, 16%, 47%);
+  --doc-primary: hsl(222, 47%, 11%);
+}
+
+.scheme-light-warm {
+  --doc-bg: hsl(30, 40%, 98%);
+  --doc-surface: hsl(30, 30%, 96%);
+  --doc-hover: hsl(30, 25%, 92%);
+  --doc-border: hsl(30, 20%, 85%);
+  --doc-text: hsl(30, 20%, 15%);
+  --doc-text-muted: hsl(30, 15%, 45%);
+  --doc-primary: hsl(25, 85%, 45%);
+}
+
+.scheme-light-cool {
+  --doc-bg: hsl(210, 40%, 98%);
+  --doc-surface: hsl(210, 30%, 96%);
+  --doc-hover: hsl(210, 25%, 92%);
+  --doc-border: hsl(210, 20%, 85%);
+  --doc-text: hsl(210, 20%, 15%);
+  --doc-text-muted: hsl(210, 15%, 45%);
+  --doc-primary: hsl(210, 85%, 45%);
+}
+
+.scheme-pastel {
+  --doc-bg: hsl(300, 30%, 98%);
+  --doc-surface: hsl(300, 25%, 96%);
+  --doc-hover: hsl(300, 20%, 92%);
+  --doc-border: hsl(300, 15%, 85%);
+  --doc-text: hsl(300, 15%, 15%);
+  --doc-text-muted: hsl(300, 10%, 45%);
+  --doc-primary: hsl(290, 70%, 55%);
+}
+
+/* Enhanced keyboard shortcuts */
+.kbd {
+  display: inline-flex;
+  height: 1.25rem;
+  max-height: 100%;
+  align-items: center;
+  border-radius: 0.25rem;
+  border: 1px solid hsl(var(--doc-border));
+  background-color: hsl(var(--doc-surface));
+  padding: 0 0.375rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: hsl(var(--doc-text-muted));
+}
+
+/* High contrast mode enhancements */
+.high-contrast {
+  --doc-border: hsl(0, 0%, 20%) !important;
+  --doc-text: hsl(0, 0%, 0%) !important;
+  --doc-text-muted: hsl(0, 0%, 30%) !important;
+}
+
+.dark.high-contrast {
+  --doc-border: hsl(0, 0%, 80%) !important;
+  --doc-text: hsl(0, 0%, 100%) !important;
+  --doc-text-muted: hsl(0, 0%, 70%) !important;
+}
+
+/* Font families */
+.font-open-sans {
+  font-family: 'Open Sans', Arial, sans-serif !important;
+}
+
+.font-pt-serif {
+  font-family: 'PT Serif', Georgia, serif !important;
+}
+
+.font-opendyslexic-regular {
+  font-family: 'OpenDyslexic-Regular', serif !important;
+}
+
+.font-opendyslexic-bold {
+  font-family: 'OpenDyslexic-Bold', serif !important;
+}
