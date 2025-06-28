@@ -2,6 +2,7 @@ import { useState } from "react";
 import { docSections } from "@/lib/docs-data";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link } from "wouter";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -51,6 +52,19 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
           </div>
           
           <nav className="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1">
+            {/* Home Button */}
+            <div className="mb-6">
+              <Link href="/">
+                <button
+                  className="nav-item flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-800 dark:text-doc-text hover:bg-gray-100 dark:hover:bg-doc-hover w-full"
+                  onClick={onClose}
+                >
+                  <i className="fas fa-home text-xs mr-3 text-gray-600 dark:text-doc-text-muted"></i>
+                  <span className="font-medium">Home</span>
+                </button>
+              </Link>
+            </div>
+
             {docSections.map((section) => (
               <div key={section.id} className="mb-6">
                 <div className="sidebar-section-header flex items-center justify-between py-2 px-3 text-sm font-medium bg-gray-100 dark:bg-doc-surface rounded-md text-gray-700 dark:text-doc-text-muted uppercase tracking-wider">

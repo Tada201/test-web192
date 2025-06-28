@@ -106,9 +106,13 @@ This is a full-stack TypeScript application built with a modern React frontend a
 
 ```
 Changelog:
+- June 28, 2025. Simplified navigation and added sidebar home button
+  - Removed top navigation header to clean up the interface
+  - Added home page button to sidebar navigation for easy access to course overview
+  - Maintained all functionality through in-page navigation and direct URL access
 - June 28, 2025. Created comprehensive home page with navigation and course overview
   - Built home page component with hero section, course statistics, and section cards
-  - Added Header component with responsive navigation and search/settings integration
+  - Added Header component with responsive navigation and search/settings integration (later removed)
   - Created Badge UI component for course labeling and visual hierarchy
   - Implemented course sections grid with color-coded icons and descriptions
   - Added call-to-action buttons linking to documentation and components
