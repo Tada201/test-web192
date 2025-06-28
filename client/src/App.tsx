@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import NotFound from "@/pages/not-found";
 import DocsPage from "@/pages/docs";
+import ComponentsDemo from "@/pages/components-demo";
+import JavaOOPExample from "@/pages/java-oop-example";
 
 function Router() {
   return (
@@ -13,6 +15,8 @@ function Router() {
       <Route path="/" component={DocsPage} />
       <Route path="/docs" component={DocsPage} />
       <Route path="/docs/:section" component={DocsPage} />
+      <Route path="/components-demo" component={ComponentsDemo} />
+      <Route path="/java-oop-example" component={JavaOOPExample} />
       <Route component={NotFound} />
     </Switch>
   );
