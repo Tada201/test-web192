@@ -132,73 +132,17 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-medium text-doc-text mb-4">
-                    Text Size
+                    Typography Settings
                   </h3>
-                  <div className="flex space-x-4">
-                    {["small", "medium", "large"].map((size) => (
-                      <button
-                        key={size}
-                        onClick={() =>
-                          updateSettings({ textSize: size as any })
-                        }
-                        className={`px-4 py-2 rounded-md border transition-colors capitalize ${
-                          settings.textSize === size
-                            ? "border-doc-primary bg-doc-primary/10 text-doc-primary"
-                            : "border-doc-border text-doc-text-muted hover:border-doc-primary/50"
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">
-                    Font Family
-                  </h3>
-                  <div className="space-y-2">
-                    {[
-                      {
-                        id: "open_sans",
-                        name: "Open Sans",
-                        desc: "Clean and readable",
-                      },
-                      {
-                        id: "pt_serif",
-                        name: "PT Serif",
-                        desc: "Traditional serif font",
-                      },
-                      {
-                        id: "opendyslexic-regular",
-                        name: "OpenDyslexic",
-                        desc: "Designed for dyslexia",
-                      },
-                      {
-                        id: "opendyslexic-bold",
-                        name: "OpenDyslexic Bold",
-                        desc: "Bold dyslexia-friendly",
-                      },
-                    ].map((font) => (
-                      <button
-                        key={font.id}
-                        onClick={() =>
-                          updateSettings({ fontStyle: font.id as any })
-                        }
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
-                          settings.fontStyle === font.id
-                            ? "border-doc-primary bg-doc-primary/10"
-                            : "border-doc-border hover:border-doc-primary/50"
-                        }`}
-                      >
-                        <div className="font-medium text-doc-text">
-                          {font.name}
-                        </div>
-                        <div className="text-sm text-doc-text-muted">
-                          {font.desc}
-                        </div>
-                      </button>
-                    ))}
+                  <div className="p-4 rounded-lg border border-doc-border bg-doc-hover">
+                    <div className="text-doc-text font-medium mb-2">
+                      Font Configuration
+                    </div>
+                    <div className="text-doc-text-muted text-sm">
+                      The site uses Inter font for optimal readability and
+                      modern appearance. Additional typography customization
+                      will be available in future updates.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -208,69 +152,27 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-medium text-doc-text mb-4">
-                    Contrast
+                    Accessibility Features
                   </h3>
-                  <div className="flex space-x-4">
-                    {["normal", "high"].map((contrast) => (
-                      <button
-                        key={contrast}
-                        onClick={() =>
-                          updateSettings({ contrast: contrast as any })
-                        }
-                        className={`px-4 py-2 rounded-md border transition-colors capitalize ${
-                          settings.contrast === contrast
-                            ? "border-doc-primary bg-doc-primary/10 text-doc-primary"
-                            : "border-doc-border text-doc-text-muted hover:border-doc-primary/50"
-                        }`}
-                      >
-                        {contrast}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">
-                    Color Blindness Support
-                  </h3>
-                  <div className="space-y-2">
-                    {[
-                      { id: "none", name: "None", desc: "Standard colors" },
-                      {
-                        id: "protanopia",
-                        name: "Protanopia",
-                        desc: "Red-blind support",
-                      },
-                      {
-                        id: "deuteranopia",
-                        name: "Deuteranopia",
-                        desc: "Green-blind support",
-                      },
-                      {
-                        id: "tritanopia",
-                        name: "Tritanopia",
-                        desc: "Blue-blind support",
-                      },
-                    ].map((mode) => (
-                      <button
-                        key={mode.id}
-                        onClick={() =>
-                          updateSettings({ colorBlindnessMode: mode.id as any })
-                        }
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
-                          settings.colorBlindnessMode === mode.id
-                            ? "border-doc-primary bg-doc-primary/10"
-                            : "border-doc-border hover:border-doc-primary/50"
-                        }`}
-                      >
-                        <div className="font-medium text-doc-text">
-                          {mode.name}
-                        </div>
-                        <div className="text-sm text-doc-text-muted">
-                          {mode.desc}
-                        </div>
-                      </button>
-                    ))}
+                  <div className="space-y-4">
+                    <div className="p-4 rounded-lg border border-doc-border bg-doc-hover">
+                      <div className="text-doc-text font-medium mb-2">
+                        High Contrast
+                      </div>
+                      <div className="text-doc-text-muted text-sm">
+                        The {theme} theme provides optimal contrast ratios for
+                        improved readability.
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-lg border border-doc-border bg-doc-hover">
+                      <div className="text-doc-text font-medium mb-2">
+                        Keyboard Navigation
+                      </div>
+                      <div className="text-doc-text-muted text-sm">
+                        Full keyboard navigation support with Tab, Enter, and
+                        Escape keys.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -280,32 +182,17 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-medium text-doc-text mb-4">
-                    Interface Language
+                    Language Settings
                   </h3>
-                  <div className="space-y-2">
-                    {[
-                      { id: "en", name: "English", flag: "🇺🇸" },
-                      { id: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
-                    ].map((lang) => (
-                      <button
-                        key={lang.id}
-                        onClick={() =>
-                          updateSettings({ language: lang.id as any })
-                        }
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
-                          settings.language === lang.id
-                            ? "border-doc-primary bg-doc-primary/10"
-                            : "border-doc-border hover:border-doc-primary/50"
-                        }`}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <span className="text-2xl">{lang.flag}</span>
-                          <span className="font-medium text-doc-text">
-                            {lang.name}
-                          </span>
-                        </div>
-                      </button>
-                    ))}
+                  <div className="p-4 rounded-lg border border-doc-border bg-doc-hover">
+                    <div className="flex items-center space-x-3 mb-2">
+                      <span className="text-2xl">🇺🇸</span>
+                      <div className="text-doc-text font-medium">English</div>
+                    </div>
+                    <div className="text-doc-text-muted text-sm">
+                      Currently using English. Additional language support will
+                      be available in future updates.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -314,9 +201,16 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t dark:border-gray-700 bg-doc-hover">
-          <div className="flex justify-end space-x-3">
-            <Button variant="outline" onClick={onClose}>
+        <div className="px-6 py-4 border-t border-doc-border bg-doc-surface">
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-doc-text-muted">
+              Theme changes are applied immediately
+            </div>
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="border-doc-border text-doc-text hover:bg-doc-hover"
+            >
               Close
             </Button>
           </div>
