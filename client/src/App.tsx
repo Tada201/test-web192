@@ -31,36 +31,31 @@ function Router() {
 }
 
 function App() {
-  // Use a more stable loading state management
-  const [isLoading, setIsLoading] = useState(() => {
-    // Only show loading if we haven't seen it in this browser session
-    const hasSeenLoading = sessionStorage.getItem('pro192-loading-shown');
-    return !hasSeenLoading;
-  });
-
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
     // Prevent multiple initializations
-    if (isInitialized) return;
+    if (hasInitialized) return;
     
-    setIsInitialized(true);
+    setHasInitialized(true);
     
-    const hasSeenLoading = sessionStorage.getItem('pro192-loading-shown');
+    // Check if user has seen loading in this browser session
+    const hasSeenLoading = sessionStorage.getItem('pro192-loading-complete');
     
-    if (!hasSeenLoading) {
-      // Show loading animation for first time visitors
+    if (hasSeenLoading === 'true') {
+      // Skip loading for returning visitors in same session
+      setIsLoading(false);
+    } else {
+      // Show loading animation for 3 seconds, then hide it
       const loadingTimer = setTimeout(() => {
         setIsLoading(false);
-        sessionStorage.setItem('pro192-loading-shown', 'true');
+        sessionStorage.setItem('pro192-loading-complete', 'true');
       }, 3000);
       
       return () => clearTimeout(loadingTimer);
-    } else {
-      // Skip loading for returning visitors in same session
-      setIsLoading(false);
     }
-  }, [isInitialized]);
+  }, [hasInitialized]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -68,38 +63,30 @@ function App() {
         <ThemeProvider>
           <TooltipProvider>
             <div className="relative min-h-screen">
-              {/* Loading Animation - Fixed positioning and z-index */}
-              {isLoading && (
-                <div 
-                  className="fixed inset-0 z-[9999]"
-                  style={{ 
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 9999
-                  }}
-                >
-                  <TextWaveLoading />
-                </div>
-              )}
-
-              {/* Main Application Content */}
-              <div 
-                className={`min-h-screen transition-opacity duration-500 ${
-                  isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                }`}
-                style={{ 
-                  position: 'relative',
-                  zIndex: 1
-                }}
-              >
+              {/* Main Application Content - Always rendered */}
+              <div className="min-h-screen">
                 <Header />
                 <BackgroundAnimation />
                 <Toaster />
                 <Router />
               </div>
+
+              {/* Loading Animation Overlay - Only when loading */}
+              {isLoading && (
+                <div 
+                  className="fixed inset-0"
+                  style={{ 
+                    zIndex: 10000,
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0
+                  }}
+                >
+                  <TextWaveLoading />
+                </div>
+              )}
             </div>
           </TooltipProvider>
         </ThemeProvider>

@@ -5,13 +5,14 @@
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: 9999 !important;
+  z-index: 10000 !important;
   background: linear-gradient(135deg, #0a0a0a 0%, #0f2a2e 100%) !important;
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
+  pointer-events: auto !important;
 }
 
 .tw-wave-container {

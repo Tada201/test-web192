@@ -17,15 +17,13 @@ export default function TextWaveLoading() {
   const [fade, setFade] = useState(false);
   
   useEffect(() => {
-    // Start fade out after 2.7 seconds
+    // Start fade out after 2.7 seconds (before the 3-second timer in App.tsx)
     const timer = setTimeout(() => setFade(true), 2700);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div 
-      className={`tw-loading-bg ${fade ? 'tw-fade-out' : ''}`}
-    >
+    <div className={`tw-loading-bg ${fade ? 'tw-fade-out' : ''}`}>
       <div className="tw-wave-container mb-8">
         {'PRO192'.split('').map((char, i) => (
           <span 
