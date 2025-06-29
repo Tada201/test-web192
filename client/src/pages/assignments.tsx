@@ -543,3 +543,87 @@ export default function AssignmentsPage() {
                   execution and feedback
                 </p>
               </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const blob = new Blob([currentCode], { type: "text/java" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `${selectedExample}.java`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Code
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Main content area with editor and output */}
+          <main className="flex-1 grid md:grid-cols-2 gap-6 p-6 overflow-auto">
+            {/* Code Editor Column */}
+            <div className="flex flex-col h-full min-h-0">
+              <Card className="flex-1 flex flex-col">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Code size={20} />
+                    <CardTitle>Java Code</CardTitle>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button onClick={handleRunCode} disabled={isRunning}>
+                      {isRunning ? (
+                        <>
+                          <Square className="mr-2 h-4 w-4 animate-spin" />
+                          Running...
+                        </>
+                      ) : (
+                        <>
+                          <Play className="mr-2 h-4 w-4" />
+                          Run
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleCopyCode}
+                      title="Copy code"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-1 p-0 relative">
+                  <div className="absolute inset-0">
+                    <CodeBlock language="java">{currentCode}</CodeBlock>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Output Column */}
+            <div className="flex flex-col h-full min-h-0">
+              <Card className="flex-1 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-2">
+                    <Monitor size={20} />
+                    <CardTitle>Output</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-1 bg-doc-hover rounded-b-lg">
+                  <pre className="w-full h-full p-4 rounded-md bg-transparent text-sm whitespace-pre-wrap font-mono overflow-auto">
+                    {output || "Output will be shown here..."}
+                  </pre>
+                </CardContent>
+              </Card>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
