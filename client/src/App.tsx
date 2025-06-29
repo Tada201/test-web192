@@ -31,26 +31,23 @@ function Router() {
 }
 
 function App() {
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Check if we've already shown the loading animation in this session
+    return !sessionStorage.getItem('app-loaded');
+  });
 
   useEffect(() => {
-    // Check if this is the first time loading the app
-    const hasLoaded = sessionStorage.getItem('app-has-loaded');
-    
-    if (!hasLoaded) {
-      // First time loading - show loading animation
+    // Only show loading animation once per session
+    if (!sessionStorage.getItem('app-loaded')) {
       const timer = setTimeout(() => {
-        setIsInitialLoading(false);
-        setHasLoadedOnce(true);
-        sessionStorage.setItem('app-has-loaded', 'true');
-      }, 3000); // 3 second loading time
+        setIsLoading(false);
+        sessionStorage.setItem('app-loaded', 'true');
+      }, 3000);
       
       return () => clearTimeout(timer);
     } else {
-      // Already loaded before in this session - skip loading
-      setIsInitialLoading(false);
-      setHasLoadedOnce(true);
+      // If already loaded in this session, skip loading immediately
+      setIsLoading(false);
     }
   }, []);
 
@@ -60,13 +57,30 @@ function App() {
         <ThemeProvider>
           <TooltipProvider>
             <div className="relative min-h-screen">
+              {/* Loading Animation - Only shows once per session */}
+              {isLoading && (
+                <div 
+                  className="fixed inset-0"
+                  style={{ 
+                    zIndex: 10000, // Highest possible z-index
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0
+                  }}
+                >
+                  <TextWaveLoading />
+                </div>
+              )}
+
               {/* Main Application Content */}
               <div 
                 className={`transition-opacity duration-700 ${
-                  isInitialLoading ? 'opacity-0' : 'opacity-100'
+                  isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
                 }`}
                 style={{ 
-                  position: 'relative', 
+                  position: 'relative',
                   minHeight: '100vh',
                   zIndex: 1
                 }}
@@ -76,19 +90,6 @@ function App() {
                 <Toaster />
                 <Router />
               </div>
-
-              {/* Loading Animation Overlay - Topmost Layer */}
-              {isInitialLoading && (
-                <div 
-                  className="fixed inset-0 transition-opacity duration-700"
-                  style={{ 
-                    zIndex: 9999, // Highest z-index to ensure it's on top
-                    backgroundColor: '#0a0a0a' // Ensure solid background
-                  }}
-                >
-                  <TextWaveLoading />
-                </div>
-              )}
             </div>
           </TooltipProvider>
         </ThemeProvider>
