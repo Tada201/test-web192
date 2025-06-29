@@ -44,7 +44,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       language: raw.language as 'en' | 'vi',
       fontStyle: raw.fontStyle as 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif' | 'roboto' | 'orbitron' | 'fira_code',
       colorBlindnessMode: raw.colorBlindnessMode as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia',
-      backgroundAnimation: raw.backgroundAnimation,
+      backgroundAnimation: Boolean(raw.backgroundAnimation),
     };
   }
 

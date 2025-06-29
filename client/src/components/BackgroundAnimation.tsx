@@ -37,9 +37,18 @@ export function BackgroundAnimation() {
   const { settings } = useSettings();
 
   useEffect(() => {
+    // Only run animation if backgroundAnimation setting is enabled
     if (!settings.backgroundAnimation) {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+      }
+      // Clear canvas if animation is disabled
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
       }
       return;
     }
@@ -100,7 +109,7 @@ export function BackgroundAnimation() {
 
     // Animation loop
     function animate() {
-      if (!running || !ctx || !canvas) return;
+      if (!running || !ctx || !canvas || !settings.backgroundAnimation) return;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -200,6 +209,7 @@ export function BackgroundAnimation() {
     };
   }, [settings.backgroundAnimation, settings.theme]);
 
+  // Don't render canvas if animation is disabled
   if (!settings.backgroundAnimation) {
     return null;
   }
