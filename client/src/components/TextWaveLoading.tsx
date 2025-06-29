@@ -17,20 +17,22 @@ export default function TextWaveLoading() {
   const [fade, setFade] = useState(false);
   
   useEffect(() => {
-    // Start fade out after 2.7 seconds to ensure smooth transition
+    // Start fade out after 2.7 seconds
     const timer = setTimeout(() => setFade(true), 2700);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div 
-      className={`tw-loading-bg min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a0a] to-[#0f2a2e] ${
-        fade ? 'tw-fade-out' : ''
-      }`}
+      className={`tw-loading-bg ${fade ? 'tw-fade-out' : ''}`}
     >
       <div className="tw-wave-container mb-8">
         {'PRO192'.split('').map((char, i) => (
-          <span key={i} className="tw-wave-char-static" style={{ animationDelay: `${i * 0.1}s` }}>
+          <span 
+            key={i} 
+            className="tw-wave-char-static" 
+            style={{ animationDelay: `${i * 0.1}s` }}
+          >
             {char}
           </span>
         ))}

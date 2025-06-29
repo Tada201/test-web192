@@ -31,25 +31,36 @@ function Router() {
 }
 
 function App() {
+  // Use a more stable loading state management
   const [isLoading, setIsLoading] = useState(() => {
-    // Check if we've already shown the loading animation in this session
-    return !sessionStorage.getItem('app-loaded');
+    // Only show loading if we haven't seen it in this browser session
+    const hasSeenLoading = sessionStorage.getItem('pro192-loading-shown');
+    return !hasSeenLoading;
   });
 
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
-    // Only show loading animation once per session
-    if (!sessionStorage.getItem('app-loaded')) {
-      const timer = setTimeout(() => {
+    // Prevent multiple initializations
+    if (isInitialized) return;
+    
+    setIsInitialized(true);
+    
+    const hasSeenLoading = sessionStorage.getItem('pro192-loading-shown');
+    
+    if (!hasSeenLoading) {
+      // Show loading animation for first time visitors
+      const loadingTimer = setTimeout(() => {
         setIsLoading(false);
-        sessionStorage.setItem('app-loaded', 'true');
+        sessionStorage.setItem('pro192-loading-shown', 'true');
       }, 3000);
       
-      return () => clearTimeout(timer);
+      return () => clearTimeout(loadingTimer);
     } else {
-      // If already loaded in this session, skip loading immediately
+      // Skip loading for returning visitors in same session
       setIsLoading(false);
     }
-  }, []);
+  }, [isInitialized]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -57,17 +68,17 @@ function App() {
         <ThemeProvider>
           <TooltipProvider>
             <div className="relative min-h-screen">
-              {/* Loading Animation - Only shows once per session */}
+              {/* Loading Animation - Fixed positioning and z-index */}
               {isLoading && (
                 <div 
-                  className="fixed inset-0"
+                  className="fixed inset-0 z-[9999]"
                   style={{ 
-                    zIndex: 10000, // Highest possible z-index
                     position: 'fixed',
                     top: 0,
                     left: 0,
                     right: 0,
-                    bottom: 0
+                    bottom: 0,
+                    zIndex: 9999
                   }}
                 >
                   <TextWaveLoading />
@@ -76,12 +87,11 @@ function App() {
 
               {/* Main Application Content */}
               <div 
-                className={`transition-opacity duration-700 ${
+                className={`min-h-screen transition-opacity duration-500 ${
                   isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
                 }`}
                 style={{ 
                   position: 'relative',
-                  minHeight: '100vh',
                   zIndex: 1
                 }}
               >

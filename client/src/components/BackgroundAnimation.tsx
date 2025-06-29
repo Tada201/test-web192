@@ -41,6 +41,7 @@ export function BackgroundAnimation() {
     if (!settings.backgroundAnimation) {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+        animationRef.current = undefined;
       }
       // Clear canvas if animation is disabled
       const canvas = canvasRef.current;
@@ -203,6 +204,7 @@ export function BackgroundAnimation() {
       running = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+        animationRef.current = undefined;
       }
       window.removeEventListener('resize', resizeCanvas);
       document.removeEventListener('mousemove', handleMouseMove);
