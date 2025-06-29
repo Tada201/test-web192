@@ -1,12 +1,17 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
-export const darkThemes = ['modern-dark', 'blue-professional', 'deep-purple', 'cyberpunk-blue', 'cyberpunk-purple', 'cyberpunk-green'] as const;
-export const lightThemes = ['light-minimal', 'light-warm', 'light-cool', 'pastel'] as const;
+// Define theme arrays as const to ensure type stability
+const DARK_THEMES = ['modern-dark', 'blue-professional', 'deep-purple', 'cyberpunk-blue', 'cyberpunk-purple', 'cyberpunk-green'] as const;
+const LIGHT_THEMES = ['light-minimal', 'light-warm', 'light-cool', 'pastel'] as const;
+
+// Export stable references
+export const darkThemes = DARK_THEMES;
+export const lightThemes = LIGHT_THEMES;
 
 interface Settings {
   theme: 'light' | 'dark';
-  darkTheme: (typeof darkThemes)[number];
-  lightTheme: (typeof lightThemes)[number];
+  darkTheme: (typeof DARK_THEMES)[number];
+  lightTheme: (typeof LIGHT_THEMES)[number];
   textSize: 'small' | 'medium' | 'large';
   contrast: 'normal' | 'high';
   language: 'en' | 'vi';
@@ -32,8 +37,8 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   function castSettings(raw: any): Settings {
     return {
       theme: raw.theme as 'light' | 'dark',
-      darkTheme: raw.darkTheme as (typeof darkThemes)[number],
-      lightTheme: raw.lightTheme as (typeof lightThemes)[number],
+      darkTheme: raw.darkTheme as (typeof DARK_THEMES)[number],
+      lightTheme: raw.lightTheme as (typeof LIGHT_THEMES)[number],
       textSize: raw.textSize as 'small' | 'medium' | 'large',
       contrast: raw.contrast as 'normal' | 'high',
       language: raw.language as 'en' | 'vi',
@@ -198,9 +203,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     html.classList.add(`scheme-${scheme}`);
     let updatedSettings;
     if (settings.theme === 'dark') {
-      updatedSettings = { ...settings, darkTheme: scheme as (typeof darkThemes)[number] };
+      updatedSettings = { ...settings, darkTheme: scheme as (typeof DARK_THEMES)[number] };
     } else {
-      updatedSettings = { ...settings, lightTheme: scheme as (typeof lightThemes)[number] };
+      updatedSettings = { ...settings, lightTheme: scheme as (typeof LIGHT_THEMES)[number] };
     }
     if (typeof window !== 'undefined') {
       localStorage.setItem('pro192-settings', JSON.stringify(updatedSettings));
