@@ -24,20 +24,20 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
       />
       
-      <div className="relative bg-white dark:bg-gray-800 w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative glass-strong w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden border border-doc-border">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b dark:border-gray-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-doc-border glass">
           <div className="flex items-center space-x-3">
-            <Settings size={24} className="text-doc-primary" />
-            <h2 className="text-xl font-semibold text-doc-text">Settings</h2>
+            <Settings size={24} className="text-doc-primary neon-text" />
+            <h2 className="text-xl font-semibold text-doc-text font-orbitron">Settings</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-md text-doc-text-muted hover:text-doc-text transition-colors"
+            className="p-2 rounded-md text-doc-text-muted hover:text-doc-text transition-colors neon-glow"
           >
             <X size={20} />
           </button>
@@ -45,7 +45,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
         <div className="flex h-96">
           {/* Sidebar */}
-          <div className="w-64 bg-doc-hover border-r dark:border-gray-700 p-4">
+          <div className="w-64 glass border-r border-doc-border p-4">
             <nav className="space-y-1">
               {tabs.map(tab => {
                 const Icon = tab.icon;
@@ -53,14 +53,14 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors ${
+                    className={`w-full flex items-center space-x-3 px-3 py-3 rounded-md text-left transition-all duration-300 ${
                       activeTab === tab.id
-                        ? 'bg-doc-primary text-white'
-                        : 'text-doc-text-muted hover:text-doc-text hover:bg-doc-bg'
+                        ? 'bg-doc-primary/20 text-doc-primary neon-border'
+                        : 'text-doc-text-muted hover:text-doc-text hover:bg-doc-hover'
                     }`}
                   >
                     <Icon size={18} />
-                    <span>{tab.label}</span>
+                    <span className="font-medium">{tab.label}</span>
                   </button>
                 );
               })}
@@ -72,13 +72,13 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
             {activeTab === 'appearance' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Theme</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Theme</h3>
                   <div className="flex space-x-4">
                     <button
                       onClick={() => setTheme('light')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-md border transition-colors ${
+                      className={`flex items-center space-x-2 px-4 py-3 rounded-md border transition-all duration-300 ${
                         settings.theme === 'light'
-                          ? 'border-doc-primary bg-doc-primary/10 text-doc-primary'
+                          ? 'border-doc-primary bg-doc-primary/10 text-doc-primary neon-glow'
                           : 'border-doc-border text-doc-text-muted hover:border-doc-primary/50'
                       }`}
                     >
@@ -87,9 +87,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                     </button>
                     <button
                       onClick={() => setTheme('dark')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-md border transition-colors ${
+                      className={`flex items-center space-x-2 px-4 py-3 rounded-md border transition-all duration-300 ${
                         settings.theme === 'dark'
-                          ? 'border-doc-primary bg-doc-primary/10 text-doc-primary'
+                          ? 'border-doc-primary bg-doc-primary/10 text-doc-primary neon-glow'
                           : 'border-doc-border text-doc-text-muted hover:border-doc-primary/50'
                       }`}
                     >
@@ -100,7 +100,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">
                     {settings.theme === 'dark' ? 'Dark' : 'Light'} Theme Variants
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
@@ -108,19 +108,22 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                       <button
                         key={theme}
                         onClick={() => setColorScheme(theme)}
-                        className={`p-3 rounded-md border text-left transition-colors ${
+                        className={`p-3 rounded-md border text-left transition-all duration-300 glass ${
                           (settings.theme === 'dark' ? settings.darkTheme : settings.lightTheme) === theme
-                            ? 'border-doc-primary bg-doc-primary/10'
+                            ? 'border-doc-primary bg-doc-primary/10 neon-glow'
                             : 'border-doc-border hover:border-doc-primary/50'
                         }`}
                       >
-                        <div className="font-medium text-doc-text capitalize">
+                        <div className="font-medium text-doc-text capitalize font-orbitron">
                           {theme.replace('-', ' ')}
                         </div>
                         <div className="text-sm text-doc-text-muted mt-1">
                           {theme === 'modern-dark' && 'Clean and modern dark theme'}
                           {theme === 'blue-professional' && 'Professional blue accent'}
                           {theme === 'deep-purple' && 'Rich purple tones'}
+                          {theme === 'cyberpunk-blue' && 'Futuristic blue cyberpunk'}
+                          {theme === 'cyberpunk-purple' && 'Electric purple cyberpunk'}
+                          {theme === 'cyberpunk-green' && 'Matrix green cyberpunk'}
                           {theme === 'light-minimal' && 'Clean minimal light theme'}
                           {theme === 'light-warm' && 'Warm light colors'}
                           {theme === 'light-cool' && 'Cool light tones'}
@@ -130,21 +133,36 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                     ))}
                   </div>
                 </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Background Animation</h3>
+                  <button
+                    onClick={() => updateSettings({ backgroundAnimation: !settings.backgroundAnimation })}
+                    className={`flex items-center space-x-2 px-4 py-3 rounded-md border transition-all duration-300 ${
+                      settings.backgroundAnimation
+                        ? 'border-doc-primary bg-doc-primary/10 text-doc-primary neon-glow'
+                        : 'border-doc-border text-doc-text-muted hover:border-doc-primary/50'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border ${settings.backgroundAnimation ? 'bg-doc-primary' : 'bg-transparent'}`}></div>
+                    <span>Enable particle animation</span>
+                  </button>
+                </div>
               </div>
             )}
 
             {activeTab === 'typography' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Text Size</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Text Size</h3>
                   <div className="flex space-x-4">
                     {['small', 'medium', 'large'].map(size => (
                       <button
                         key={size}
                         onClick={() => updateSettings({ textSize: size as any })}
-                        className={`px-4 py-2 rounded-md border transition-colors capitalize ${
+                        className={`px-4 py-3 rounded-md border transition-all duration-300 capitalize ${
                           settings.textSize === size
-                            ? 'border-doc-primary bg-doc-primary/10 text-doc-primary'
+                            ? 'border-doc-primary bg-doc-primary/10 text-doc-primary neon-glow'
                             : 'border-doc-border text-doc-text-muted hover:border-doc-primary/50'
                         }`}
                       >
@@ -155,9 +173,12 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Font Family</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Font Family</h3>
                   <div className="space-y-2">
                     {[
+                      { id: 'roboto', name: 'Roboto', desc: 'Modern and clean sans-serif' },
+                      { id: 'orbitron', name: 'Orbitron', desc: 'Futuristic cyberpunk font' },
+                      { id: 'fira_code', name: 'Fira Code', desc: 'Monospace with ligatures' },
                       { id: 'open_sans', name: 'Open Sans', desc: 'Clean and readable' },
                       { id: 'pt_serif', name: 'PT Serif', desc: 'Traditional serif font' },
                       { id: 'opendyslexic-regular', name: 'OpenDyslexic', desc: 'Designed for dyslexia' },
@@ -166,9 +187,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                       <button
                         key={font.id}
                         onClick={() => updateSettings({ fontStyle: font.id as any })}
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
+                        className={`w-full p-3 rounded-md border text-left transition-all duration-300 glass ${
                           settings.fontStyle === font.id
-                            ? 'border-doc-primary bg-doc-primary/10'
+                            ? 'border-doc-primary bg-doc-primary/10 neon-glow'
                             : 'border-doc-border hover:border-doc-primary/50'
                         }`}
                       >
@@ -184,15 +205,15 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
             {activeTab === 'accessibility' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Contrast</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Contrast</h3>
                   <div className="flex space-x-4">
                     {['normal', 'high'].map(contrast => (
                       <button
                         key={contrast}
                         onClick={() => updateSettings({ contrast: contrast as any })}
-                        className={`px-4 py-2 rounded-md border transition-colors capitalize ${
+                        className={`px-4 py-3 rounded-md border transition-all duration-300 capitalize ${
                           settings.contrast === contrast
-                            ? 'border-doc-primary bg-doc-primary/10 text-doc-primary'
+                            ? 'border-doc-primary bg-doc-primary/10 text-doc-primary neon-glow'
                             : 'border-doc-border text-doc-text-muted hover:border-doc-primary/50'
                         }`}
                       >
@@ -203,7 +224,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Color Blindness Support</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Color Blindness Support</h3>
                   <div className="space-y-2">
                     {[
                       { id: 'none', name: 'None', desc: 'Standard colors' },
@@ -214,9 +235,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                       <button
                         key={mode.id}
                         onClick={() => updateSettings({ colorBlindnessMode: mode.id as any })}
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
+                        className={`w-full p-3 rounded-md border text-left transition-all duration-300 glass ${
                           settings.colorBlindnessMode === mode.id
-                            ? 'border-doc-primary bg-doc-primary/10'
+                            ? 'border-doc-primary bg-doc-primary/10 neon-glow'
                             : 'border-doc-border hover:border-doc-primary/50'
                         }`}
                       >
@@ -232,7 +253,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
             {activeTab === 'language' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4">Interface Language</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Interface Language</h3>
                   <div className="space-y-2">
                     {[
                       { id: 'en', name: 'English', flag: '🇺🇸' },
@@ -241,9 +262,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                       <button
                         key={lang.id}
                         onClick={() => updateSettings({ language: lang.id as any })}
-                        className={`w-full p-3 rounded-md border text-left transition-colors ${
+                        className={`w-full p-3 rounded-md border text-left transition-all duration-300 glass ${
                           settings.language === lang.id
-                            ? 'border-doc-primary bg-doc-primary/10'
+                            ? 'border-doc-primary bg-doc-primary/10 neon-glow'
                             : 'border-doc-border hover:border-doc-primary/50'
                         }`}
                       >
@@ -261,9 +282,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t dark:border-gray-700 bg-doc-hover">
+        <div className="px-6 py-4 border-t border-doc-border glass">
           <div className="flex justify-end space-x-3">
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={onClose} className="neon-glow">
               Close
             </Button>
           </div>
