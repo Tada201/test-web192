@@ -25,12 +25,12 @@ html.light {
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
   
-  /* Light mode documentation theme colors */
+  /* Light mode documentation theme colors - Enhanced contrast */
   --doc-bg: hsl(0, 0%, 100%);
   --doc-surface: hsl(0, 0%, 98%);
-  --doc-border: hsl(214, 13%, 88%);
+  --doc-border: hsl(214, 13%, 85%);
   --doc-text: hsl(20, 14.3%, 4.1%);
-  --doc-text-muted: hsl(25, 5.3%, 44.7%);
+  --doc-text-muted: hsl(25, 5.3%, 35%);
   --doc-primary: hsl(207, 90%, 54%);
   --doc-accent: hsl(207, 90%, 54%);
   --doc-hover: hsl(60, 4.8%, 95.9%);
@@ -143,6 +143,28 @@ html.dark {
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
+  /* Light mode glass effects */
+  html.light .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  
+  html.light .glass-strong {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.15),
+      0 0 20px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  
   /* Neon Effects */
   .neon-glow {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -156,6 +178,15 @@ html.dark {
     transform: translateY(-2px);
   }
   
+  /* Light mode neon effects */
+  html.light .neon-glow:hover {
+    box-shadow: 
+      0 0 10px rgba(59, 130, 246, 0.3),
+      0 0 20px rgba(59, 130, 246, 0.2),
+      0 0 30px rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+  }
+  
   .neon-text {
     color: var(--neon-cyan);
     text-shadow: 
@@ -164,11 +195,23 @@ html.dark {
       0 0 15px var(--neon-cyan);
   }
   
+  html.light .neon-text {
+    color: hsl(207, 90%, 54%);
+    text-shadow: none;
+  }
+  
   .neon-border {
     border: 1px solid var(--neon-cyan);
     box-shadow: 
       0 0 5px var(--neon-cyan),
       inset 0 0 5px var(--neon-cyan);
+  }
+  
+  html.light .neon-border {
+    border: 1px solid hsl(207, 90%, 54%);
+    box-shadow: 
+      0 0 5px rgba(59, 130, 246, 0.3),
+      inset 0 0 5px rgba(59, 130, 246, 0.1);
   }
   
   /* Cyberpunk Animations */
@@ -209,6 +252,11 @@ html.dark {
     overflow: hidden;
   }
   
+  html.light .terminal {
+    background: #F8F9FA;
+    border: 1px solid hsl(214, 13%, 85%);
+  }
+  
   .terminal::before {
     content: '';
     position: absolute;
@@ -220,10 +268,19 @@ html.dark {
     border-bottom: 1px solid var(--neon-cyan);
   }
   
+  html.light .terminal::before {
+    background: linear-gradient(90deg, #E5E7EB, #F3F4F6, #E5E7EB);
+    border-bottom: 1px solid hsl(214, 13%, 85%);
+  }
+  
   .terminal-content {
     padding: 40px 20px 20px;
     color: var(--neon-green);
     font-family: 'Fira Code', monospace;
+  }
+  
+  html.light .terminal-content {
+    color: hsl(20, 14.3%, 4.1%);
   }
   
   /* Sidebar Enhancements */
@@ -309,6 +366,11 @@ html.dark {
     position: relative;
   }
   
+  html.light .code-block {
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+    border: 1px solid hsl(214, 13%, 85%);
+  }
+  
   .code-block::before {
     content: '';
     position: absolute;
@@ -318,6 +380,10 @@ html.dark {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
     animation: pulse-neon 2s ease-in-out infinite;
+  }
+  
+  html.light .code-block::before {
+    background: linear-gradient(90deg, transparent, hsl(207, 90%, 54%), transparent);
   }
   
   /* Prose Documentation */
@@ -337,6 +403,13 @@ html.dark {
     background-clip: text;
   }
   
+  html.light .prose-docs h1 {
+    background: linear-gradient(45deg, hsl(207, 90%, 54%), hsl(280, 100%, 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
   .prose-docs p {
     color: var(--doc-text-muted);
     line-height: 1.7;
@@ -347,6 +420,10 @@ html.dark {
     font-weight: 600;
   }
   
+  html.light .prose-docs strong {
+    color: hsl(207, 90%, 54%);
+  }
+  
   .prose-docs a {
     color: var(--neon-cyan);
     text-decoration: none;
@@ -354,9 +431,18 @@ html.dark {
     position: relative;
   }
   
+  html.light .prose-docs a {
+    color: hsl(207, 90%, 54%);
+  }
+  
   .prose-docs a:hover {
     color: var(--neon-magenta);
     text-shadow: 0 0 5px var(--neon-magenta);
+  }
+  
+  html.light .prose-docs a:hover {
+    color: hsl(280, 100%, 50%);
+    text-shadow: none;
   }
   
   .prose-docs a::after {
@@ -376,6 +462,15 @@ html.dark {
     box-shadow: 0 0 5px var(--neon-magenta);
   }
   
+  html.light .prose-docs a::after {
+    background: hsl(207, 90%, 54%);
+  }
+  
+  html.light .prose-docs a:hover::after {
+    background: hsl(280, 100%, 50%);
+    box-shadow: none;
+  }
+  
   .prose-docs code {
     background: rgba(0, 255, 255, 0.1);
     color: var(--neon-cyan);
@@ -385,12 +480,23 @@ html.dark {
     font-family: 'Fira Code', monospace;
   }
   
+  html.light .prose-docs code {
+    background: rgba(59, 130, 246, 0.1);
+    color: hsl(207, 90%, 54%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+  
   .prose-docs pre {
     background: #0A0A0A;
     border: 1px solid var(--neon-cyan);
     border-radius: 8px;
     position: relative;
     overflow: hidden;
+  }
+  
+  html.light .prose-docs pre {
+    background: #F8F9FA;
+    border: 1px solid hsl(214, 13%, 85%);
   }
   
   .prose-docs pre::before {
@@ -402,6 +508,11 @@ html.dark {
     height: 30px;
     background: linear-gradient(90deg, #1A1A1A, #2A2A2A, #1A1A1A);
     border-bottom: 1px solid var(--neon-cyan);
+  }
+  
+  html.light .prose-docs pre::before {
+    background: linear-gradient(90deg, #E5E7EB, #F3F4F6, #E5E7EB);
+    border-bottom: 1px solid hsl(214, 13%, 85%);
   }
 
   .line-clamp-2 {
@@ -550,9 +661,9 @@ html.dark {
   --doc-bg: hsl(0, 0%, 100%);
   --doc-surface: hsl(0, 0%, 98%);
   --doc-hover: hsl(0, 0%, 95%);
-  --doc-border: hsl(0, 0%, 89%);
+  --doc-border: hsl(0, 0%, 85%);
   --doc-text: hsl(222, 84%, 4.9%);
-  --doc-text-muted: hsl(215, 16%, 47%);
+  --doc-text-muted: hsl(215, 16%, 40%);
   --doc-primary: hsl(222, 47%, 11%);
 }
 
@@ -560,9 +671,9 @@ html.dark {
   --doc-bg: hsl(30, 40%, 98%);
   --doc-surface: hsl(30, 30%, 96%);
   --doc-hover: hsl(30, 25%, 92%);
-  --doc-border: hsl(30, 20%, 85%);
+  --doc-border: hsl(30, 20%, 80%);
   --doc-text: hsl(30, 20%, 15%);
-  --doc-text-muted: hsl(30, 15%, 45%);
+  --doc-text-muted: hsl(30, 15%, 40%);
   --doc-primary: hsl(25, 85%, 45%);
 }
 
@@ -570,9 +681,9 @@ html.dark {
   --doc-bg: hsl(210, 40%, 98%);
   --doc-surface: hsl(210, 30%, 96%);
   --doc-hover: hsl(210, 25%, 92%);
-  --doc-border: hsl(210, 20%, 85%);
+  --doc-border: hsl(210, 20%, 80%);
   --doc-text: hsl(210, 20%, 15%);
-  --doc-text-muted: hsl(210, 15%, 45%);
+  --doc-text-muted: hsl(210, 15%, 40%);
   --doc-primary: hsl(210, 85%, 45%);
 }
 
@@ -580,9 +691,9 @@ html.dark {
   --doc-bg: hsl(300, 30%, 98%);
   --doc-surface: hsl(300, 25%, 96%);
   --doc-hover: hsl(300, 20%, 92%);
-  --doc-border: hsl(300, 15%, 85%);
+  --doc-border: hsl(300, 15%, 80%);
   --doc-text: hsl(300, 15%, 15%);
-  --doc-text-muted: hsl(300, 10%, 45%);
+  --doc-text-muted: hsl(300, 10%, 40%);
   --doc-primary: hsl(290, 70%, 55%);
 }
 
@@ -601,6 +712,13 @@ html.dark {
   font-weight: 500;
   color: var(--neon-cyan);
   box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+}
+
+html.light .kbd {
+  border: 1px solid hsl(207, 90%, 54%);
+  background: rgba(59, 130, 246, 0.1);
+  color: hsl(207, 90%, 54%);
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
 }
 
 /* High contrast mode enhancements */
@@ -683,10 +801,20 @@ canvas[style*="z-index: -1"] {
     box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
   }
   
+  html.light aside.sidebar-mobile {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-right: 1px solid hsl(214, 13%, 85%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  }
+  
   .nav-item {
     background: var(--glass-bg) !important;
     margin-bottom: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  html.light .nav-item {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -710,4 +838,44 @@ canvas[style*="z-index: -1"] {
     border: 1px solid black !important;
     box-shadow: none !important;
   }
+}
+
+/* Accessibility improvements for focus states */
+*:focus-visible {
+  outline: 2px solid var(--doc-primary);
+  outline-offset: 2px;
+}
+
+/* Ensure proper contrast for all interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.3s ease;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--doc-primary);
+  outline-offset: 2px;
+}
+
+/* Enhanced readability for light mode */
+html.light {
+  --doc-text: hsl(20, 14.3%, 4.1%);
+  --doc-text-muted: hsl(25, 5.3%, 35%);
+  --doc-border: hsl(214, 13%, 80%);
+  --doc-surface: hsl(0, 0%, 97%);
+  --doc-hover: hsl(60, 4.8%, 93%);
+}
+
+/* Ensure cards and surfaces have proper contrast in light mode */
+html.light .glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html.light .card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }

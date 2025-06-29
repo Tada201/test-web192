@@ -81,7 +81,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     // Apply theme
     if (settings.theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
+      document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
 
@@ -185,7 +187,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   const setTheme = (theme: 'light' | 'dark') => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
+      document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
     const updatedSettings = { ...settings, theme };
