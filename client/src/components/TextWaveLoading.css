@@ -1,33 +1,46 @@
 /* TextWave Loading Animation CSS */
 .tw-loading-bg {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 9999;
 }
 
 .tw-wave-container {
   display: flex;
   gap: 0.2em;
   font-size: 3rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Orbitron', 'Montserrat', sans-serif;
   font-weight: 700;
   color: #00f7ff;
   letter-spacing: 0.1em;
   filter: drop-shadow(0 0 8px #00f7ff88);
+  animation: pulse-glow 2s ease-in-out infinite alternate;
 }
 
 .tw-wave-char-static {
   display: inline-block;
   font-size: 3rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Orbitron', 'Montserrat', sans-serif;
   font-weight: 700;
   color: #00f7ff;
   letter-spacing: 0.1em;
   filter: drop-shadow(0 0 8px #00f7ff88);
+  animation: wave-bounce 2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.1s);
 }
 
-@keyframes tw-wave-bounce {
+.tw-wave-char-static:nth-child(1) { --i: 0; }
+.tw-wave-char-static:nth-child(2) { --i: 1; }
+.tw-wave-char-static:nth-child(3) { --i: 2; }
+.tw-wave-char-static:nth-child(4) { --i: 3; }
+.tw-wave-char-static:nth-child(5) { --i: 4; }
+.tw-wave-char-static:nth-child(6) { --i: 5; }
+
+@keyframes wave-bounce {
   0%, 100% {
     transform: translateY(0) scale(1);
     opacity: 1;
@@ -50,6 +63,15 @@
   }
 }
 
+@keyframes pulse-glow {
+  0% {
+    filter: drop-shadow(0 0 8px #00f7ff88);
+  }
+  100% {
+    filter: drop-shadow(0 0 20px #00f7ffcc) drop-shadow(0 0 40px #00f7ff66);
+  }
+}
+
 .tw-fade-out {
   opacity: 0;
   transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
@@ -69,6 +91,7 @@
   animation: .9s ease-in-out infinite;
   background: #183153;
   box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+  border-radius: 2px;
 }
 
 .loaderRectangle div:nth-child(1) {
@@ -77,9 +100,9 @@
 }
 
 @keyframes rectangleOneAnim {
-  0% { height: 15px; }
-  40% { height: 30px; }
-  100% { height: 15px; }
+  0% { height: 15px; background: #183153; }
+  40% { height: 30px; background: #00f7ff; box-shadow: 0 0 20px #00f7ff66; }
+  100% { height: 15px; background: #183153; }
 }
 
 .loaderRectangle div:nth-child(2) {
@@ -88,9 +111,9 @@
 }
 
 @keyframes rectangleTwoAnim {
-  0% { height: 15px; }
-  40% { height: 40px; }
-  100% { height: 15px; }
+  0% { height: 15px; background: #183153; }
+  40% { height: 40px; background: #00f7ff; box-shadow: 0 0 20px #00f7ff66; }
+  100% { height: 15px; background: #183153; }
 }
 
 .loaderRectangle div:nth-child(3) {
@@ -99,9 +122,9 @@
 }
 
 @keyframes rectangleThreeAnim {
-  0% { height: 15px; }
-  40% { height: 50px; }
-  100% { height: 15px; }
+  0% { height: 15px; background: #183153; }
+  40% { height: 50px; background: #00f7ff; box-shadow: 0 0 20px #00f7ff66; }
+  100% { height: 15px; background: #183153; }
 }
 
 .loaderRectangle div:nth-child(4) {
@@ -110,9 +133,9 @@
 }
 
 @keyframes rectangleFourAnim {
-  0% { height: 15px; }
-  40% { height: 40px; }
-  100% { height: 15px; }
+  0% { height: 15px; background: #183153; }
+  40% { height: 40px; background: #00f7ff; box-shadow: 0 0 20px #00f7ff66; }
+  100% { height: 15px; background: #183153; }
 }
 
 .loaderRectangle div:nth-child(5) {
@@ -121,7 +144,18 @@
 }
 
 @keyframes rectangleFiveAnim {
-  0% { height: 15px; }
-  40% { height: 30px; }
-  100% { height: 15px; }
+  0% { height: 15px; background: #183153; }
+  40% { height: 30px; background: #00f7ff; box-shadow: 0 0 20px #00f7ff66; }
+  100% { height: 15px; background: #183153; }
+}
+
+/* Ensure loading screen is always on top */
+.tw-loading-bg {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  background: linear-gradient(135deg, #0a0a0a 0%, #0f2a2e 100%) !important;
 }

@@ -31,11 +31,27 @@ function Router() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3300);
-    return () => clearTimeout(timer);
+    // Check if this is the first time loading the app
+    const hasLoaded = sessionStorage.getItem('app-has-loaded');
+    
+    if (!hasLoaded) {
+      // First time loading - show loading animation
+      const timer = setTimeout(() => {
+        setIsInitialLoading(false);
+        setHasLoadedOnce(true);
+        sessionStorage.setItem('app-has-loaded', 'true');
+      }, 3000); // 3 second loading time
+      
+      return () => clearTimeout(timer);
+    } else {
+      // Already loaded before in this session - skip loading
+      setIsInitialLoading(false);
+      setHasLoadedOnce(true);
+    }
   }, []);
 
   return (
@@ -43,15 +59,33 @@ function App() {
       <SettingsProvider>
         <ThemeProvider>
           <TooltipProvider>
-            <div style={{ position: 'relative', minHeight: '100vh' }}>
-              <Header />
-              <div style={{ zIndex: 1, position: 'relative' }} aria-hidden={isLoading}>
+            <div className="relative min-h-screen">
+              {/* Main Application Content */}
+              <div 
+                className={`transition-opacity duration-700 ${
+                  isInitialLoading ? 'opacity-0' : 'opacity-100'
+                }`}
+                style={{ 
+                  position: 'relative', 
+                  minHeight: '100vh',
+                  zIndex: 1
+                }}
+              >
+                <Header />
                 <BackgroundAnimation />
                 <Toaster />
                 <Router />
               </div>
-              {isLoading && (
-                <div style={{ zIndex: 2, position: 'fixed', inset: 0 }}>
+
+              {/* Loading Animation Overlay - Topmost Layer */}
+              {isInitialLoading && (
+                <div 
+                  className="fixed inset-0 transition-opacity duration-700"
+                  style={{ 
+                    zIndex: 9999, // Highest z-index to ensure it's on top
+                    backgroundColor: '#0a0a0a' // Ensure solid background
+                  }}
+                >
                   <TextWaveLoading />
                 </div>
               )}
