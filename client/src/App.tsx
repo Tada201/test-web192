@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { SettingsProvider } from "./contexts/SettingsContext";
-import TextWaveLoading from "./components/TextWaveLoading";
 import { BackgroundAnimation } from "./components/BackgroundAnimation";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
@@ -31,62 +30,16 @@ function Router() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasInitialized, setHasInitialized] = useState(false);
-
-  useEffect(() => {
-    // Prevent multiple initializations
-    if (hasInitialized) return;
-    
-    setHasInitialized(true);
-    
-    // Check if user has seen loading in this browser session
-    const hasSeenLoading = sessionStorage.getItem('pro192-loading-complete');
-    
-    if (hasSeenLoading === 'true') {
-      // Skip loading for returning visitors in same session
-      setIsLoading(false);
-    } else {
-      // Show loading animation for 3 seconds, then hide it
-      const loadingTimer = setTimeout(() => {
-        setIsLoading(false);
-        sessionStorage.setItem('pro192-loading-complete', 'true');
-      }, 3000);
-      
-      return () => clearTimeout(loadingTimer);
-    }
-  }, [hasInitialized]);
-
   return (
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <ThemeProvider>
           <TooltipProvider>
             <div className="relative min-h-screen">
-              {/* Main Application Content - Always rendered */}
-              <div className="min-h-screen">
-                <Header />
-                <BackgroundAnimation />
-                <Toaster />
-                <Router />
-              </div>
-
-              {/* Loading Animation Overlay - Only when loading */}
-              {isLoading && (
-                <div 
-                  className="fixed inset-0"
-                  style={{ 
-                    zIndex: 10000,
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0
-                  }}
-                >
-                  <TextWaveLoading />
-                </div>
-              )}
+              <Header />
+              <BackgroundAnimation />
+              <Toaster />
+              <Router />
             </div>
           </TooltipProvider>
         </ThemeProvider>
