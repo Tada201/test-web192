@@ -1,12 +1,12 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { BookOpen, Code, Download, ArrowRight, Users, Clock, Trophy, Star, CheckCircle, Play } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
-import { BookOpen, Code, Download, ArrowRight, Users, Clock, Trophy, Star, CheckCircle, Play } from "lucide-react";
-import { useSettings } from "@/contexts/SettingsContext";
+import HeroSection from "../components/HeroSection";
 
 export default function HomePage() {
-  const { settings } = useSettings();
-
   const { settings } = useSettings();
 
   const courseSections = [
@@ -18,8 +18,6 @@ export default function HomePage() {
       href: "/docs#welcome",
       color: "from-blue-500 to-blue-600",
       darkColor: "from-neon-cyan to-blue-400"
-      color: "from-blue-500 to-blue-600",
-      darkColor: "from-neon-cyan to-blue-400"
     },
     {
       id: "introduction",
@@ -27,8 +25,6 @@ export default function HomePage() {
       description: "An introduction to the course structure, objectives, and the foundational concepts of object-oriented programming in Java.",
       icon: <Users className="w-6 h-6" />,
       href: "/docs#introduction",
-      color: "from-green-500 to-green-600",
-      darkColor: "from-neon-green to-green-400"
       color: "from-green-500 to-green-600",
       darkColor: "from-neon-green to-green-400"
     },
@@ -40,8 +36,6 @@ export default function HomePage() {
       href: "/docs#foundations",
       color: "from-purple-500 to-purple-600",
       darkColor: "from-neon-purple to-purple-400"
-      color: "from-purple-500 to-purple-600",
-      darkColor: "from-neon-purple to-purple-400"
     },
     {
       id: "encapsulation",
@@ -49,8 +43,6 @@ export default function HomePage() {
       description: "Learn about classes, objects, constructors, access modifiers, and data hiding principles.",
       icon: <Trophy className="w-6 h-6" />,
       href: "/docs#encapsulation",
-      color: "from-orange-500 to-orange-600",
-      darkColor: "from-neon-orange to-orange-400"
       color: "from-orange-500 to-orange-600",
       darkColor: "from-neon-orange to-orange-400"
     },
@@ -62,18 +54,13 @@ export default function HomePage() {
       href: "/docs#inheritance",
       color: "from-red-500 to-red-600",
       darkColor: "from-neon-magenta to-red-400"
-      color: "from-red-500 to-red-600",
-      darkColor: "from-neon-magenta to-red-400"
     },
     {
       id: "polymorphism",
       title: "Polymorphism",
       description: "Method overloading, dynamic binding, abstract classes, and interfaces.",
       icon: <Star className="w-6 h-6" />,
-      icon: <Star className="w-6 h-6" />,
       href: "/docs#polymorphism",
-      color: "from-indigo-500 to-indigo-600",
-      darkColor: "from-neon-cyan to-indigo-400"
       color: "from-indigo-500 to-indigo-600",
       darkColor: "from-neon-cyan to-indigo-400"
     }
@@ -104,152 +91,20 @@ export default function HomePage() {
     }
   ];
 
-  const features = [
-    {
-      title: "Interactive Learning",
-      description: "Hands-on coding exercises with real-time feedback and execution",
-      icon: <Play className="w-6 h-6" />
-    },
-    {
-      title: "Comprehensive Documentation",
-      description: "Detailed explanations with examples and best practices",
-      icon: <BookOpen className="w-6 h-6" />
-    },
-    {
-      title: "Progress Tracking",
-      description: "Monitor your learning journey with built-in progress indicators",
-      icon: <CheckCircle className="w-6 h-6" />
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-doc-bg text-doc-text transition-colors duration-300">
-    <div className="min-h-screen bg-doc-bg text-doc-text transition-colors duration-300">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background Pattern for Dark Mode */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-doc-primary/20 to-doc-accent/20"></div>
-        </div>
-        
-        <div className="relative max-w-6xl mx-auto text-center">
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background Pattern for Dark Mode */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-doc-primary/20 to-doc-accent/20"></div>
-        </div>
-        
-        <div className="relative max-w-6xl mx-auto text-center">
-          {/* Course Badge */}
-          <span className="inline-flex items-center mb-6 text-sm px-6 py-3 glass neon-glow border border-doc-border bg-doc-surface/80 text-doc-text hover:bg-doc-hover transition-all duration-300">
-            <Code className="w-4 h-4 mr-2" />
-            Object-Oriented Programming
-          </span>
-
-          {/* Main Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-doc-text mb-6 font-orbitron leading-tight">
-            <span className="bg-gradient-to-r from-doc-primary to-doc-accent bg-clip-text text-transparent">
-              PRO192
-            </span>
-            <br />
-            <span className="text-doc-text">
-              Object Oriented Programming using Java
-            </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-doc-text mb-6 font-orbitron leading-tight">
-            <span className="bg-gradient-to-r from-doc-primary to-doc-accent bg-clip-text text-transparent">
-              PRO192
-            </span>
-            <br />
-            <span className="text-doc-text">
-              Object Oriented Programming using Java
-            </span>
-          </h1>
-
-          {/* Description */}
-          <p className="text-xl sm:text-2xl text-doc-text-muted mb-10 max-w-4xl mx-auto leading-relaxed">
-          <p className="text-xl sm:text-2xl text-doc-text-muted mb-10 max-w-4xl mx-auto leading-relaxed">
-            A comprehensive course exploring object-oriented programming concepts, design principles, and practical implementation in Java.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link href="/docs">
-              <a className="inline-flex items-center justify-center bg-doc-primary hover:bg-doc-primary/90 text-white px-8 py-4 text-lg neon-glow border-0 transition-all duration-300 hover:scale-105 rounded-md">
-                <BookOpen className="w-5 h-5 mr-2" />
-                Explore Course Sections
-              </a>
-            </Link>
-            <button className="inline-flex items-center justify-center px-8 py-4 text-lg glass border-doc-border bg-doc-surface/50 text-doc-text hover:bg-doc-hover neon-glow transition-all duration-300 hover:scale-105 rounded-md">
-              <Download className="w-5 h-5 mr-2" />
-              Download Syllabus
-            </button>
-          </div>
-
-          {/* Stats Grid */}
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="flex items-center justify-center w-16 h-16 bg-doc-surface border border-doc-border rounded-xl mx-auto mb-4 glass neon-glow group-hover:scale-110 transition-all duration-300">
-                  <div className="text-doc-primary">
-              <div key={index} className="text-center group">
-                <div className="flex items-center justify-center w-16 h-16 bg-doc-surface border border-doc-border rounded-xl mx-auto mb-4 glass neon-glow group-hover:scale-110 transition-all duration-300">
-                  <div className="text-doc-primary">
-                    {stat.icon}
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-doc-text font-orbitron">{stat.value}</div>
-                <div className="text-sm text-doc-text-muted mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      {/* Hero Section - restored to top of HomePage */}
+      <div className="mt-16" />
+      <HeroSection />
       {/* Features Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-doc-surface/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-doc-text mb-4 font-orbitron">
-              Why Choose This Course?
-            </h2>
-            <p className="text-lg text-doc-text-muted max-w-2xl mx-auto">
-              Experience modern learning with cutting-edge tools and methodologies
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105 p-6 rounded-lg">
-                <div className="text-center pb-4">
-                  <div className="flex items-center justify-center w-16 h-16 bg-doc-primary/20 rounded-xl mx-auto mb-4 group-hover:bg-doc-primary/30 transition-colors duration-300">
-                    <div className="text-doc-primary">
-                      {feature.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-semibold text-doc-text font-orbitron">
-                    {feature.title}
-                  </h3>
-                </div>
-                <p className="text-doc-text-muted leading-relaxed text-center">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-doc-surface/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-doc-text mb-4 font-orbitron">
-              Why Choose This Course?
-            </h2>
-            <p className="text-lg text-doc-text-muted max-w-2xl mx-auto">
-              Experience modern learning with cutting-edge tools and methodologies
-            </p>
+            {/* Why Choose This Course - floating box style */}
+            <div className="rounded-lg border text-card-foreground shadow-sm glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105 max-w-xl mx-auto mb-8 px-6 py-4" style={{ zIndex: 30 }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-doc-text text-center">Why Choose This Course?</h2>
+              <p className="text-base md:text-lg text-doc-text-muted text-center mt-2">Experience modern learning with cutting-edge tools and methodologies</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -278,45 +133,39 @@ export default function HomePage() {
 
       {/* Course Sections */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-doc-text mb-4 font-orbitron">
-            <h2 className="text-3xl font-bold text-doc-text mb-4 font-orbitron">
-              Course Sections
-            </h2>
-            <p className="text-lg text-doc-text-muted">
-            <p className="text-lg text-doc-text-muted">
-              Explore the comprehensive curriculum designed to master Java OOP concepts
-            </p>
+            {/* Course Sections - floating box style */}
+            <div className="rounded-lg border text-card-foreground shadow-sm glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105 max-w-xl mx-auto mb-8 px-6 py-4" style={{ zIndex: 30 }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-doc-text text-center">Course Sections</h2>
+              <p className="text-base md:text-lg text-doc-text-muted text-center mt-2">Explore the comprehensive curriculum designed to master Java OOP concepts</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courseSections.map((section) => (
               <Link key={section.id} href={section.href}>
-                <div className="h-full hover:shadow-xl transition-all duration-300 cursor-pointer group glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 neon-glow rounded-lg">
-                  <div className="pb-4">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 cursor-pointer group glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 neon-glow hover:scale-105">
+                  <CardHeader className="pb-4">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${settings.theme === 'dark' ? section.darkColor : section.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                       <div className={`p-3 rounded-xl bg-gradient-to-br ${settings.theme === 'dark' ? section.darkColor : section.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         {section.icon}
                       </div>
-                      <h3 className="text-lg font-semibold text-doc-text group-hover:text-doc-primary transition-colors duration-300 font-orbitron">
+                      <CardTitle className="text-lg font-semibold text-doc-text group-hover:text-doc-primary transition-colors duration-300 font-orbitron">
                         {section.title}
-                      </h3>
+                      </CardTitle>
                     </div>
-                  </div>
-                  <div className="p-4">
-                    <p className="text-doc-text-muted leading-relaxed mb-4">
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-doc-text-muted leading-relaxed mb-4">
                       {section.description}
-                    </p>
+                    </CardDescription>
                     <div className="flex items-center text-sm text-doc-primary font-medium group-hover:text-doc-accent transition-colors duration-300">
                       View Content
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               </Link>
             ))}
           </div>
@@ -324,29 +173,32 @@ export default function HomePage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-doc-surface/30">
-      {/* Call to Action */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-doc-surface/30">
+      <section className="relative z-50 w-full fixed top-0 left-0 bg-[navy] dark:bg-black/70 dark:rounded-lg dark:shadow-lg dark:border dark:border-white dark:outline dark:outline-1 dark:outline-white neon-glow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-doc-text mb-8 font-orbitron">
-          <h2 className="text-3xl font-bold text-doc-text mb-8 font-orbitron">
+          <h2 className="text-3xl font-bold text-white dark:text-doc-text mb-8 font-orbitron" style={{ textShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px' }}>
             Ready to Start Learning?
           </h2>
-          <p className="text-lg text-doc-text-muted mb-8 max-w-2xl mx-auto">
-          <p className="text-lg text-doc-text-muted mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 dark:text-doc-text-muted mb-8 max-w-2xl mx-auto" style={{ textShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px' }}>
             Begin your journey into object-oriented programming with our comprehensive Java course materials.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/docs">
-              <a className="inline-flex items-center justify-center bg-doc-accent hover:bg-doc-accent/90 text-white px-8 py-4 text-lg neon-glow transition-all duration-300 hover:scale-105 rounded-md">
+              <Button 
+                size="lg" 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border hover:text-accent-foreground h-11 rounded-md px-8 py-4 text-lg glass border-doc-border bg-doc-surface/50 text-doc-text hover:bg-doc-hover neon-glow transition-all duration-300 hover:scale-105"
+              >
                 Start Learning Now
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </a>
+              </Button>
             </Link>
             <Link href="/assignments">
-              <button className="inline-flex items-center justify-center px-8 py-4 text-lg glass border-doc-border bg-doc-surface/50 text-doc-text hover:bg-doc-hover neon-glow transition-all duration-300 hover:scale-105 rounded-md">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border hover:text-accent-foreground h-11 rounded-md px-8 py-4 text-lg glass border-doc-border bg-doc-surface/50 text-doc-text hover:bg-doc-hover neon-glow transition-all duration-300 hover:scale-105"
+              >
                 Try Interactive Assignments
-              </button>
+              </Button>
             </Link>
           </div>
         </div>

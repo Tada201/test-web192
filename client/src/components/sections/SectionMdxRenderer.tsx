@@ -19,8 +19,11 @@ const mdxComponents = {
 const SectionMdxRenderer: React.FC<{ sectionId: string }> = () => {
   return (
     <MDXProvider components={mdxComponents}>
-      <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
-        This section is now managed by Docusaurus docs. Please use the sidebar or navigation to access your content.
+      <div className="rounded-lg border border-cyan-400 text-card-foreground shadow-[0_0_8px_2px_#00BFFF] glass bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105 max-w-xl mx-auto mb-8 px-6 py-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center">Course Sections</h2>
+        <p className="text-base md:text-lg text-gray-200 text-center mt-2">
+          This section is now managed by Docusaurus docs. Please use the sidebar or navigation to access your content.
+        </p>
       </div>
     </MDXProvider>
   );
