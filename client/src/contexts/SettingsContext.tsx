@@ -1,16 +1,21 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
-export const darkThemes = ['modern-dark', 'blue-professional', 'deep-purple'] as const;
-export const lightThemes = ['light-minimal', 'light-warm', 'light-cool', 'pastel'] as const;
+// Define theme arrays as const to ensure type stability
+const DARK_THEMES = ['modern-dark', 'blue-professional', 'deep-purple', 'cyberpunk-blue', 'cyberpunk-purple', 'cyberpunk-green'] as const;
+const LIGHT_THEMES = ['light-minimal', 'light-warm', 'light-cool', 'pastel'] as const;
+
+// Export stable references
+export const darkThemes = DARK_THEMES;
+export const lightThemes = LIGHT_THEMES;
 
 interface Settings {
   theme: 'light' | 'dark';
-  darkTheme: (typeof darkThemes)[number];
-  lightTheme: (typeof lightThemes)[number];
+  darkTheme: (typeof DARK_THEMES)[number];
+  lightTheme: (typeof LIGHT_THEMES)[number];
   textSize: 'small' | 'medium' | 'large';
   contrast: 'normal' | 'high';
   language: 'en' | 'vi';
-  fontStyle: 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif';
+  fontStyle: 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif' | 'roboto' | 'orbitron' | 'fira_code';
   colorBlindnessMode: 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia';
   backgroundAnimation: boolean;
 }
@@ -32,14 +37,14 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   function castSettings(raw: any): Settings {
     return {
       theme: raw.theme as 'light' | 'dark',
-      darkTheme: raw.darkTheme as (typeof darkThemes)[number],
-      lightTheme: raw.lightTheme as (typeof lightThemes)[number],
+      darkTheme: raw.darkTheme as (typeof DARK_THEMES)[number],
+      lightTheme: raw.lightTheme as (typeof LIGHT_THEMES)[number],
       textSize: raw.textSize as 'small' | 'medium' | 'large',
       contrast: raw.contrast as 'normal' | 'high',
       language: raw.language as 'en' | 'vi',
-      fontStyle: raw.fontStyle as 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif',
+      fontStyle: raw.fontStyle as 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif' | 'roboto' | 'orbitron' | 'fira_code',
       colorBlindnessMode: raw.colorBlindnessMode as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia',
-      backgroundAnimation: raw.backgroundAnimation,
+      backgroundAnimation: Boolean(raw.backgroundAnimation),
     };
   }
 
@@ -48,24 +53,24 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       const savedSettings = localStorage.getItem('pro192-settings');
       return savedSettings ? castSettings(JSON.parse(savedSettings)) : castSettings({
         theme: 'dark',
-        darkTheme: 'blue-professional',
+        darkTheme: 'cyberpunk-blue',
         lightTheme: 'light-minimal',
         textSize: 'medium',
         contrast: 'normal',
         language: 'en',
-        fontStyle: 'open_sans',
+        fontStyle: 'roboto',
         colorBlindnessMode: 'none',
         backgroundAnimation: true,
       });
     }
     return castSettings({
       theme: 'dark',
-      darkTheme: 'blue-professional',
+      darkTheme: 'cyberpunk-blue',
       lightTheme: 'light-minimal',
       textSize: 'medium',
       contrast: 'normal',
       language: 'en',
-      fontStyle: 'open_sans',
+      fontStyle: 'roboto',
       colorBlindnessMode: 'none',
       backgroundAnimation: true,
     });
@@ -76,7 +81,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     // Apply theme
     if (settings.theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
+      document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
 
@@ -102,7 +109,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     }
 
     // Apply font style
-    document.documentElement.classList.remove('font-opendyslexic-regular', 'font-opendyslexic-bold', 'font-open-sans', 'font-pt-serif');
+    document.documentElement.classList.remove('font-opendyslexic-regular', 'font-opendyslexic-bold', 'font-open-sans', 'font-pt-serif', 'font-roboto', 'font-orbitron', 'font-fira-code');
     switch (settings.fontStyle) {
       case 'opendyslexic-regular':
         document.documentElement.classList.add('font-opendyslexic-regular');
@@ -119,6 +126,18 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       case 'pt_serif':
         document.documentElement.classList.add('font-pt-serif');
         document.documentElement.style.fontFamily = "'PT Serif', Georgia, serif";
+        break;
+      case 'roboto':
+        document.documentElement.classList.add('font-roboto');
+        document.documentElement.style.fontFamily = "'Roboto', Arial, sans-serif";
+        break;
+      case 'orbitron':
+        document.documentElement.classList.add('font-orbitron');
+        document.documentElement.style.fontFamily = "'Orbitron', sans-serif";
+        break;
+      case 'fira_code':
+        document.documentElement.classList.add('font-fira-code');
+        document.documentElement.style.fontFamily = "'Fira Code', monospace";
         break;
       default:
         document.documentElement.style.fontFamily = "";
@@ -153,7 +172,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     let mergedSettings = { ...settings, ...newSettings };
     if (newSettings.theme) {
       if (newSettings.theme === 'dark' && !('darkTheme' in newSettings)) {
-        mergedSettings.darkTheme = settings.darkTheme || 'modern-dark';
+        mergedSettings.darkTheme = settings.darkTheme || 'cyberpunk-blue';
       }
       if (newSettings.theme === 'light' && !('lightTheme' in newSettings)) {
         mergedSettings.lightTheme = settings.lightTheme || 'light-minimal';
@@ -168,7 +187,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   const setTheme = (theme: 'light' | 'dark') => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
+      document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
     const updatedSettings = { ...settings, theme };
@@ -186,9 +207,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     html.classList.add(`scheme-${scheme}`);
     let updatedSettings;
     if (settings.theme === 'dark') {
-      updatedSettings = { ...settings, darkTheme: scheme as (typeof darkThemes)[number] };
+      updatedSettings = { ...settings, darkTheme: scheme as (typeof DARK_THEMES)[number] };
     } else {
-      updatedSettings = { ...settings, lightTheme: scheme as (typeof lightThemes)[number] };
+      updatedSettings = { ...settings, lightTheme: scheme as (typeof LIGHT_THEMES)[number] };
     }
     if (typeof window !== 'undefined') {
       localStorage.setItem('pro192-settings', JSON.stringify(updatedSettings));

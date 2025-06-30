@@ -3,11 +3,6 @@ import { CodeBlock } from "@/components/content/CodeBlock";
 import { InfoBox } from "@/components/content/InfoBox";
 import { ConceptCard } from "@/components/content/ConceptCard";
 import { ProgressTracker } from "@/components/content/ProgressTracker";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 import {
   Play,
   Square,
@@ -359,11 +354,9 @@ export default function AssignmentsPage() {
                   Navigation
                 </h2>
               )}
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="text-doc-text-muted hover:text-doc-text hover:bg-doc-hover"
+                className="text-doc-text-muted hover:text-doc-text hover:bg-doc-hover p-2 rounded-md"
                 title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               >
                 {sidebarCollapsed ? (
@@ -371,160 +364,180 @@ export default function AssignmentsPage() {
                 ) : (
                   <ChevronDown size={20} />
                 )}
-              </Button>
+              </button>
             </div>
           </div>
 
           {!sidebarCollapsed && (
             <div className="p-4 flex flex-col h-full">
-              <Tabs
-                value={activeTab}
-                onValueChange={setActiveTab}
-                className="w-full flex-1 flex flex-col"
-              >
-                <TabsList className="grid w-full grid-cols-2 bg-doc-hover mb-4">
-                  <TabsTrigger value="learning-path" className="text-xs">
+              <div className="w-full flex-1 flex flex-col">
+                <div className="grid w-full grid-cols-2 bg-doc-hover mb-4">
+                  <div
+                    onClick={() => setActiveTab("learning-path")}
+                    className={`text-xs p-2 flex items-center cursor-pointer transition-all duration-200 rounded-md ${
+                      activeTab === "learning-path"
+                        ? "bg-doc-accent text-doc-text"
+                        : "text-doc-text-muted hover:text-doc-text hover:bg-doc-hover"
+                    }`}
+                  >
                     <Target size={16} className="mr-1" />
                     Learning
-                  </TabsTrigger>
-                  <TabsTrigger value="assignments" className="text-xs">
+                  </div>
+                  <div
+                    onClick={() => setActiveTab("assignments")}
+                    className={`text-xs p-2 flex items-center cursor-pointer transition-all duration-200 rounded-md ${
+                      activeTab === "assignments"
+                        ? "bg-doc-accent text-doc-text"
+                        : "text-doc-text-muted hover:text-doc-text hover:bg-doc-hover"
+                    }`}
+                  >
                     <BookOpen size={16} className="mr-1" />
                     Assignments
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent
-                  value="learning-path"
-                  className="flex-1 overflow-auto"
-                >
-                  <div className="space-y-4 pr-2">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-medium text-doc-text">
-                          Learning Progress
-                        </h3>
-                        <span className="text-xs text-doc-text-muted">
-                          {codeCompletionCount}/{learningSteps.length}
-                        </span>
-                      </div>
-                      <Progress value={progressPercentage} className="h-2" />
-                    </div>
-
-                    <div className="space-y-2">
-                      {learningSteps.map((step, index) => {
-                        const isCompleted = checkCodeCompletion(currentCode);
-                        return (
-                          <div
-                            key={step.id}
-                            className={`p-3 rounded-lg border transition-all duration-200 ${
-                              isCompleted
-                                ? "bg-doc-accent/10 border-doc-accent/30"
-                                : "bg-doc-surface border-doc-border"
-                            }`}
-                            style={{
-                              backgroundColor: isCompleted
-                                ? "hsl(var(--doc-accent) / 0.1)"
-                                : "hsl(var(--doc-surface))",
-                            }}
-                          >
-                            <div className="flex items-start space-x-2">
-                              {isCompleted ? (
-                                <CheckCircle
-                                  size={16}
-                                  className="text-doc-accent mt-0.5 flex-shrink-0"
-                                />
-                              ) : (
-                                <Circle
-                                  size={16}
-                                  className="text-doc-text-muted mt-0.5 flex-shrink-0"
-                                />
-                              )}
-                              <div>
-                                <h4 className="text-sm font-medium text-doc-text">
-                                  {step.title}
-                                </h4>
-                                <p className="text-xs text-doc-text-muted mt-1">
-                                  {step.description}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
                   </div>
-                </TabsContent>
+                </div>
 
-                <TabsContent
-                  value="assignments"
-                  className="flex-1 overflow-auto"
-                >
-                  <div className="space-y-4 pr-2">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-medium text-doc-text">
-                          Assignment Progress
-                        </h3>
-                        <span className="text-xs text-doc-text-muted">
-                          {assignmentCompletionCount}/{assignments.length}
-                        </span>
-                      </div>
-                      <Progress value={assignmentProgress} className="h-2" />
-                    </div>
-
-                    <div className="space-y-2 overflow-y-auto custom-scrollbar">
-                      {assignments.map((assignment, index) => {
-                        const isCompleted = checkAssignmentCompletion(
-                          index,
-                          currentCode,
-                        );
-                        return (
+                {/* Learning Path Content */}
+                {activeTab === "learning-path" && (
+                  <div className="flex-1 overflow-auto pr-2">
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-doc-text">
+                            Learning Progress
+                          </h3>
+                          <span className="text-xs text-doc-text-muted">
+                            {codeCompletionCount}/{learningSteps.length}
+                          </span>
+                        </div>
+                        <div className="h-2 bg-doc-border rounded-full">
                           <div
-                            key={index}
-                            className={`p-3 rounded-lg border transition-all duration-200 ${
-                              isCompleted
-                                ? "bg-doc-accent/10 border-doc-accent/30"
-                                : "bg-doc-surface border-doc-border"
-                            }`}
-                            style={{
-                              backgroundColor: isCompleted
-                                ? "hsl(var(--doc-accent) / 0.1)"
-                                : "hsl(var(--doc-surface))",
-                            }}
-                          >
-                            <div className="flex items-start space-x-2">
-                              {isCompleted ? (
-                                <CheckCircle
-                                  size={16}
-                                  className="text-doc-accent mt-0.5 flex-shrink-0"
-                                />
-                              ) : (
-                                <Circle
-                                  size={16}
-                                  className="text-doc-text-muted mt-0.5 flex-shrink-0"
-                                />
-                              )}
-                              <div>
-                                <span className="text-xs font-medium text-doc-accent">
-                                  #{index + 1}
-                                </span>
-                                <p className="text-sm text-doc-text mt-1">
-                                  {assignment}
-                                </p>
-                                {isCompleted && (
-                                  <span className="text-xs text-green-400 mt-1 block">
-                                    ✓ Requirements detected
-                                  </span>
+                            className="h-full bg-doc-accent rounded-full"
+                            style={{ width: `${progressPercentage}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        {learningSteps.map((step, index) => {
+                          const isCompleted = checkCodeCompletion(currentCode);
+                          return (
+                            <div
+                              key={step.id}
+                              className={`p-3 rounded-lg border transition-all duration-200 ${
+                                isCompleted
+                                  ? "bg-doc-accent/10 border-doc-accent/30"
+                                  : "bg-doc-surface border-doc-border"
+                              }`}
+                              style={{
+                                backgroundColor: isCompleted
+                                  ? "hsl(var(--doc-accent) / 0.1)"
+                                  : "hsl(var(--doc-surface))",
+                              }}
+                            >
+                              <div className="flex items-start space-x-2">
+                                {isCompleted ? (
+                                  <CheckCircle
+                                    size={16}
+                                    className="text-doc-accent mt-0.5 flex-shrink-0"
+                                  />
+                                ) : (
+                                  <Circle
+                                    size={16}
+                                    className="text-doc-text-muted mt-0.5 flex-shrink-0"
+                                  />
                                 )}
+                                <div>
+                                  <h4 className="text-sm font-medium text-doc-text">
+                                    {step.title}
+                                  </h4>
+                                  <p className="text-xs text-doc-text-muted mt-1">
+                                    {step.description}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </TabsContent>
-              </Tabs>
+                )}
+
+                {/* Assignments Content */}
+                {activeTab === "assignments" && (
+                  <div className="flex-1 overflow-auto pr-2">
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-doc-text">
+                            Assignment Progress
+                          </h3>
+                          <span className="text-xs text-doc-text-muted">
+                            {assignmentCompletionCount}/{assignments.length}
+                          </span>
+                        </div>
+                        <div className="h-2 bg-doc-border rounded-full">
+                          <div
+                            className="h-full bg-doc-accent rounded-full"
+                            style={{ width: `${assignmentProgress}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 overflow-y-auto custom-scrollbar">
+                        {assignments.map((assignment, index) => {
+                          const isCompleted = checkAssignmentCompletion(
+                            index,
+                            currentCode,
+                          );
+                          return (
+                            <div
+                              key={index}
+                              className={`p-3 rounded-lg border transition-all duration-200 ${
+                                isCompleted
+                                  ? "bg-doc-accent/10 border-doc-accent/30"
+                                  : "bg-doc-surface border-doc-border"
+                              }`}
+                              style={{
+                                backgroundColor: isCompleted
+                                  ? "hsl(var(--doc-accent) / 0.1)"
+                                  : "hsl(var(--doc-surface))",
+                              }}
+                            >
+                              <div className="flex items-start space-x-2">
+                                {isCompleted ? (
+                                  <CheckCircle
+                                    size={16}
+                                    className="text-doc-accent mt-0.5 flex-shrink-0"
+                                  />
+                                ) : (
+                                  <Circle
+                                    size={16}
+                                    className="text-doc-text-muted mt-0.5 flex-shrink-0"
+                                  />
+                                )}
+                                <div>
+                                  <span className="text-xs font-medium text-doc-accent">
+                                    #{index + 1}
+                                  </span>
+                                  <p className="text-sm text-doc-text mt-1">
+                                    {assignment}
+                                  </p>
+                                  {isCompleted && (
+                                    <span className="text-xs text-green-400 mt-1 block">
+                                      ✓ Requirements detected
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -544,8 +557,7 @@ export default function AssignmentsPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
+                <button
                   onClick={() => {
                     const blob = new Blob([currentCode], { type: "text/java" });
                     const url = URL.createObjectURL(blob);
@@ -555,10 +567,11 @@ export default function AssignmentsPage() {
                     a.click();
                     URL.revokeObjectURL(url);
                   }}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-doc-text bg-doc-accent rounded-md shadow-sm hover:bg-doc-accent/90 transition-all duration-200"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Download Code
-                </Button>
+                </button>
               </div>
             </div>
           </div>
@@ -567,14 +580,20 @@ export default function AssignmentsPage() {
           <main className="flex-1 grid md:grid-cols-2 gap-6 p-6 overflow-auto">
             {/* Code Editor Column */}
             <div className="flex flex-col h-full min-h-0">
-              <Card className="flex-1 flex flex-col">
-                <CardHeader className="flex flex-row items-center justify-between">
+              <div className="flex-1 flex flex-col">
+                <div className="flex flex-row items-center justify-between p-4 bg-doc-surface border-b border-doc-border">
                   <div className="flex items-center gap-2">
                     <Code size={20} />
-                    <CardTitle>Java Code</CardTitle>
+                    <h2 className="text-lg font-semibold text-doc-text">
+                      Java Code
+                    </h2>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button onClick={handleRunCode} disabled={isRunning}>
+                    <button
+                      onClick={handleRunCode}
+                      disabled={isRunning}
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-doc-text bg-doc-accent rounded-md shadow-sm hover:bg-doc-accent/90 transition-all duration-200"
+                    >
                       {isRunning ? (
                         <>
                           <Square className="mr-2 h-4 w-4 animate-spin" />
@@ -586,40 +605,39 @@ export default function AssignmentsPage() {
                           Run
                         </>
                       )}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
+                    </button>
+                    <button
                       onClick={handleCopyCode}
+                      className="p-2 rounded-md text-doc-text-muted hover:text-doc-text hover:bg-doc-hover"
                       title="Copy code"
                     >
                       <Copy className="h-4 w-4" />
-                    </Button>
+                    </button>
                   </div>
-                </CardHeader>
-                <CardContent className="flex-1 p-0 relative">
+                </div>
+                <div className="flex-1 p-0 relative">
                   <div className="absolute inset-0">
                     <CodeBlock language="java">{currentCode}</CodeBlock>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
             {/* Output Column */}
             <div className="flex flex-col h-full min-h-0">
-              <Card className="flex-1 flex flex-col">
-                <CardHeader>
+              <div className="flex-1 flex flex-col">
+                <div className="p-4 bg-doc-surface border-b border-doc-border">
                   <div className="flex items-center gap-2">
                     <Monitor size={20} />
-                    <CardTitle>Output</CardTitle>
+                    <h2 className="text-lg font-semibold text-doc-text">Output</h2>
                   </div>
-                </CardHeader>
-                <CardContent className="flex-1 bg-doc-hover rounded-b-lg">
+                </div>
+                <div className="flex-1 bg-doc-hover rounded-b-lg">
                   <pre className="w-full h-full p-4 rounded-md bg-transparent text-sm whitespace-pre-wrap font-mono overflow-auto">
                     {output || "Output will be shown here..."}
                   </pre>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </main>
         </div>

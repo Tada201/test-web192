@@ -29,17 +29,17 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-doc-border bg-white/95 dark:bg-doc-bg/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-doc-bg/60">
+      <header className="sticky top-0 z-50 w-full border-b border-doc-border glass-strong backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="flex items-center space-x-2 neon-glow">
+                  <div className="w-8 h-8 bg-gradient-to-br from-neon-cyan to-neon-magenta rounded-lg flex items-center justify-center glass">
                     <Code className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-xl font-bold text-gray-900 dark:text-doc-text">
+                  <span className="text-xl font-bold text-doc-text font-orbitron neon-text">
                     PRO192
                   </span>
                 </div>
@@ -52,10 +52,10 @@ export function Header() {
                 <Link key={item.name} href={item.href}>
                   <Button
                     variant="ghost"
-                    className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                    className="text-doc-text-muted hover:text-doc-text neon-glow transition-all duration-300"
                   >
                     {item.icon}
-                    <span className="ml-2">{item.name}</span>
+                    <span className="ml-2 font-medium">{item.name}</span>
                   </Button>
                 </Link>
               ))}
@@ -67,20 +67,18 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                className="text-doc-text-muted hover:text-doc-text neon-glow"
               >
                 <Search className="w-4 h-4" />
                 <span className="ml-2 hidden sm:inline">Search</span>
               </Button>
-
-              
 
               {/* Theme Toggle */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={toggleTheme}
-                className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                className="text-doc-text-muted hover:text-doc-text neon-glow"
                 title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
                 {theme === "dark" ? (
@@ -94,7 +92,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSettingsOpen(true)}
-                className="text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                className="text-doc-text-muted hover:text-doc-text neon-glow"
               >
                 <Settings className="w-4 h-4" />
               </Button>
@@ -103,7 +101,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden"
+                className="md:hidden neon-glow"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -113,13 +111,13 @@ export function Header() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-200 dark:border-doc-border">
+            <div className="md:hidden py-4 border-t border-doc-border glass">
               <nav className="space-y-2">
                 {navigation.map((item) => (
                   <Link key={item.name} href={item.href}>
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-gray-600 dark:text-doc-text-muted hover:text-gray-900 dark:hover:text-doc-text"
+                      className="w-full justify-start text-doc-text-muted hover:text-doc-text neon-glow"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.icon}

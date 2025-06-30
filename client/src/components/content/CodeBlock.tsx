@@ -29,21 +29,21 @@ export function CodeBlock({
   const lines = children.trim().split('\n');
 
   return (
-    <div className="my-6 rounded-lg border border-doc-border bg-doc-surface overflow-hidden">
+    <div className="my-6 rounded-lg border border-doc-border bg-doc-surface overflow-hidden glass code-block">
       {title && (
-        <div className="flex items-center justify-between px-4 py-2 bg-doc-hover border-b border-doc-border">
-          <span className="text-sm font-medium text-doc-text">{title}</span>
-          <span className="text-xs text-doc-text-muted uppercase tracking-wide">{language}</span>
+        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-doc-border">
+          <span className="text-sm font-medium text-doc-text font-orbitron neon-text">{title}</span>
+          <span className="text-xs text-doc-text-muted uppercase tracking-wide font-fira-code">{language}</span>
         </div>
       )}
       
-      <div className="relative">
-        <div className="flex items-center justify-between px-4 py-2 bg-doc-bg border-b border-doc-border">
-          <span className="text-xs text-doc-text-muted font-mono">{language}</span>
+      <div className="relative terminal">
+        <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-doc-border">
+          <span className="text-xs text-doc-text-muted font-fira-code">{language}</span>
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 px-3 text-xs"
+            className="h-8 px-3 text-xs neon-glow hover:text-doc-primary"
             onClick={copyToClipboard}
           >
             <i className={`fas ${copied ? 'fa-check' : 'fa-copy'} mr-2`}></i>
@@ -51,20 +51,20 @@ export function CodeBlock({
           </Button>
         </div>
         
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto terminal-content">
           <pre className="p-4 text-sm leading-relaxed">
-            <code className="text-doc-text font-mono">
+            <code className="text-doc-text font-fira-code">
               {showLineNumbers ? (
                 lines.map((line, index) => (
-                  <div key={index} className="flex">
-                    <span className="select-none w-8 text-doc-text-muted text-right mr-4 flex-shrink-0">
+                  <div key={index} className="flex hover:bg-gray-800/30 transition-colors">
+                    <span className="select-none w-8 text-doc-text-muted text-right mr-4 flex-shrink-0 opacity-60">
                       {index + 1}
                     </span>
-                    <span className="flex-1">{line}</span>
+                    <span className="flex-1 text-neon-green">{line}</span>
                   </div>
                 ))
               ) : (
-                children
+                <span className="text-neon-green">{children}</span>
               )}
             </code>
           </pre>

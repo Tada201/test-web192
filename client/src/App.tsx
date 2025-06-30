@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/hooks/use-theme";
+import { ThemeProvider } from "./hooks/use-theme";
 import { SettingsProvider } from "./contexts/SettingsContext";
-import TextWaveLoading from "./components/TextWaveLoading";
-import { BackgroundAnimation } from "./components/BackgroundAnimation";
+import CanvasBackground from "./components/CanvasBackground";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 import DocsPage from "@/pages/docs";
 import ComponentsDemo from "@/pages/components-demo";
 import JavaOOPExample from "@/pages/java-oop-example";
 import AssignmentsPage from "@/pages/assignments";
+import SyllabusTabsPage from "@/pages/syllabus-tabs";
+import SectionPage from "@/pages/SectionPage";
 import { Header } from "@/components/Header";
+import PatternBackground from "./PatternBackground";
 
 function Router() {
   return (
@@ -25,38 +25,27 @@ function Router() {
       <Route path="/components" component={ComponentsDemo} />
       <Route path="/java-oop" component={JavaOOPExample} />
       <Route path="/assignments" component={AssignmentsPage} />
+      <Route path="/syllabus-tabs" component={SyllabusTabsPage} />
+      <Route path="/section/:sectionId" component={SectionPage} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3300);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <ThemeProvider>
-          <TooltipProvider>
-            <div style={{ position: 'relative', minHeight: '100vh' }}>
-              <Header />
-              <div style={{ zIndex: 1, position: 'relative' }} aria-hidden={isLoading}>
-                <BackgroundAnimation />
-                <Toaster />
-                <Router />
-              </div>
-              {isLoading && (
-                <div style={{ zIndex: 2, position: 'fixed', inset: 0 }}>
-                  <TextWaveLoading />
-                </div>
-              )}
-            </div>
-          </TooltipProvider>
+          {/* Pattern background always rendered for static fallback */}
+          <PatternBackground />
+          {/* Move CanvasBackground outside the main content for proper layering */}
+          <CanvasBackground />
+          <div className="relative min-h-screen z-20" style={{ background: "none" }}>
+            <Header />
+            {/* Toaster and TooltipProvider removed as ui folder is gone */}
+            <Router />
+          </div>
         </ThemeProvider>
       </SettingsProvider>
     </QueryClientProvider>
