@@ -35,15 +35,10 @@ export function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center" style={{ marginLeft: '20px' }}>
               <Link href="/">
-                <div className="flex items-center space-x-2 neon-glow">
-                  <div className="w-8 h-8 bg-gradient-to-br from-neon-cyan to-neon-magenta rounded-lg flex items-center justify-center glass">
-                    <Code className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-xl font-bold text-doc-text font-orbitron neon-text">
-                    PRO192
-                  </span>
+                <div style={{ width: '200px', height: '50px' }} className="flex items-center justify-center overflow-hidden rounded-lg">
+                  <img src="/media/logo.webp" alt="PRO192 Logo" className="object-contain w-full h-full" />
                 </div>
               </Link>
             </div>
@@ -63,18 +58,8 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Actions */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsSearchOpen(true)}
-                className="text-doc-text-muted hover:text-doc-text neon-glow"
-              >
-                <Search className="w-4 h-4" />
-                <span className="ml-2 hidden sm:inline">Search</span>
-              </Button>
-
+            {/* Right-aligned actions with margin from edge */}
+            <div className="flex items-center" style={{ marginRight: '20px' }}>
               {/* Theme Toggle */}
               <Button
                 variant="ghost"
@@ -94,16 +79,26 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSettingsOpen(true)}
-                className="text-doc-text-muted hover:text-doc-text neon-glow"
+                className="text-doc-text-muted hover:text-doc-text neon-glow ml-2"
               >
                 <Settings className="w-4 h-4" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsSearchOpen(true)}
+                className="text-doc-text-muted hover:text-doc-text neon-glow ml-2"
+              >
+                <Search className="w-4 h-4" />
+                <span className="ml-2 hidden sm:inline">Search</span>
               </Button>
 
               {/* Mobile menu button */}
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden neon-glow"
+                className="md:hidden neon-glow ml-2"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}

@@ -1,0 +1,22 @@
+/* Font Imports for Font Switching */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&family=Fira+Code:wght@400;700&family=Open+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap');
+
+/* OpenDyslexic Regular */
+@font-face {
+  font-family: 'OpenDyslexic-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/web/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/web/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* OpenDyslexic Bold */
+@font-face {
+  font-family: 'OpenDyslexic-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/web/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/web/OpenDyslexic-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

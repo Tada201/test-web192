@@ -20,6 +20,21 @@ export default function DocsPage() {
   }, [location]);
 
   useEffect(() => {
+    // Listen to hashchange event to update activeSection
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setActiveSection(hash);
+      }
+    };
+    window.addEventListener('hashchange', onHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', onHashChange);
+    };
+  }, []);
+
+  useEffect(() => {
     // Close sidebar when route changes (mobile)
     setIsSidebarOpen(false);
   }, [location]);
@@ -40,7 +55,7 @@ export default function DocsPage() {
           onClose={closeSidebar}
           activeSection={activeSection}
         />
-        <div className="flex-1 lg:ml-0">
+        <div className="flex-1 content-area lg:ml-80">
           <div className="flex">
             <MainContent activeSection={activeSection} />
             <TableOfContents activeSection={activeSection} />

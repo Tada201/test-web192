@@ -81,9 +81,6 @@ export function EnhancedSearchModal({ isOpen, onClose }: EnhancedSearchModalProp
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Popular search terms
-  const popularSearches = ['encapsulation', 'inheritance', 'polymorphism', 'classes', 'objects', 'methods'];
-
   // Load recent searches from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('recent-searches');
@@ -323,22 +320,6 @@ export function EnhancedSearchModal({ isOpen, onClose }: EnhancedSearchModalProp
                   </div>
                 </div>
               )}
-
-              {/* Popular Searches */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Popular Searches</h3>
-                <div className="flex flex-wrap gap-2">
-                  {popularSearches.map(term => (
-                    <button
-                      key={term}
-                      onClick={() => setSearchQuery(term)}
-                      className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                    >
-                      {term}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
 

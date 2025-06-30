@@ -1,3 +1,6 @@
+@import './fonts.css';
+
+/* Tailwind CSS Imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

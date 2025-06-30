@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { docSections } from "@/lib/docs-data";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
 
 interface SidebarProps {
@@ -34,35 +33,25 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
       )}
       
       {/* Sidebar */}
-      <aside className={`sidebar-mobile fixed lg:static inset-y-0 left-0 z-40 w-80 glass-strong border-r border-doc-border transform transition-all duration-500 ease-in-out pt-16 lg:pt-0 ${
+      <aside className={`sidebar-mobile fixed inset-y-0 left-0 z-40 w-80 glass-strong border-r border-doc-border transform transition-all duration-500 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-      }`}>
+      }`} style={{
+        top: 0,
+        height: '100vh',
+        zIndex: 40,
+      }}>
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b border-doc-border glass">
-            <Select defaultValue="v3.0.0">
-              <SelectTrigger className="w-full glass border border-doc-border text-doc-text neon-glow">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="glass border border-doc-border">
-                <SelectItem value="v3.0.0">v3.0.0</SelectItem>
-                <SelectItem value="v2.1.0">v2.1.0</SelectItem>
-                <SelectItem value="v1.0.0">v1.0.0</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
           <nav className="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1">
             {/* Home Button */}
             <div className="mb-6">
-              <Link href="/">
-                <button
-                  className="nav-item flex items-center px-3 py-3 text-sm rounded-md transition-all duration-300 text-doc-text hover:text-doc-primary w-full glass neon-glow"
-                  onClick={onClose}
-                >
-                  <i className="fas fa-home text-xs mr-3 text-doc-text-muted"></i>
-                  <span className="font-medium font-orbitron">Home</span>
-                </button>
-              </Link>
+              <a
+                href="/"
+                className="nav-item flex items-center px-3 py-3 text-sm rounded-md transition-all duration-300 text-doc-text hover:text-doc-primary w-full glass neon-glow"
+                onClick={onClose}
+              >
+                <i className="fas fa-home text-xs mr-3 text-doc-text-muted"></i>
+                <span className="font-medium font-orbitron">Home</span>
+              </a>
             </div>
 
             {docSections.map((section) => (
@@ -86,8 +75,8 @@ export function Sidebar({ isOpen, onClose, activeSection = "introduction" }: Sid
                     {section.items.map((item) => (
                       <li key={item.id}>
                         <a
-                          href={item.href}
-                          className={`nav-item flex items-center px-3 py-3 text-sm rounded-md transition-all duration-300 text-doc-text hover:text-doc-primary glass ${
+                          href={`#${item.id}`}
+                          className={`nav-item flex items-center px-3 py-3 text-sm rounded-md transition-all duration-300 text-doc-text hover:text-doc-primary glass w-full ${
                             activeSection === item.id ? 'active neon-border' : ''
                           }`}
                           onClick={onClose}
