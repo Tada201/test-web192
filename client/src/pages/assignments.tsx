@@ -24,6 +24,14 @@ import {
   Monitor,
   Sun,
   Moon,
+  ExternalLink,
+  RefreshCw,
+  Save,
+  FileText,
+  Award,
+  Clock,
+  Users,
+  TrendingUp,
 } from "lucide-react";
 import { HighlightedCode } from "@/components/content/HighlightedCode";
 
@@ -43,6 +51,34 @@ export default function AssignmentsPage() {
   const [learningSteps, setLearningSteps] = useState<any[]>([]);
   const [assignments, setAssignments] = useState<string[]>([]);
   const [openExample, setOpenExample] = useState<string | null>(null);
+  const [savedCode, setSavedCode] = useState<Record<string, string>>({});
+  const [activeAssignment, setActiveAssignment] = useState<number | null>(null);
+
+  // Load saved progress from localStorage
+  useEffect(() => {
+    const savedProgress = localStorage.getItem('assignment-progress');
+    if (savedProgress) {
+      try {
+        const progress = JSON.parse(savedProgress);
+        setCompletedAssignments(new Set(progress.completed || []));
+        setSavedCode(progress.savedCode || {});
+        setActiveAssignment(progress.activeAssignment || null);
+      } catch (e) {
+        console.error('Failed to load saved progress:', e);
+      }
+    }
+  }, []);
+
+  // Save progress to localStorage
+  const saveProgress = () => {
+    const progress = {
+      completed: Array.from(completedAssignments),
+      savedCode,
+      activeAssignment,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('assignment-progress', JSON.stringify(progress));
+  };
 
   // Fetch code examples, learning steps, and assignments from backend on mount
   useEffect(() => {
@@ -194,13 +230,34 @@ export default function AssignmentsPage() {
 }`,
     };
     setExamples(staticExamples);
-    setLearningSteps([]);
+    setLearningSteps([
+      {
+        id: "java-basics",
+        title: "Java Basics",
+        description: "Learn fundamental Java syntax and concepts"
+      },
+      {
+        id: "oop-concepts",
+        title: "OOP Concepts",
+        description: "Master object-oriented programming principles"
+      },
+      {
+        id: "advanced-topics",
+        title: "Advanced Topics",
+        description: "Explore advanced Java features and best practices"
+      }
+    ]);
     setAssignments([
       "Write a loop to print numbers 1 to 10",
       "Create a class Car with properties and methods",
       "Implement a method to reverse a string",
       "Write a program to check if a number is prime",
       "Create a BankAccount class with deposit and withdraw methods",
+      "Implement a simple calculator with basic operations",
+      "Create a Student management system",
+      "Write a program to sort an array of integers",
+      "Implement inheritance with Animal and Dog classes",
+      "Create an interface for geometric shapes",
     ]);
   }, []);
 
@@ -263,10 +320,46 @@ export default function AssignmentsPage() {
     navigator.clipboard.writeText(currentCode);
   };
 
+  const handleSaveCode = () => {
+    if (activeAssignment !== null) {
+      const newSavedCode = { ...savedCode, [activeAssignment]: currentCode };
+      setSavedCode(newSavedCode);
+      saveProgress();
+    }
+  };
+
+  const handleLoadCode = (assignmentIndex: number) => {
+    if (savedCode[assignmentIndex]) {
+      setCurrentCode(savedCode[assignmentIndex]);
+      setActiveAssignment(assignmentIndex);
+    }
+  };
+
   const handleExampleChange = (exampleKey: string) => {
     setSelectedExample(exampleKey);
     setCurrentCode(examples[exampleKey] || "");
     setOutput("");
+  };
+
+  const handleAssignmentSelect = (index: number) => {
+    setActiveAssignment(index);
+    if (savedCode[index]) {
+      setCurrentCode(savedCode[index]);
+    } else {
+      setCurrentCode("");
+    }
+    setOutput("");
+  };
+
+  const markAssignmentComplete = (index: number) => {
+    const newCompleted = new Set(completedAssignments);
+    if (newCompleted.has(index)) {
+      newCompleted.delete(index);
+    } else {
+      newCompleted.add(index);
+    }
+    setCompletedAssignments(newCompleted);
+    saveProgress();
   };
 
   // Auto-detect code completion based on requirements
@@ -287,23 +380,15 @@ export default function AssignmentsPage() {
     // Auto-detect completion based on assignment requirements
     const requirements = [
       () => code.includes("for") || code.includes("while"), // Loop assignment
-      () => code.includes("length") && code.includes("width"), // Rectangle area
-      () =>
-        code.includes("if") && (code.includes("even") || code.includes("odd")), // Even/odd check
-      () => code.includes("if") && code.includes("else"), // If-else structure
       () => code.includes("class Car"), // Car class
       () => code.includes("reverse") || code.includes("charAt"), // String reverse
+      () => code.includes("prime") || (code.includes("for") && code.includes("if")), // Prime check
       () => code.includes("class BankAccount"), // BankAccount class
-      () =>
-        code.includes("fibonacci") ||
-        (code.includes("for") && code.includes("+")), // Fibonacci
-      () => code.includes("leap") || code.includes("year"), // Leap year
+      () => code.includes("calculator") || (code.includes("+") && code.includes("-")), // Calculator
       () => code.includes("class Student"), // Student class
       () => code.includes("sort") || code.includes("bubble"), // Sorting
-      () => code.includes("factorial"), // Factorial
-      () => code.includes("class Rectangle"), // Rectangle class
-      () => code.includes("celsius") || code.includes("fahrenheit"), // Temperature
-      () => code.includes("vowel") || code.includes("consonant"), // Character counting
+      () => code.includes("extends") && code.includes("Animal"), // Inheritance
+      () => code.includes("interface") && code.includes("Shape"), // Interface
     ];
 
     if (requirements[assignmentIndex]) {
@@ -317,17 +402,53 @@ export default function AssignmentsPage() {
     ? learningSteps.length
     : 0;
   const assignmentCompletionCount = assignments.filter((_, index) =>
-    checkAssignmentCompletion(index, currentCode),
+    completedAssignments.has(index)
   ).length;
 
-  const progressPercentage = (codeCompletionCount / learningSteps.length) * 100;
-  const assignmentProgress =
-    (assignmentCompletionCount / assignments.length) * 100;
+  const progressPercentage = learningSteps.length > 0 ? (codeCompletionCount / learningSteps.length) * 100 : 0;
+  const assignmentProgress = assignments.length > 0 ? (assignmentCompletionCount / assignments.length) * 100 : 0;
+
+  const getDifficultyLevel = (index: number): "beginner" | "intermediate" | "advanced" => {
+    if (index < 3) return "beginner";
+    if (index < 7) return "intermediate";
+    return "advanced";
+  };
+
+  const getDifficultyColor = (level: string) => {
+    switch (level) {
+      case "beginner": return "text-green-500 bg-green-100 dark:bg-green-900";
+      case "intermediate": return "text-yellow-500 bg-yellow-100 dark:bg-yellow-900";
+      case "advanced": return "text-red-500 bg-red-100 dark:bg-red-900";
+      default: return "text-gray-500 bg-gray-100 dark:bg-gray-900";
+    }
+  };
 
   return (
     <div className="min-h-screen bg-doc-bg text-doc-text">
-      <div className="flex h-[calc(100vh-4rem)] overflow-hidden">
-        {/* Sidebar */}
+      {/* Header with stats */}
+      <div className="border-b border-doc-border bg-doc-surface/50 p-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-doc-text font-orbitron">Java Programming Assignments</h1>
+              <p className="text-doc-text-muted">Practice your Java skills with interactive coding exercises</p>
+            </div>
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2 px-3 py-2 bg-doc-hover rounded-lg">
+                <Award className="w-4 h-4 text-doc-accent" />
+                <span className="text-sm font-medium">{assignmentCompletionCount}/{assignments.length} Completed</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 bg-doc-hover rounded-lg">
+                <Clock className="w-4 h-4 text-doc-accent" />
+                <span className="text-sm font-medium">Progress: {Math.round(assignmentProgress)}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex h-[calc(100vh-8rem)] overflow-hidden">
+        {/* Enhanced Sidebar */}
         <div
           className={`border-r border-doc-border transition-all duration-300 flex-shrink-0 ${
             sidebarCollapsed ? "w-16" : "w-80"
@@ -340,8 +461,8 @@ export default function AssignmentsPage() {
           >
             <div className="flex items-center justify-between">
               {!sidebarCollapsed && (
-                <h2 className="text-lg font-semibold text-doc-text">
-                  Navigation
+                <h2 className="text-lg font-semibold text-doc-text font-orbitron">
+                  Learning Hub
                 </h2>
               )}
               <Button
@@ -367,67 +488,20 @@ export default function AssignmentsPage() {
                 onValueChange={setActiveTab}
                 className="w-full flex-1 flex flex-col"
               >
-                <TabsList className="grid w-full grid-cols-2 bg-doc-hover mb-4">
-                  <TabsTrigger value="learning-path" className="text-xs">
-                    <Target size={16} className="mr-1" />
-                    Learning
-                  </TabsTrigger>
+                <TabsList className="grid w-full grid-cols-3 bg-doc-hover mb-4">
                   <TabsTrigger value="assignments" className="text-xs">
-                    <BookOpen size={16} className="mr-1" />
-                    Assignments
+                    <Target size={16} className="mr-1" />
+                    Tasks
+                  </TabsTrigger>
+                  <TabsTrigger value="examples" className="text-xs">
+                    <Code size={16} className="mr-1" />
+                    Examples
+                  </TabsTrigger>
+                  <TabsTrigger value="progress" className="text-xs">
+                    <TrendingUp size={16} className="mr-1" />
+                    Progress
                   </TabsTrigger>
                 </TabsList>
-
-                <TabsContent
-                  value="learning-path"
-                  className="flex-1 overflow-auto"
-                >
-                  <div className="space-y-4 pr-2">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-medium text-doc-text">
-                          Code Examples
-                        </h3>
-                        <span className="text-xs text-doc-text-muted">
-                          {Object.keys(examples).length}
-                        </span>
-                      </div>
-
-                      <Progress value={0} className="h-2" />
-                    </div>
-
-                    <div className="space-y-2">
-                      {Object.entries(examples).map(([key, code]) => (
-                        <div
-                          key={key}
-                          className="p-3 rounded-lg border bg-doc-surface border-doc-border"
-                        >
-                          <button
-                            className="w-full text-left font-medium text-doc-text"
-                            onClick={() => setOpenExample(openExample === key ? null : key)}
-                          >
-                            {key}
-                          </button>
-                          {openExample === key && (
-                            <div className="mt-2 relative">
-                              <pre className="overflow-auto max-h-48 p-2 bg-doc-hover rounded text-sm font-mono whitespace-pre-wrap">
-                                {code}
-                              </pre>
-                              <button
-                                className="absolute top-1 right-1 bg-doc-accent text-white px-2 py-1 rounded text-xs"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(code);
-                                }}
-                              >
-                                Copy
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
 
                 <TabsContent
                   value="assignments"
@@ -437,64 +511,208 @@ export default function AssignmentsPage() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-medium text-doc-text">
-                          Assignment Progress
+                          Programming Assignments
                         </h3>
-                        <span className="text-xs text-doc-text-muted">
+                        <Badge variant="outline" className="text-xs">
                           {assignmentCompletionCount}/{assignments.length}
-                        </span>
+                        </Badge>
                       </div>
-                      <Progress value={assignmentProgress} className="h-2" />
+                      <Progress value={assignmentProgress} className="h-2 mb-4" />
                     </div>
 
                     <div className="space-y-2 overflow-y-auto custom-scrollbar">
                       {assignments.map((assignment, index) => {
-                        const isCompleted = checkAssignmentCompletion(
-                          index,
-                          currentCode,
-                        );
+                        const isCompleted = completedAssignments.has(index);
+                        const isActive = activeAssignment === index;
+                        const hasSavedCode = savedCode[index];
+                        const difficulty = getDifficultyLevel(index);
+                        
                         return (
-                          <div
+                          <Card
                             key={index}
-                            className={`p-3 rounded-lg border transition-all duration-200 ${
+                            className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                              isActive ? "ring-2 ring-doc-accent" : ""
+                            } ${
                               isCompleted
-                                ? "bg-doc-accent/10 border-doc-accent/30"
-                                : "bg-doc-surface border-doc-border"
+                                ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+                                : "bg-doc-surface border-doc-border hover:bg-doc-hover"
                             }`}
-                            style={{
-                              backgroundColor: isCompleted
-                                ? "hsl(var(--doc-accent) / 0.1)"
-                                : "hsl(var(--doc-surface))",
-                            }}
+                            onClick={() => handleAssignmentSelect(index)}
                           >
-                            <div className="flex items-start space-x-2">
-                              {isCompleted ? (
-                                <CheckCircle
-                                  size={16}
-                                  className="text-doc-accent mt-0.5 flex-shrink-0"
-                                />
-                              ) : (
-                                <Circle
-                                  size={16}
-                                  className="text-doc-text-muted mt-0.5 flex-shrink-0"
-                                />
-                              )}
-                              <div>
-                                <span className="text-xs font-medium text-doc-accent">
-                                  #{index + 1}
-                                </span>
-                                <p className="text-sm text-doc-text mt-1">
-                                  {assignment}
-                                </p>
-                                {isCompleted && (
-                                  <span className="text-xs text-green-400 mt-1 block">
-                                    ✓ Requirements detected
+                            <CardContent className="p-3">
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex items-center space-x-2">
+                                  <span className="text-xs font-medium text-doc-accent">
+                                    #{index + 1}
                                   </span>
-                                )}
+                                  <Badge 
+                                    variant="outline" 
+                                    className={`text-xs ${getDifficultyColor(difficulty)}`}
+                                  >
+                                    {difficulty}
+                                  </Badge>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                  {hasSavedCode && (
+                                    <Save size={12} className="text-doc-accent" title="Has saved code" />
+                                  )}
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      markAssignmentComplete(index);
+                                    }}
+                                    className="hover:scale-110 transition-transform"
+                                  >
+                                    {isCompleted ? (
+                                      <CheckCircle
+                                        size={16}
+                                        className="text-green-500"
+                                      />
+                                    ) : (
+                                      <Circle
+                                        size={16}
+                                        className="text-doc-text-muted hover:text-doc-accent"
+                                      />
+                                    )}
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                          </div>
+                              <p className="text-sm text-doc-text leading-relaxed">
+                                {assignment}
+                              </p>
+                              {isCompleted && (
+                                <div className="mt-2 flex items-center text-xs text-green-600 dark:text-green-400">
+                                  <CheckCircle size={12} className="mr-1" />
+                                  Completed
+                                </div>
+                              )}
+                            </CardContent>
+                          </Card>
                         );
                       })}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent
+                  value="examples"
+                  className="flex-1 overflow-auto"
+                >
+                  <div className="space-y-4 pr-2">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-sm font-medium text-doc-text">
+                          Code Examples
+                        </h3>
+                        <Badge variant="outline" className="text-xs">
+                          {Object.keys(examples).length}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {Object.entries(examples).map(([key, code]) => (
+                        <Card
+                          key={key}
+                          className="cursor-pointer hover:shadow-md transition-all duration-200 bg-doc-surface border-doc-border hover:bg-doc-hover"
+                        >
+                          <CardContent className="p-3">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-medium text-doc-text">{key}</h4>
+                              <div className="flex items-center space-x-1">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleExampleChange(key);
+                                  }}
+                                  className="h-6 px-2 text-xs"
+                                >
+                                  <ExternalLink size={12} className="mr-1" />
+                                  Load
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenExample(openExample === key ? null : key);
+                                  }}
+                                  className="h-6 px-2 text-xs"
+                                >
+                                  {openExample === key ? (
+                                    <ChevronDown size={12} />
+                                  ) : (
+                                    <ChevronRight size={12} />
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+                            {openExample === key && (
+                              <div className="mt-2">
+                                <pre className="overflow-auto max-h-32 p-2 bg-doc-bg rounded text-xs font-mono whitespace-pre-wrap text-doc-text-muted">
+                                  {code.substring(0, 200)}...
+                                </pre>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent
+                  value="progress"
+                  className="flex-1 overflow-auto"
+                >
+                  <div className="space-y-4 pr-2">
+                    <div className="grid grid-cols-2 gap-3">
+                      <Card className="bg-doc-surface border-doc-border">
+                        <CardContent className="p-3 text-center">
+                          <div className="text-2xl font-bold text-doc-accent">{assignmentCompletionCount}</div>
+                          <div className="text-xs text-doc-text-muted">Completed</div>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-doc-surface border-doc-border">
+                        <CardContent className="p-3 text-center">
+                          <div className="text-2xl font-bold text-doc-accent">{assignments.length - assignmentCompletionCount}</div>
+                          <div className="text-xs text-doc-text-muted">Remaining</div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-doc-text mb-2">Overall Progress</h3>
+                      <Progress value={assignmentProgress} className="h-3" />
+                      <div className="text-xs text-doc-text-muted mt-1">
+                        {Math.round(assignmentProgress)}% Complete
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-sm font-medium text-doc-text mb-2">Difficulty Breakdown</h3>
+                      <div className="space-y-2">
+                        {["beginner", "intermediate", "advanced"].map((level) => {
+                          const levelAssignments = assignments.filter((_, i) => getDifficultyLevel(i) === level);
+                          const levelCompleted = levelAssignments.filter((_, i) => {
+                            const originalIndex = assignments.findIndex(a => a === levelAssignments[i]);
+                            return completedAssignments.has(originalIndex);
+                          }).length;
+                          const levelProgress = levelAssignments.length > 0 ? (levelCompleted / levelAssignments.length) * 100 : 0;
+                          
+                          return (
+                            <div key={level} className="space-y-1">
+                              <div className="flex justify-between text-xs">
+                                <span className="capitalize text-doc-text">{level}</span>
+                                <span className="text-doc-text-muted">{levelCompleted}/{levelAssignments.length}</span>
+                              </div>
+                              <Progress value={levelProgress} className="h-2" />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </TabsContent>
@@ -503,11 +721,119 @@ export default function AssignmentsPage() {
           )}
         </div>
 
-        {/* Main Content */}
+        {/* Enhanced Main Content */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          {/* Toolbar */}
+          <div className="border-b border-doc-border bg-doc-surface/50 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                {activeAssignment !== null && (
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline" className="text-xs">
+                      Assignment #{activeAssignment + 1}
+                    </Badge>
+                    <Badge 
+                      variant="outline" 
+                      className={`text-xs ${getDifficultyColor(getDifficultyLevel(activeAssignment))}`}
+                    >
+                      {getDifficultyLevel(activeAssignment)}
+                    </Badge>
+                  </div>
+                )}
+                <div className="text-sm text-doc-text-muted">
+                  {activeAssignment !== null 
+                    ? assignments[activeAssignment]
+                    : "Select an assignment to get started"
+                  }
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                {activeAssignment !== null && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleSaveCode}
+                      disabled={!currentCode.trim()}
+                      className="text-xs"
+                    >
+                      <Save size={14} className="mr-1" />
+                      Save
+                    </Button>
+                    {savedCode[activeAssignment] && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleLoadCode(activeAssignment)}
+                        className="text-xs"
+                      >
+                        <RefreshCw size={14} className="mr-1" />
+                        Load Saved
+                      </Button>
+                    )}
+                  </>
+                )}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleClearCode}
+                  disabled={!currentCode.trim()}
+                  className="text-xs"
+                >
+                  <Square size={14} className="mr-1" />
+                  Clear
+                </Button>
+              </div>
+            </div>
+          </div>
+
           {/* Main content area with JDoodle embed */}
           <main className="flex-1 p-6 overflow-auto">
-            <div data-pym-src="https://www.jdoodle.com/embed/v1/383bf936da7f82d1" style={{ width: "100%", height: "600px" }}></div>
+            {activeAssignment !== null ? (
+              <div className="space-y-4">
+                <InfoBox type="info" title="Assignment Instructions">
+                  <p className="mb-2"><strong>Task:</strong> {assignments[activeAssignment]}</p>
+                  <p className="text-sm">
+                    Use the embedded code editor below to write your Java solution. 
+                    You can run your code directly in the browser and see the output.
+                  </p>
+                </InfoBox>
+                
+                <div 
+                  data-pym-src="https://www.jdoodle.com/embed/v1/383bf936da7f82d1" 
+                  style={{ width: "100%", height: "600px", border: "1px solid hsl(var(--doc-border))", borderRadius: "8px" }}
+                ></div>
+                
+                {completedAssignments.has(activeAssignment) && (
+                  <div className="mt-4">
+                    <InfoBox type="tip" title="Assignment Completed!">
+                      Great job! You've marked this assignment as complete. 
+                      You can continue to the next assignment or review your solution.
+                    </InfoBox>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <Card className="max-w-md text-center bg-doc-surface border-doc-border">
+                  <CardContent className="p-8">
+                    <Code size={48} className="mx-auto mb-4 text-doc-accent" />
+                    <h3 className="text-lg font-semibold text-doc-text mb-2">
+                      Ready to Start Coding?
+                    </h3>
+                    <p className="text-doc-text-muted mb-4">
+                      Select an assignment from the sidebar to begin practicing your Java programming skills.
+                    </p>
+                    <Button
+                      onClick={() => handleAssignmentSelect(0)}
+                      className="w-full"
+                    >
+                      Start First Assignment
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </main>
         </div>
       </div>
