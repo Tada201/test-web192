@@ -39,20 +39,21 @@ export function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <div
-              className="flex items-center fixed top-0 left-0 z-50 bg-transparent"
-              style={{ width: '200px', height: '50px', marginLeft: 0 }}
-            >
+            {/* Logo - Fixed positioning on left */}
+            <div className="flex items-center">
               <Link href="/">
-                <div className="flex items-center justify-center overflow-hidden rounded-lg w-full h-full">
-                  <img src="/media/logo.webp" alt="PRO192 Logo" className="object-contain w-full h-full" style={{ marginTop: '2px' }} />
+                <div className="flex items-center justify-center p-2">
+                  <img 
+                    src="/media/logo.webp" 
+                    alt="PRO192 Logo" 
+                    className="h-8 w-8 object-contain"
+                  />
                 </div>
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20" style={{ marginLeft: '200px' }}>
+            <nav className="hidden md:flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20">
               {navigation.map((item) => (
                 <Link key={item.name} href={item.href}>
                   <Button
@@ -66,8 +67,8 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Right-aligned actions with margin from edge */}
-            <div className="flex items-center" style={{ marginRight: '20px' }}>
+            {/* Right-aligned actions */}
+            <div className="flex items-center space-x-2">
               {/* Theme Toggle */}
               <Button
                 variant="ghost"
@@ -87,7 +88,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSettingsOpen(true)}
-                className="text-white hover:text-doc-accent neon-glow ml-2"
+                className="text-white hover:text-doc-accent neon-glow"
               >
                 <Settings className="w-4 h-4" />
               </Button>
@@ -96,7 +97,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white hover:text-doc-accent neon-glow ml-2"
+                className="text-white hover:text-doc-accent neon-glow"
               >
                 <Search className="w-4 h-4" />
                 <span className="ml-2 hidden sm:inline">Search</span>
@@ -106,7 +107,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden neon-glow ml-2"
+                className="md:hidden neon-glow"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
