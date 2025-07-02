@@ -30,13 +30,31 @@ function Router() {
 }
 
 function App() {
+  const [font, setFont] = useState('roboto');
+
+  useEffect(() => {
+    // Get saved font from localStorage or default to roboto
+    const savedFont = localStorage.getItem('selectedFont');
+    if (savedFont) {
+      setFont(savedFont);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Apply font class to html element
+    document.documentElement.className = `font-${font}`;
+    
+    // Save to localStorage
+    localStorage.setItem('selectedFont', font);
+  }, [font]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <ThemeProvider>
           <TooltipProvider>
             <div className="relative min-h-screen" style={{ zIndex: 1, position: 'relative' }}>
-              <Header />
+              <Header font={font} setFont={setFont} />
               <CanvasBackground />
               <Toaster />
               <Router />

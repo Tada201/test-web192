@@ -9,6 +9,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&family=Fira+Code:wght@300;400;500;600&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      html, body {
+        background-color: #0D0D0D;
+      }
+    </style>
+    <script>
+      (function() {
+        try {
+          const savedSettings = localStorage.getItem('pro192-settings');
+          if (savedSettings) {
+            const settings = JSON.parse(savedSettings);
+            const html = document.documentElement;
+            if (settings.theme === 'dark') {
+              html.classList.add('dark');
+              html.classList.remove('light');
+            } else {
+              html.classList.add('light');
+              html.classList.remove('dark');
+            }
+            // Remove existing scheme classes
+            Array.from(html.classList)
+              .filter(c => c.startsWith('scheme-'))
+              .forEach(c => html.classList.remove(c));
+            const scheme = settings.theme === 'dark' ? settings.darkTheme : settings.lightTheme;
+            if (scheme) {
+              html.classList.add(`scheme-${scheme}`);
+            }
+          }
+        } catch (e) {
+          // Fail silently
+          console.error('Error applying saved theme:', e);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

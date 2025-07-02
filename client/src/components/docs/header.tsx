@@ -27,7 +27,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
     <header className="sticky top-0 z-50 bg-doc-bg/95 backdrop-blur-sm border-b border-doc-border">
       <div className="flex items-center justify-between px-4 h-16 max-w-none">
         {/* Logo and Title */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center h-full" style={{ minWidth: 80 }}>
           <Button
             variant="ghost"
             size="sm"
@@ -36,13 +36,11 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           >
             <i className="fas fa-bars text-doc-text"></i>
           </Button>
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-doc-primary rounded-lg flex items-center justify-center">
-              <i className="fas fa-book text-white text-sm"></i>
-            </div>
-            <span className="font-semibold text-lg text-doc-text">PRO192 - Object-Oriented Programming</span>
+          <div className="flex items-center justify-center h-full w-16">
+            <img src="/media/logo.webp" alt="PRO192 Logo" className="object-contain h-12 w-12 mx-auto" style={{ marginTop: 2 }} />
           </div>
         </div>
+        <span className="font-semibold text-lg text-doc-text ml-2">PRO192 - Object-Oriented Programming</span>
 
         {/* Enhanced Search Bar */}
         <div className="hidden md:flex flex-1 max-w-lg mx-8">

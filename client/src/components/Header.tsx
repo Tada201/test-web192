@@ -4,7 +4,8 @@ import { Link } from "wouter";
 import { Menu, X, Search, Settings, Home, BookOpen, Code, Github, Twitter, Sun, Moon } from "lucide-react";
 import { EnhancedSearchModal } from "./EnhancedSearchModal";
 import { SettingsMenu } from "./SettingsMenu";
-import { useTheme } from "@/hooks/use-theme";
+import { useSettings } from "../contexts/SettingsContext";
+import { uiStrings } from '../data/uiStrings';
 
 // Discord icon fallback (SVG)
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -13,43 +14,50 @@ const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+interface HeaderProps {}
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { settings, setTheme } = useSettings();
+  const theme = settings.theme;
+  const lang = settings.language as 'en' | 'vi';
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const navigation = [
-    { name: "Home", href: "/", icon: <Home className="w-4 h-4" /> },
-    { name: "Documentation", href: "/docs", icon: <BookOpen className="w-4 h-4" /> },
-    { name: "Components", href: "/components", icon: <Code className="w-4 h-4" /> },
-    { name: "Assignments", href: "/assignments", icon: <Code className="w-4 h-4" /> },
+    { name: uiStrings[lang].home, href: "/", icon: <Home className="w-4 h-4" /> },
+    { name: uiStrings[lang].documentation, href: "/docs", icon: <BookOpen className="w-4 h-4" /> },
+    { name: uiStrings[lang].components, href: "/components", icon: <Code className="w-4 h-4" /> },
+    { name: uiStrings[lang].assignments, href: "/assignments", icon: <Code className="w-4 h-4" /> },
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full border-b border-doc-border glass-strong backdrop-blur-md${theme === 'light' ? ' bg-[navy]' : ''}`}
+        className={`sticky top-0 z-50 w-full border-b border-doc-border backdrop-blur-md ${theme === 'dark' ? 'glass-strong' : 'bg-[navy]'}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-16 items-center justify-between" style={{ marginLeft: '200px' }}>
             {/* Logo */}
-            <div className="flex items-center" style={{ marginLeft: '20px' }}>
+            <div
+              className="flex items-center fixed top-0 left-0 z-50 bg-transparent"
+              style={{ width: '200px', height: '50px', marginLeft: 0 }}
+            >
               <Link href="/">
-                <div style={{ width: '200px', height: '50px' }} className="flex items-center justify-center overflow-hidden rounded-lg">
-                  <img src="/media/logo.webp" alt="PRO192 Logo" className="object-contain w-full h-full" />
+                <div className="flex items-center justify-center overflow-hidden rounded-lg w-full h-full">
+                  <img src="/media/logo.webp" alt="PRO192 Logo" className="object-contain w-full h-full" style={{ marginTop: '2px' }} />
                 </div>
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20">
               {navigation.map((item) => (
                 <Link key={item.name} href={item.href}>
                   <Button
                     variant="ghost"
-                    className="text-doc-text-muted hover:text-doc-text neon-glow transition-all duration-300"
+                    className="text-white hover:text-doc-accent neon-glow transition-all duration-300"
                   >
                     {item.icon}
                     <span className="ml-2 font-medium">{item.name}</span>
@@ -65,7 +73,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={toggleTheme}
-                className="text-doc-text-muted hover:text-doc-text neon-glow"
+                className="text-white hover:text-doc-accent neon-glow"
                 title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
                 {theme === "dark" ? (
@@ -79,7 +87,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSettingsOpen(true)}
-                className="text-doc-text-muted hover:text-doc-text neon-glow ml-2"
+                className="text-white hover:text-doc-accent neon-glow ml-2"
               >
                 <Settings className="w-4 h-4" />
               </Button>
@@ -88,7 +96,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-doc-text-muted hover:text-doc-text neon-glow ml-2"
+                className="text-white hover:text-doc-accent neon-glow ml-2"
               >
                 <Search className="w-4 h-4" />
                 <span className="ml-2 hidden sm:inline">Search</span>

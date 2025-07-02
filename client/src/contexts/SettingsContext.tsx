@@ -1,7 +1,8 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 // Define theme arrays as const to ensure type stability
-const DARK_THEMES = ['modern-dark', 'blue-professional', 'deep-purple', 'cyberpunk-blue', 'cyberpunk-purple', 'cyberpunk-green'] as const;
+const DARK_THEMES = ['modern-dark', 'blue-professional', 'deep-purple'] as const;
 const LIGHT_THEMES = ['light-minimal', 'light-warm', 'light-cool', 'pastel'] as const;
 
 // Export stable references
@@ -33,27 +34,36 @@ interface SettingsProviderProps {
   children: ReactNode;
 }
 
-export function SettingsProvider({ children }: SettingsProviderProps) {
-  function castSettings(raw: any): Settings {
-    return {
-      theme: raw.theme as 'light' | 'dark',
-      darkTheme: raw.darkTheme as (typeof DARK_THEMES)[number],
-      lightTheme: raw.lightTheme as (typeof LIGHT_THEMES)[number],
-      textSize: raw.textSize as 'small' | 'medium' | 'large',
-      contrast: raw.contrast as 'normal' | 'high',
-      language: raw.language as 'en' | 'vi',
-      fontStyle: raw.fontStyle as 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif' | 'roboto' | 'orbitron' | 'fira_code',
-      colorBlindnessMode: raw.colorBlindnessMode as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia',
-      backgroundAnimation: Boolean(raw.backgroundAnimation),
-    };
-  }
+function castSettings(raw: any): Settings {
+  return {
+    theme: raw.theme as 'light' | 'dark',
+    darkTheme: raw.darkTheme as (typeof DARK_THEMES)[number],
+    lightTheme: raw.lightTheme as (typeof LIGHT_THEMES)[number],
+    textSize: raw.textSize as 'small' | 'medium' | 'large',
+    contrast: raw.contrast as 'normal' | 'high',
+    language: raw.language as 'en' | 'vi',
+    fontStyle: raw.fontStyle as 'open_sans' | 'opendyslexic-regular' | 'opendyslexic-bold' | 'pt_serif' | 'roboto' | 'orbitron' | 'fira_code',
+    colorBlindnessMode: raw.colorBlindnessMode as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia',
+    backgroundAnimation: Boolean(raw.backgroundAnimation),
+  };
+}
 
+export function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useState<Settings>(() => {
     if (typeof window !== 'undefined') {
+      // Try to load from cookie first
+      const cookieSettings = Cookies.get('pro192-settings');
+      if (cookieSettings) {
+        try {
+          return castSettings(JSON.parse(cookieSettings));
+        } catch (e) {
+          // Fallback to localStorage if cookie is invalid
+        }
+      }
       const savedSettings = localStorage.getItem('pro192-settings');
       return savedSettings ? castSettings(JSON.parse(savedSettings)) : castSettings({
         theme: 'dark',
-        darkTheme: 'cyberpunk-blue',
+        darkTheme: 'modern-dark',
         lightTheme: 'light-minimal',
         textSize: 'medium',
         contrast: 'normal',
@@ -65,7 +75,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     }
     return castSettings({
       theme: 'dark',
-      darkTheme: 'cyberpunk-blue',
+      darkTheme: 'modern-dark',
       lightTheme: 'light-minimal',
       textSize: 'medium',
       contrast: 'normal',
@@ -172,7 +182,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     let mergedSettings = { ...settings, ...newSettings };
     if (newSettings.theme) {
       if (newSettings.theme === 'dark' && !('darkTheme' in newSettings)) {
-        mergedSettings.darkTheme = settings.darkTheme || 'cyberpunk-blue';
+        mergedSettings.darkTheme = settings.darkTheme || 'modern-dark';
       }
       if (newSettings.theme === 'light' && !('lightTheme' in newSettings)) {
         mergedSettings.lightTheme = settings.lightTheme || 'light-minimal';
@@ -181,6 +191,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     setSettings(mergedSettings);
     if (typeof window !== 'undefined') {
       localStorage.setItem('pro192-settings', JSON.stringify(mergedSettings));
+      Cookies.set('pro192-settings', JSON.stringify(mergedSettings), { expires: 365 });
     }
   };
 
@@ -195,6 +206,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     const updatedSettings = { ...settings, theme };
     if (typeof window !== 'undefined') {
       localStorage.setItem('pro192-settings', JSON.stringify(updatedSettings));
+      Cookies.set('pro192-settings', JSON.stringify(updatedSettings), { expires: 365 });
     }
     setSettings(updatedSettings);
   };
@@ -213,6 +225,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     }
     if (typeof window !== 'undefined') {
       localStorage.setItem('pro192-settings', JSON.stringify(updatedSettings));
+      Cookies.set('pro192-settings', JSON.stringify(updatedSettings), { expires: 365 });
     }
     setSettings(updatedSettings);
   };

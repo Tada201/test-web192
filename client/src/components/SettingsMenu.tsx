@@ -3,6 +3,7 @@ import { Settings, X, Palette, Type, Eye, Globe, Volume2 } from 'lucide-react';
 import { useSettings, darkThemes, lightThemes } from '../contexts/SettingsContext';
 import { Button } from '@/components/ui/button';
 import { CustomSwitch } from '@/components/ui/custom-switch';
+import { uiStrings } from '../data/uiStrings';
 
 interface SettingsMenuProps {
   isOpen: boolean;
@@ -37,11 +38,13 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
 
   if (!isOpen) return null;
 
+  const lang = settings.language;
+
   const tabs = [
-    { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'typography', label: 'Typography', icon: Type },
-    { id: 'accessibility', label: 'Accessibility', icon: Eye },
-    { id: 'language', label: 'Language', icon: Globe },
+    { id: 'appearance', label: lang === 'vi' ? 'Giao diện' : 'Appearance', icon: Palette },
+    { id: 'typography', label: lang === 'vi' ? 'Kiểu chữ' : 'Typography', icon: Type },
+    { id: 'accessibility', label: lang === 'vi' ? 'Trợ năng' : 'Accessibility', icon: Eye },
+    { id: 'language', label: lang === 'vi' ? 'Ngôn ngữ' : 'Language', icon: Globe },
   ];
 
   return (
@@ -88,7 +91,7 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-doc-border glass">
           <div className="flex items-center space-x-3">
             <Settings size={24} className="text-doc-primary" />
-            <h2 className="text-xl font-semibold text-doc-text font-orbitron">Settings</h2>
+            <h2 className="text-xl font-semibold text-doc-text font-orbitron">{uiStrings[lang].settings}</h2>
           </div>
           <button
             onClick={onClose}
@@ -173,16 +176,16 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                           {theme.replace('-', ' ')}
                         </div>
                         <div className="text-sm text-doc-text-muted mt-1">
-                          {theme === 'modern-dark' && 'Clean and modern dark theme'}
-                          {theme === 'blue-professional' && 'Professional blue accent'}
-                          {theme === 'deep-purple' && 'Rich purple tones'}
-                          {theme === 'cyberpunk-blue' && 'Futuristic blue cyberpunk'}
-                          {theme === 'cyberpunk-purple' && 'Electric purple cyberpunk'}
-                          {theme === 'cyberpunk-green' && 'Matrix green cyberpunk'}
-                          {theme === 'light-minimal' && 'Clean minimal light theme'}
-                          {theme === 'light-warm' && 'Warm light colors'}
-                          {theme === 'light-cool' && 'Cool light tones'}
-                          {theme === 'pastel' && 'Soft pastel colors'}
+                          {theme === 'modern-dark' && uiStrings[lang].themeVariants.modernDark}
+                          {theme === 'blue-professional' && uiStrings[lang].themeVariants.blueProfessional}
+                          {theme === 'deep-purple' && uiStrings[lang].themeVariants.deepPurple}
+                          {theme === 'cyberpunk-blue' && uiStrings[lang].themeVariants.cyberpunkBlue}
+                          {theme === 'cyberpunk-purple' && uiStrings[lang].themeVariants.cyberpunkPurple}
+                          {theme === 'cyberpunk-green' && uiStrings[lang].themeVariants.cyberpunkGreen}
+                          {theme === 'light-minimal' && uiStrings[lang].themeVariants.lightMinimal}
+                          {theme === 'light-warm' && uiStrings[lang].themeVariants.lightWarm}
+                          {theme === 'light-cool' && uiStrings[lang].themeVariants.lightCool}
+                          {theme === 'pastel' && uiStrings[lang].themeVariants.pastel}
                         </div>
                       </button>
                     ))}
@@ -193,16 +196,16 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                   <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Background Animation</h3>
                   <div className="flex items-center justify-between p-4 rounded-md border border-doc-border glass">
                     <div>
-                      <div className="font-medium text-doc-text">Enable particle animation</div>
-                      <div className="text-sm text-doc-text-muted mt-1">
-                        Interactive background particles with mouse interaction
-                      </div>
-                    </div>
-                    <CustomSwitch
-                      checked={settings.backgroundAnimation}
-                      onCheckedChange={(checked) => updateSettings({ backgroundAnimation: checked })}
-                    />
+                  <div className="font-medium text-doc-text">{uiStrings[lang].enableParticleAnimation}</div>
+                  <div className="text-sm text-doc-text-muted mt-1">
+                    Interactive background particles with mouse interaction
                   </div>
+                </div>
+                <CustomSwitch
+                  checked={settings.backgroundAnimation}
+                  onCheckedChange={(checked) => updateSettings({ backgroundAnimation: checked })}
+                />
+              </div>
                 </div>
               </div>
             )}
@@ -232,26 +235,31 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                   <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Font Family</h3>
                   <div className="space-y-2">
                     {[
-                      { id: 'roboto', name: 'Roboto', desc: 'Modern and clean sans-serif' },
+                      { id: 'roboto', name: 'Roboto', desc: 'Default clean font' },
                       { id: 'orbitron', name: 'Orbitron', desc: 'Futuristic cyberpunk font' },
-                      { id: 'fira_code', name: 'Fira Code', desc: 'Monospace with ligatures' },
-                      { id: 'open_sans', name: 'Open Sans', desc: 'Clean and readable' },
-                      { id: 'pt_serif', name: 'PT Serif', desc: 'Traditional serif font' },
+                      { id: 'fira-code', name: 'Fira Code', desc: 'Monospace for code' },
                       { id: 'opendyslexic-regular', name: 'OpenDyslexic', desc: 'Designed for dyslexia' },
-                      { id: 'opendyslexic-bold', name: 'OpenDyslexic Bold', desc: 'Bold dyslexia-friendly' },
-                    ].map(font => (
+                    ].map(fontOpt => (
                       <button
-                        key={font.id}
-                        onClick={() => updateSettings({ fontStyle: font.id as any })}
-                        className={`w-full p-3 rounded-md border text-left transition-colors glass ${
-                          settings.fontStyle === font.id
-                            ? 'border-doc-primary bg-doc-primary/10'
-                            : 'border-doc-border hover:border-doc-primary/50'
-                        }`}
-                      >
-                        <div className="font-medium text-doc-text">{font.name}</div>
-                        <div className="text-sm text-doc-text-muted">{font.desc}</div>
-                      </button>
+                        key={fontOpt.id}
+                    onClick={() => updateSettings({ fontStyle: fontOpt.id as
+                      | "roboto"
+                      | "orbitron"
+                      | "opendyslexic-regular"
+                      | "open_sans"
+                      | "opendyslexic-bold"
+                      | "pt_serif"
+                      | "fira_code"
+                      | undefined })}
+                    className={`w-full p-3 rounded-md border text-left transition-colors glass ${
+                      settings.fontStyle === fontOpt.id
+                        ? 'border-doc-primary bg-doc-primary/10'
+                        : 'border-doc-border hover:border-doc-primary/50'
+                    }`}
+                  >
+                    <div className="font-medium text-doc-text">{fontOpt.name}</div>
+                    <div className="text-sm text-doc-text-muted">{fontOpt.desc}</div>
+                  </button>
                     ))}
                   </div>
                 </div>
@@ -278,55 +286,30 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                     ))}
                   </div>
                 </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Color Blindness Support</h3>
-                  <div className="space-y-2">
-                    {[
-                      { id: 'none', name: 'None', desc: 'Standard colors' },
-                      { id: 'protanopia', name: 'Protanopia', desc: 'Red-blind support' },
-                      { id: 'deuteranopia', name: 'Deuteranopia', desc: 'Green-blind support' },
-                      { id: 'tritanopia', name: 'Tritanopia', desc: 'Blue-blind support' },
-                    ].map(mode => (
-                      <button
-                        key={mode.id}
-                        onClick={() => updateSettings({ colorBlindnessMode: mode.id as any })}
-                        className={`w-full p-3 rounded-md border text-left transition-colors glass ${
-                          settings.colorBlindnessMode === mode.id
-                            ? 'border-doc-primary bg-doc-primary/10'
-                            : 'border-doc-border hover:border-doc-primary/50'
-                        }`}
-                      >
-                        <div className="font-medium text-doc-text">{mode.name}</div>
-                        <div className="text-sm text-doc-text-muted">{mode.desc}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
             )}
 
             {activeTab === 'language' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">Interface Language</h3>
+                  <h3 className="text-lg font-medium text-doc-text mb-4 font-orbitron">{uiStrings[lang].interfaceLanguage}</h3>
                   <div className="space-y-2">
                     {[
-                      { id: 'en', name: 'English', flag: '🇺🇸' },
-                      { id: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
-                    ].map(lang => (
+                      { id: 'en', name: uiStrings[lang].english, flag: '🇺🇸' },
+                      { id: 'vi', name: uiStrings[lang].vietnamese, flag: '🇻🇳' },
+                    ].map(langOpt => (
                       <button
-                        key={lang.id}
-                        onClick={() => updateSettings({ language: lang.id as any })}
+                        key={langOpt.id}
+                        onClick={() => updateSettings({ language: langOpt.id as any })}
                         className={`w-full p-3 rounded-md border text-left transition-colors glass ${
-                          settings.language === lang.id
+                          settings.language === langOpt.id
                             ? 'border-doc-primary bg-doc-primary/10'
                             : 'border-doc-border hover:border-doc-primary/50'
                         }`}
                       >
                         <div className="flex items-center space-x-3">
-                          <span className="text-2xl">{lang.flag}</span>
-                          <span className="font-medium text-doc-text">{lang.name}</span>
+                          <span className="text-2xl">{langOpt.flag}</span>
+                          <span className="font-medium text-doc-text">{langOpt.name}</span>
                         </div>
                       </button>
                     ))}
@@ -340,9 +323,9 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
         {/* Footer */}
         <div className="px-6 py-4 border-t border-doc-border glass">
           <div className="flex justify-end space-x-3">
-            <Button variant="outline" onClick={onClose}>
-              Close
-            </Button>
+          <Button variant="outline" onClick={onClose}>
+            {uiStrings[lang].close}
+          </Button>
           </div>
         </div>
       </div>

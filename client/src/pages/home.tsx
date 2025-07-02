@@ -5,9 +5,11 @@ import { Link } from "wouter";
 import { BookOpen, Code, Download, ArrowRight, Users, Clock, Trophy, Star, CheckCircle, Play } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
 import HeroSection from "../components/HeroSection";
+import { uiStrings } from '../data/uiStrings';
 
 export default function HomePage() {
   const { settings } = useSettings();
+  const lang = settings.language as 'en' | 'vi';
 
   const courseSections = [
     {
@@ -73,24 +75,6 @@ export default function HomePage() {
     { label: "Assignments", value: "15", icon: <Trophy className="w-5 h-5" /> }
   ];
 
-  const features = [
-    {
-      title: "Interactive Learning",
-      description: "Hands-on coding exercises with real-time feedback and execution",
-      icon: <Play className="w-6 h-6" />
-    },
-    {
-      title: "Comprehensive Documentation",
-      description: "Detailed explanations with examples and best practices",
-      icon: <BookOpen className="w-6 h-6" />
-    },
-    {
-      title: "Progress Tracking",
-      description: "Monitor your learning journey with built-in progress indicators",
-      icon: <CheckCircle className="w-6 h-6" />
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-doc-bg text-doc-text transition-colors duration-300">
       {/* Hero Section - restored to top of HomePage */}
@@ -102,13 +86,29 @@ export default function HomePage() {
           <div className="text-center mb-12">
             {/* Why Choose This Course - floating box style */}
             <div className="rounded-lg border text-card-foreground shadow-sm glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105 max-w-xl mx-auto mb-8 px-6 py-4" style={{ zIndex: 30 }}>
-              <h2 className="text-2xl md:text-3xl font-bold text-doc-text text-center">Why Choose This Course?</h2>
-              <p className="text-base md:text-lg text-doc-text-muted text-center mt-2">Experience modern learning with cutting-edge tools and methodologies</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-doc-text text-center">{uiStrings[lang].whyChoose}</h2>
+              <p className="text-base md:text-lg text-doc-text-muted text-center mt-2">{uiStrings[lang].whyChooseDesc}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {[
+              {
+                title: uiStrings[lang].interactiveLearning,
+                description: uiStrings[lang].interactiveLearningDesc,
+                icon: <Play className="w-6 h-6" />
+              },
+              {
+                title: uiStrings[lang].comprehensiveDocs,
+                description: uiStrings[lang].comprehensiveDocsDesc,
+                icon: <BookOpen className="w-6 h-6" />
+              },
+              {
+                title: uiStrings[lang].progressTracking,
+                description: uiStrings[lang].progressTrackingDesc,
+                icon: <CheckCircle className="w-6 h-6" />
+              }
+            ].map((feature, index) => (
               <Card key={index} className="glass border-doc-border bg-doc-surface/50 hover:bg-doc-hover/50 transition-all duration-300 neon-glow group hover:scale-105">
                 <CardHeader className="text-center pb-4">
                   <div className="flex items-center justify-center w-16 h-16 bg-doc-primary/20 rounded-xl mx-auto mb-4 group-hover:bg-doc-primary/30 transition-colors duration-300">
@@ -119,12 +119,10 @@ export default function HomePage() {
                   <CardTitle className="text-xl font-semibold text-doc-text font-orbitron">
                     {feature.title}
                   </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-doc-text-muted leading-relaxed text-center">
+                  <CardDescription className="text-doc-text-muted mt-2">
                     {feature.description}
                   </CardDescription>
-                </CardContent>
+                </CardHeader>
               </Card>
             ))}
           </div>

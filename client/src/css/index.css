@@ -1,4 +1,5 @@
 @import './fonts.css';
+@import './_navbar.css';
 
 /* Tailwind CSS Imports */
 @tailwind base;
@@ -86,9 +87,14 @@ html.dark {
     @apply border-border;
   }
 
+  html {
+    @apply font-roboto;
+  }
+
   body {
-    @apply font-roboto antialiased;
-    font-family: 'Roboto', 'Inter', sans-serif;
+    @apply antialiased;
+    /* Ensure font inheritance from html element */
+    font-family: inherit;
     background: var(--doc-bg);
     color: var(--doc-text);
     /* Optimize rendering performance */
@@ -112,16 +118,17 @@ html.dark {
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
   }
   
+  /* Apply font classes to html element for global control */
   .font-roboto {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
   }
   
   .font-orbitron {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Orbitron', sans-serif !important;
   }
   
   .font-fira-code {
-    font-family: 'Fira Code', monospace;
+    font-family: 'Fira Code', monospace !important;
   }
   
   .font-exo {
@@ -333,55 +340,7 @@ html.dark {
   }
 
   /* Optimized Navigation Items */
-  .nav-item {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    transition: transform 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
-    position: relative;
-    overflow: hidden;
-    will-change: transform, border-color, box-shadow;
-  }
-  
-  .nav-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-    transition: left 0.3s ease-out;
-  }
-  
-  .nav-item:hover::before {
-    left: 100%;
-  }
-  
-  .nav-item:hover {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-    transform: translateX(3px);
-  }
-  
-  .nav-item.active {
-    background: rgba(0, 255, 255, 0.1);
-    border-color: var(--neon-cyan);
-    box-shadow: 
-      0 0 10px rgba(0, 255, 255, 0.5),
-      inset 0 0 10px rgba(0, 255, 255, 0.1);
-  }
-  
-  .nav-item.active::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--neon-cyan);
-    box-shadow: 0 0 10px var(--neon-cyan);
-  }
+  /* Moved to _navbar.css */
 
   /* Enhanced Search */
   .search-highlight {
@@ -837,6 +796,11 @@ html.light .kbd {
   outline-offset: 2px;
 }
 
+/* Ensure all elements inherit font family */
+body, p, span, div, button, input, textarea {
+  font-family: inherit !important;
+}
+
 /* Ensure proper contrast for all interactive elements */
 button, a, input, select, textarea {
   transition: color 0.15s ease-out, background-color 0.15s ease-out, border-color 0.15s ease-out, box-shadow 0.15s ease-out;
@@ -946,4 +910,13 @@ html:not(.background-animation-enabled) .float {
 
 html:not(.background-animation-enabled) .pulse-neon {
   animation: none;
+}
+
+/* Improve navbar readability in dark mode */
+html.dark .glass .text-doc-text-muted,
+html.dark .glass .text-doc-text-muted svg,
+html.dark .glass .neon-glow svg {
+  color: #fff !important;
+  fill: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }

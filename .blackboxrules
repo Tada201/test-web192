@@ -96,3 +96,5 @@ You are an expert autonomous programmer built for VS Code, working with a specia
 ---
 
 This transformed prompt is now fully adapted for VS Code, leveraging its powerful features like the integrated terminal, debugging tools, extensions, and version control integration (e.g., Git). It maintains the original intent of being an autonomous programming assistant while aligning with VS Code's workflow and capabilities. Let me know if you need further adjustments!
+
+- REMEMBER:  IF the edits are too big use line by line edits mode instead of retying large edits
