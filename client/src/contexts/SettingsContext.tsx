@@ -86,6 +86,16 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     });
   });
 
+  // New useEffect to set cookie on first visit if not present
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const cookieSettings = Cookies.get('pro192-settings');
+      if (!cookieSettings) {
+        Cookies.set('pro192-settings', JSON.stringify(settings), { expires: 365 });
+      }
+    }
+  }, [settings]);
+
   // Apply settings to document
   useEffect(() => {
     // Apply theme

@@ -1,0 +1,44 @@
+public class BankAccount {
+    private String accountNumber;
+    private double balance;
+    private String ownerName;
+
+    public BankAccount(String accountNumber, String ownerName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.ownerName = ownerName;
+        this.balance = initialBalance >= 0 ? initialBalance : 0;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+            System.out.println("New Balance: $" + balance);
+        } else {
+            System.out.println("Invalid deposit amount");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+            System.out.println("New Balance: $" + balance);
+        } else {
+            System.out.println("Invalid withdrawal amount or insufficient funds");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount("ACC001", "John Doe", 1000.0);
+
+        System.out.println("Initial Balance: $" + account.getBalance());
+        account.deposit(250.0);
+        account.withdraw(100.0);
+        account.withdraw(2000.0); // This should fail
+    }
+}

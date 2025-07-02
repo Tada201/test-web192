@@ -38,7 +38,7 @@ export function Header() {
         className={`sticky top-0 z-50 w-full border-b border-doc-border backdrop-blur-md ${theme === 'dark' ? 'glass-strong' : 'bg-[navy]'}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between" style={{ marginLeft: '200px' }}>
+          <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div
               className="flex items-center fixed top-0 left-0 z-50 bg-transparent"
@@ -52,7 +52,7 @@ export function Header() {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20">
+            <nav className="hidden md:flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20" style={{ marginLeft: '200px' }}>
               {navigation.map((item) => (
                 <Link key={item.name} href={item.href}>
                   <Button

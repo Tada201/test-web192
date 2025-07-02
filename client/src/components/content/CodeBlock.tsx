@@ -38,13 +38,14 @@ export function CodeBlock({
       )}
       
       <div className="relative terminal">
-        <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-doc-border">
+        <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-doc-border" style={{ position: 'relative', zIndex: 2 }}>
           <span className="text-xs text-doc-text-muted font-fira-code">{language}</span>
           <Button
             variant="ghost"
             size="sm"
             className="h-8 px-3 text-xs neon-glow hover:text-doc-primary"
             onClick={copyToClipboard}
+            style={{ zIndex: 3, position: 'relative' }}
           >
             <i className={`fas ${copied ? 'fa-check' : 'fa-copy'} mr-2`}></i>
             {copied ? 'Copied!' : 'Copy'}

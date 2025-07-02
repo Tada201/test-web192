@@ -1,0 +1,80 @@
+public class Student {
+    // Private fields (encapsulation)
+    private String name;
+    private int studentId;
+    private double gpa;
+    private String major;
+
+    // Constructor
+    public Student(String name, int studentId, String major) {
+        this.name = name;
+        this.studentId = studentId;
+        this.major = major;
+        this.gpa = 0.0; // Default GPA
+    }
+
+    // Getter methods
+    public String getName() {
+        return name;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    // Setter methods with validation
+    public void setGpa(double gpa) {
+        if (gpa >= 0.0 && gpa <= 4.0) {
+            this.gpa = gpa;
+        } else {
+            System.out.println("Invalid GPA. Must be between 0.0 and 4.0");
+        }
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    // Method to display student information
+    public void displayInfo() {
+        System.out.println("Student Information:");
+        System.out.println("Name: " + name);
+        System.out.println("ID: " + studentId);
+        System.out.println("Major: " + major);
+        System.out.println("GPA: " + String.format("%.2f", gpa));
+    }
+
+    // Method to check academic standing
+    public String getAcademicStanding() {
+        if (gpa >= 3.5) return "Dean's List";
+        else if (gpa >= 3.0) return "Good Standing";
+        else if (gpa >= 2.0) return "Satisfactory";
+        else return "Academic Probation";
+    }
+
+    public static void main(String[] args) {
+        // Create student objects
+        Student alice = new Student("Alice Johnson", 12345, "Computer Science");
+        Student bob = new Student("Bob Smith", 12346, "Mathematics");
+
+        // Set GPAs
+        alice.setGpa(3.8);
+        bob.setGpa(2.9);
+
+        // Display information
+        alice.displayInfo();
+        System.out.println("Academic Standing: " + alice.getAcademicStanding());
+        System.out.println();
+
+        bob.displayInfo();
+        System.out.println("Academic Standing: " + bob.getAcademicStanding());
+    }
+}

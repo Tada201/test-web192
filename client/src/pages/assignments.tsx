@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { CodeBlock } from "@/components/content/CodeBlock";
 import { InfoBox } from "@/components/content/InfoBox";
 import { ConceptCard } from "@/components/content/ConceptCard";
 import { ProgressTracker } from "@/components/content/ProgressTracker";
@@ -26,9 +25,36 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import { HighlightedCode } from "@/components/content/HighlightedCode";
 
-const codeExamples = {
-  student: `public class Student {
+export default function AssignmentsPage() {
+  const [currentCode, setCurrentCode] = useState("");
+  const [output, setOutput] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
+  const [selectedExample, setSelectedExample] = useState("");
+  const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
+  const [completedAssignments, setCompletedAssignments] = useState<Set<number>>(
+    new Set(),
+  );
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [activeTab, setActiveTab] = useState("learning-path");
+  const [error, setError] = useState<string>("");
+  const [examples, setExamples] = useState<Record<string, string>>({});
+  const [learningSteps, setLearningSteps] = useState<any[]>([]);
+  const [assignments, setAssignments] = useState<string[]>([]);
+  const [openExample, setOpenExample] = useState<string | null>(null);
+
+  // Fetch code examples, learning steps, and assignments from backend on mount
+  useEffect(() => {
+    // Static examples data since backend is removed
+    const staticExamples: Record<string, string> = {
+      "HelloWorld": `public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("Welcome to Java Programming!");
+    }
+}`,
+      "Student": `public class Student {
     // Private fields (encapsulation)
     private String name;
     private int studentId;
@@ -108,13 +134,7 @@ const codeExamples = {
         System.out.println("Academic Standing: " + bob.getAcademicStanding());
     }
 }`,
-  helloWorld: `public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-        System.out.println("Welcome to Java Programming!");
-    }
-}`,
-  calculator: `public class Calculator {
+      "Calculator": `public class Calculator {
     public static void main(String[] args) {
         int a = 15;
         int b = 7;
@@ -128,7 +148,7 @@ const codeExamples = {
         System.out.println("Remainder: " + (a % b));
     }
 }`,
-  bankAccount: `public class BankAccount {
+      "BankAccount": `public class BankAccount {
     private String accountNumber;
     private double balance;
     private String ownerName;
@@ -172,99 +192,64 @@ const codeExamples = {
         account.withdraw(2000.0); // This should fail
     }
 }`,
-};
+    };
+    setExamples(staticExamples);
+    setLearningSteps([]);
+    setAssignments([
+      "Write a loop to print numbers 1 to 10",
+      "Create a class Car with properties and methods",
+      "Implement a method to reverse a string",
+      "Write a program to check if a number is prime",
+      "Create a BankAccount class with deposit and withdraw methods",
+    ]);
+  }, []);
 
-const learningSteps = [
-  {
-    id: "understand-encapsulation",
-    title: "Understand Encapsulation",
-    description:
-      "Learn why we use private fields and public methods to control access to data.",
-    completed: false,
-  },
-  {
-    id: "implement-constructors",
-    title: "Implement Constructors",
-    description:
-      "Create constructors to properly initialize object state when creating instances.",
-    completed: false,
-  },
-  {
-    id: "create-getters-setters",
-    title: "Create Getters and Setters",
-    description:
-      "Implement accessor and mutator methods with proper validation.",
-    completed: false,
-  },
-  {
-    id: "add-business-logic",
-    title: "Add Business Logic",
-    description:
-      "Implement methods that perform meaningful operations on the object's data.",
-    completed: false,
-  },
-  {
-    id: "test-implementation",
-    title: "Test Your Implementation",
-    description:
-      "Create objects and test all methods to verify correct functionality.",
-    completed: false,
-  },
-];
+  useEffect(() => {
+    // Dynamically add JDoodle embed script
+    const scriptId = "jdoodle-embed-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://www.jdoodle.com/assets/jdoodle-pym.min.js";
+      script.type = "text/javascript";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
-const assignments = [
-  "Write a Java program to print your name 10 times using a loop.",
-  "Create a program to calculate the area of a rectangle given length and width.",
-  "Write a program to check if a number is even or odd using conditional statements.",
-  "Implement a program to find the largest of three numbers using if-else statements.",
-  "Create a class `Car` with attributes `model`, `year`, and `color`, and a method to display them.",
-  "Write a program to reverse a string using a loop without using built-in methods.",
-  "Implement a simple `BankAccount` class with `deposit`, `withdraw`, and `getBalance` methods.",
-  "Create a program to generate the first 10 Fibonacci numbers using loops.",
-  "Write a program to check if a given year is a leap year using conditional logic.",
-  "Implement a `Student` class with attributes `name`, `age`, `grade`, and methods to display and update details.",
-  "Create a program to sort an array of integers in ascending order using bubble sort.",
-  "Write a program to find the factorial of a number using both iterative and recursive approaches.",
-  "Implement a `Rectangle` class with methods to calculate area, perimeter, and check if it's a square.",
-  "Create a program to convert temperature between Celsius and Fahrenheit with input validation.",
-  "Write a program to count vowels, consonants, and special characters in a given string.",
-];
-
-export default function AssignmentsPage() {
-  const [currentCode, setCurrentCode] = useState(codeExamples.student);
-  const [output, setOutput] = useState("");
-  const [isRunning, setIsRunning] = useState(false);
-  const [selectedExample, setSelectedExample] = useState("student");
-  const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
-  const [completedAssignments, setCompletedAssignments] = useState<Set<number>>(
-    new Set(),
-  );
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState("learning-path");
-
-  // Simulate Java code execution
-  const simulateJavaExecution = (code: string): string => {
-    if (code.includes("class HelloWorld")) {
-      return "Hello, World!\nWelcome to Java Programming!";
-    } else if (code.includes("class Calculator")) {
-      return "Basic Calculator Operations:\na = 15, b = 7\nAddition: 22\nSubtraction: 8\nMultiplication: 105\nDivision: 2\nRemainder: 1";
-    } else if (code.includes("class Student")) {
-      return "Student Information:\nName: Alice Johnson\nID: 12345\nMajor: Computer Science\nGPA: 3.80\nAcademic Standing: Dean's List\n\nStudent Information:\nName: Bob Smith\nID: 12346\nMajor: Mathematics\nGPA: 2.90\nAcademic Standing: Good Standing";
-    } else if (code.includes("class BankAccount")) {
-      return "Initial Balance: $1000.0\nDeposited: $250.0\nNew Balance: $1250.0\nWithdrawn: $100.0\nNew Balance: $1150.0\nInvalid withdrawal amount or insufficient funds";
-    } else {
-      return "Code executed successfully!\n(This is a simulated output. In production, integrate with TeaVM or CheerpJ for actual Java execution)";
+  // Real Java code execution via backend API
+  const executeJavaCode = async (code: string): Promise<string> => {
+    try {
+      const response = await fetch("/api/java/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to execute code");
+      }
+      const data = await response.json();
+      return data.output || "";
+    } catch (error: any) {
+      return `Error: ${error.message}`;
     }
   };
 
   const handleRunCode = async () => {
     setIsRunning(true);
     setOutput("Running assignment...");
-
-    // Simulate execution delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const result = simulateJavaExecution(currentCode);
+    setError("");
+    if (!currentCode.includes("class ")) {
+      setError("Error: No class definition found.");
+      setIsRunning(false);
+      return;
+    } else if (!currentCode.includes("main")) {
+      setError("Warning: No main method found.");
+    }
+    const result = await executeJavaCode(currentCode);
     setOutput(result);
     setIsRunning(false);
   };
@@ -280,7 +265,7 @@ export default function AssignmentsPage() {
 
   const handleExampleChange = (exampleKey: string) => {
     setSelectedExample(exampleKey);
-    setCurrentCode(codeExamples[exampleKey as keyof typeof codeExamples]);
+    setCurrentCode(examples[exampleKey] || "");
     setOutput("");
   };
 
@@ -401,56 +386,45 @@ export default function AssignmentsPage() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-medium text-doc-text">
-                          Learning Progress
+                          Code Examples
                         </h3>
                         <span className="text-xs text-doc-text-muted">
-                          {codeCompletionCount}/{learningSteps.length}
+                          {Object.keys(examples).length}
                         </span>
                       </div>
-                      <Progress value={progressPercentage} className="h-2" />
+
+                      <Progress value={0} className="h-2" />
                     </div>
 
                     <div className="space-y-2">
-                      {learningSteps.map((step, index) => {
-                        const isCompleted = checkCodeCompletion(currentCode);
-                        return (
-                          <div
-                            key={step.id}
-                            className={`p-3 rounded-lg border transition-all duration-200 ${
-                              isCompleted
-                                ? "bg-doc-accent/10 border-doc-accent/30"
-                                : "bg-doc-surface border-doc-border"
-                            }`}
-                            style={{
-                              backgroundColor: isCompleted
-                                ? "hsl(var(--doc-accent) / 0.1)"
-                                : "hsl(var(--doc-surface))",
-                            }}
+                      {Object.entries(examples).map(([key, code]) => (
+                        <div
+                          key={key}
+                          className="p-3 rounded-lg border bg-doc-surface border-doc-border"
+                        >
+                          <button
+                            className="w-full text-left font-medium text-doc-text"
+                            onClick={() => setOpenExample(openExample === key ? null : key)}
                           >
-                            <div className="flex items-start space-x-2">
-                              {isCompleted ? (
-                                <CheckCircle
-                                  size={16}
-                                  className="text-doc-accent mt-0.5 flex-shrink-0"
-                                />
-                              ) : (
-                                <Circle
-                                  size={16}
-                                  className="text-doc-text-muted mt-0.5 flex-shrink-0"
-                                />
-                              )}
-                              <div>
-                                <h4 className="text-sm font-medium text-doc-text">
-                                  {step.title}
-                                </h4>
-                                <p className="text-xs text-doc-text-muted mt-1">
-                                  {step.description}
-                                </p>
-                              </div>
+                            {key}
+                          </button>
+                          {openExample === key && (
+                            <div className="mt-2 relative">
+                              <pre className="overflow-auto max-h-48 p-2 bg-doc-hover rounded text-sm font-mono whitespace-pre-wrap">
+                                {code}
+                              </pre>
+                              <button
+                                className="absolute top-1 right-1 bg-doc-accent text-white px-2 py-1 rounded text-xs"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(code);
+                                }}
+                              >
+                                Copy
+                              </button>
                             </div>
-                          </div>
-                        );
-                      })}
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </TabsContent>
@@ -531,64 +505,9 @@ export default function AssignmentsPage() {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          {/* Main content area with editor and output */}
-          <main className="flex-1 grid md:grid-cols-2 gap-6 p-6 overflow-auto">
-            {/* Code Editor Column */}
-            <div className="flex flex-col h-full min-h-0">
-              <Card className="flex-1 flex flex-col">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Code size={20} />
-                    <CardTitle>Java Code</CardTitle>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button onClick={handleRunCode} disabled={isRunning}>
-                      {isRunning ? (
-                        <>
-                          <Square className="mr-2 h-4 w-4 animate-spin" />
-                          Running...
-                        </>
-                      ) : (
-                        <>
-                          <Play className="mr-2 h-4 w-4" />
-                          Run
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleCopyCode}
-                      title="Copy code"
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-1 p-0 relative">
-                  <div className="absolute inset-0">
-                    <CodeBlock language="java">{currentCode}</CodeBlock>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Output Column */}
-            <div className="flex flex-col h-full min-h-0">
-              <Card className="flex-1 flex flex-col">
-                <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <Monitor size={20} />
-                    <CardTitle>Output</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-1 bg-doc-hover rounded-b-lg">
-                  <pre className="w-full h-full p-4 rounded-md bg-transparent text-sm whitespace-pre-wrap font-mono overflow-auto">
-                    {output || "Output will be shown here..."}
-                  </pre>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Main content area with JDoodle embed */}
+          <main className="flex-1 p-6 overflow-auto">
+            <div data-pym-src="https://www.jdoodle.com/embed/v1/383bf936da7f82d1" style={{ width: "100%", height: "600px" }}></div>
           </main>
         </div>
       </div>
